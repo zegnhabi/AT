@@ -32,6 +32,6 @@ Las tecnologías aplicadas a esta pagina web son PHP,MySQL y JavaScript, la tem�
 
 ![enter image description here](https://3.bp.blogspot.com/-XlF-cGS-Xx0/T-axWAgET2I/AAAAAAAAAhA/80oM3PB_l_A/s320/sshot-8.png)
 
-- Y después de imprimir el boleto, terminamos la venta. Espero y les guste el código, Un saludo!! El link de descarga re-subido.¡Demo Live! ¡Descargar!
+- Y después de imprimir el boleto, terminamos la venta.
 
 ![enter image description here](https://2.bp.blogspot.com/-fbdXxBxoRNs/T-axW5kWATI/AAAAAAAAAhI/mObJq8r2PsM/s320/sshot-9.png)
