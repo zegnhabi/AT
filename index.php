@@ -120,19 +120,19 @@ src="http://pagead2.googlesyndication.com/pagead/show_ads.js">
 			<td>
 				<?php
 					//Creamos la consulta SQL
-					$tabla = mysql_query("SELECT `ciudad` FROM  `vistacorridas` GROUP BY  `ciudad`"); 
+					$tabla = mysqli_query("SELECT `ciudad` FROM  `vistacorridas` GROUP BY  `ciudad`"); 
 				?>
 				<select id="origen">
 				<option value="-1" selected="selected">--<?php echo $selectOrigen;?>--</option>
 				<?php
 				//recorremos la tabla en busca de los registros
-					while ($registro = mysql_fetch_array($tabla)) { 
+					while ($registro = mysqli_fetch_array($tabla)) { 
 				?>
 				<option value="<?php echo $registro[0]; //a�adimos el registro ?>"><?php echo $registro[0]; //a�adimos el registro?></option>
 				<?php
 					} 
 					//liberamos la tabla del bloqueo..
-					mysql_free_result($tabla);
+					mysqli_free_result($tabla);
 				?>
 				</select>
 			</td>
@@ -146,19 +146,19 @@ src="http://pagead2.googlesyndication.com/pagead/show_ads.js">
 			<td>
 				<?php
 					//Creamos la consulta SQL
-					$tabla = mysql_query("SELECT `ciudad` as `id` FROM  `vistacorridas` GROUP BY  `ciudad`"); 
+					$tabla = mysqli_query("SELECT `ciudad` as `id` FROM  `vistacorridas` GROUP BY  `ciudad`"); 
 				?>
 				<select id="destino">
 				<option value="-1" selected="selected">--<?php echo $selectDestino;?>--</option>
 				<?php
 				//recorremos los registros
-					while ($registro = mysql_fetch_array($tabla)) { 
+					while ($registro = mysqli_fetch_array($tabla)) { 
 				?>
 				<option value="<?php echo $registro[0]; //a�adimos el valor?>"><?php echo $registro[0]; //a�adimos el valor?></option>
 				<?php
 					} 
 					//liberamos la tabla...
-					mysql_free_result($tabla);
+					mysqli_free_result($tabla);
 				?>
 				</select>
 			</td>
