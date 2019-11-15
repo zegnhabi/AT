@@ -1,6 +1,6 @@
 /*Funciones ocupadas en el sistema.
 */
-	//añade una funcion a la clase String.
+	//aÃ±ade una funcion a la clase String.
 	String.prototype.endsWith = function(str){
 			return (this.match(str+"$")==str)
 		}
@@ -76,7 +76,7 @@ var Util={
 			//obtenemos el id de boleto
 			var id_boleto=document.forms[0].id_boleto.value;
 			var encoded="id="+Base64.encode(id_boleto)+"&as="+Base64.encode(asi)+"&no="+Base64.encode(nombres);
-				formu.action="/AT/imprimirBoletos.php?"+encoded;
+				formu.action="imprimirBoletos.php?"+encoded;
 			if(confirm("Desea realizar la compra de los boletos!?"))
 			{
 				alert("Compra realizada");
@@ -96,7 +96,7 @@ var Util={
 		AvanzarCompra:function()
 		{
 			//vemos que boletos estan seleccionados y sus respectivos numeros.
-			var seleccionado="/AT/images/seleccionado.gif";
+			var seleccionado="images/seleccionado.gif";
 			var imagenes=document.images;
 			var largo=imagenes.length;
 			var query="";
@@ -113,7 +113,7 @@ var Util={
 				var id_corrida=formu.id_corrida.value;
 				//Enviamos los datos
 				var encoded="id="+Base64.encode(id_corrida)+"&as="+Base64.encode(query);
-				formu.action="/AT/comprar.php?"+encoded;
+				formu.action="comprar.php?"+encoded;
 				formu.submit();
 		},
 		avanzar:function()
@@ -122,17 +122,17 @@ var Util={
 			var bolMax=document.forms[0].bolsMax.value;
 			if(bolSel==0)
 			{
-					alert("Tienes que  seleccionar más boletos");
+					alert("Tienes que  seleccionar mÃ¡s boletos");
 					return false;
 			}
 			if(bolSel>bolMax )
 			{
-				if(confirm("Tienes Seleccionados más boletos, deseas volver a seleccionarlos!?"))
+				if(confirm("Tienes Seleccionados mÃ¡s boletos, deseas volver a seleccionarlos!?"))
 				{
 					location.reload(true);
 				}else
 				{
-					alert("Puedes seleccionar más boletos, cambiando el numero de boletos.");
+					alert("Puedes seleccionar mÃ¡s boletos, cambiando el numero de boletos.");
 					document.forms[0].num_boletos.focus();
 				}
 			}else
@@ -159,8 +159,8 @@ var Util={
 		{
 			var id=imagenSeleccionada.id;
 			var imagen=document.images[id];
-			var img="/AT/images/seleccionado.gif";
-			var path="/AT/images/";
+			var img="images/seleccionado.gif";
+			var path="images/";
 			var bolSel=document.forms[0].num_bol_selec.value;
 			var bolMax=document.forms[0].bolsMax.value;
 			if( bolSel < bolMax )
@@ -202,7 +202,7 @@ var Util={
 				var formu=document.forms[0];
 				//Enviamos los datos
 				var encoded="id="+Base64.encode(id_corrida);
-				formu.action="/AT/elegir.php?"+encoded;
+				formu.action="elegir.php?"+encoded;
 				formu.submit();
 			}else
 			{
@@ -278,7 +278,7 @@ var Util={
 							"&de="+Base64.encode(destino)+
 							"&fe="+Base64.encode(fecha)+
 							"&fh="+Base64.encode(fechah);
-			formu.action="/AT/buscar.php?"+encoded;
+			formu.action="buscar.php?"+encoded;
 			formu.submit();
 			return true;
 		}
