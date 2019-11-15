@@ -7,11 +7,11 @@
 <html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1">
-<link rel="shortcut icon" href="/AT/images/favicon.ico"/> 
-<link rel="stylesheet" type="text/css" href="/AT/styles/admin.css" />
-<link rel="stylesheet" type="text/css" href="/AT/styles/estilo.css" />
-<script language="javascript" type="text/javascript" src="/AT/js/calendario.js"></script>
-<script src="/AT/js/jquery.js" type="text/javascript" language="javascript"></script>
+<link rel="shortcut icon" href="images/favicon.ico"/> 
+<link rel="stylesheet" type="text/css" href="styles/admin.css" />
+<link rel="stylesheet" type="text/css" href="styles/estilo.css" />
+<script language="javascript" type="text/javascript" src="js/calendario.js"></script>
+<script src="js/jquery.js" type="text/javascript" language="javascript"></script>
 	<title>Administracion de Autobuses SQLeros.Com.Ar</title>
 <script language="javascript">
 	$(document).ready(function(){
@@ -183,13 +183,13 @@
 </head>
 <body>
 <div id="Cabecera" align="center">
-	<img src="/AT/images/logo.jpg" alt="Autobuses SQLeros.Com.Ar"/>
+	<img src="images/logo.jpg" alt="Autobuses SQLeros.Com.Ar"/>
 </div>
 <div id="nombreAdmin" align="center">
 	<label> Bienvenido: <?php echo $_SESSION['uname'];?></label>
 	<label id="menuAltas" style="cursor:pointer;"> Operaciones </label>
 	<label id="menuConsultas" style="cursor:pointer;"> Consultas </label>
-	<label><a href="/AT/secure.php?salir">Salir</a></label>
+	<label><a href="secure.php?salir">Salir</a></label>
 </div>
 <div id="contenido" align="center">
 	<br/>
@@ -326,7 +326,7 @@
 						Fecha:<br />
 						<input id="fecha" type="text" maxlength="10" readonly="readonly"> 
 				<a href="javascript:NewCal('fecha','ddmmyyyy')"><img 
-				src="/AT/images/calendario.gif" width="16" height="16" 
+				src="images/calendario.gif" width="16" height="16" 
 				border="0" alt="Selecciona una fecha"></a>
 						</select>
 					</td>

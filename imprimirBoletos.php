@@ -65,9 +65,9 @@ session_start();
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
 <head>
-<script language="javascript" type="text/javascript" src="/AT/js/util.js"></script>
-<link rel="stylesheet" type="text/css" href="/AT/styles/estilo.css" />
-<link rel="shortcut icon" href="/AT/images/favicon.ico"/> 
+<script language="javascript" type="text/javascript" src="js/util.js"></script>
+<link rel="stylesheet" type="text/css" href="styles/estilo.css" />
+<link rel="shortcut icon" href="images/favicon.ico"/> 
 <meta http-equiv="Content-Type" content="text/html; iso-8859-7">
 <meta name="title" content="Sistema Web Boletaje Autobuses ">
 <meta name="ROBOTS" content="INDEX,FOLLOW">
@@ -110,7 +110,7 @@ google_ad_height = 15;
 src="http://pagead2.googlesyndication.com/pagead/show_ads.js">
 </script></div>
 <div id="Cabecera" align="center">
-	<img src="/AT/images/logo.jpg" alt="Autobuses SQLeros.Com.Ar"/>
+	<img src="images/logo.jpg" alt="Autobuses SQLeros.Com.Ar"/>
 </div>
 
 <?php
@@ -129,7 +129,7 @@ if(isset($_GET['id']) && isset($_GET['as']) && isset($_GET['no']))
 <table id="Notificacion" >
 	<tr>
 		<td>
-			<label><?php echo $SeHanComprado." ".count($asientos)." ".$Boletos;?>  <a href="javascript:void(0);" onclick="Util.imprimirBoleto();"> <?php echo $Imprimir;?> </a><a href="javascript:void(0);" onclick="location.href='/AT/';"> <?php echo $Inicio;?> </a><a href="mailto:zegnhabi@gmail.com"> <?php echo $contacto;?> </a></label>
+			<label><?php echo $SeHanComprado." ".count($asientos)." ".$Boletos;?>  <a href="javascript:void(0);" onclick="Util.imprimirBoleto();"> <?php echo $Imprimir;?> </a><a href="javascript:void(0);" onclick="location.href='';"> <?php echo $Inicio;?> </a><a href="mailto:zegnhabi@gmail.com"> <?php echo $contacto;?> </a></label>
 		</td>
 	</tr>
 </table>

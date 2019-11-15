@@ -3,8 +3,8 @@
 <html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1">
-<link rel="shortcut icon" href="/AT/images/favicon.ico"/> 
-<link rel="stylesheet" type="text/css" href="/AT/styles/admin.css" />
+<link rel="shortcut icon" href="images/favicon.ico"/> 
+<link rel="stylesheet" type="text/css" href="styles/admin.css" />
 <meta http-equiv="Content-Type" content="text/html; iso-8859-7">
 <meta name="title" content="Sistema Web Boletaje Autobuses ">
 <meta name="ROBOTS" content="INDEX,FOLLOW">
@@ -12,7 +12,7 @@
 <meta name="description" content="sistema para la venta de boletos de una terminal de autobuses">
 <meta name="abstract" content="sistema para la venta de boletos de una terminal de autobuses">
 <meta name="keywords" content="ticket,bus,sqleros,php,mysql,javascript,autobuses, sistema web, GiS,corridas,boletos, boletaje">
-<meta name="author" content="José Ramón Ibáñez">
+<meta name="author" content="Josï¿½ Ramï¿½n Ibï¿½ï¿½ez">
 <meta name="copyright" content="">
 <meta name="rating" content="General">
 <meta http-equiv="Reply-to" content="zegnhabi@gmail.com">
@@ -30,7 +30,7 @@
     var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(ga, s);
   })();
 </script>
-<script src="/AT/js/jquery.js" type="text/javascript" language="javascript"></script>
+<script src="js/jquery.js" type="text/javascript" language="javascript"></script>
 	<title>Administracion de Autobuses SQLeros.Com.Ar</title>
 <script language="javascript">
 $(document).ready(function()
@@ -46,7 +46,7 @@ $(document).ready(function()
 		  {
 		  	$("#msgbox").fadeTo(200,0.1,function()  //inicia la caja de mensajes
 			{ 
-			  //añade la clase para poner el mensaje..
+			  //aï¿½ade la clase para poner el mensaje..
 			  $(this).html('Iniciando Sesion.....').addClass('messageboxok').fadeTo(900,1,
               function()
 			  { 
@@ -79,7 +79,7 @@ $(document).ready(function()
 </head>
 <body>
 <div id="Cabecera" align="center">
-	<img src="/AT/images/logo.jpg" alt="Autobuses SQLeros.Com.Ar"/>
+	<img src="images/logo.jpg" alt="Autobuses SQLeros.Com.Ar"/>
 </div>
 <div id="loginForm">
 	<form method="post" action="" id="login_form">

@@ -39,9 +39,9 @@ session_start();
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
 <head>
-<script language="javascript" type="text/javascript" src="/AT/js/util.js"></script>
-<link rel="stylesheet" type="text/css" href="/AT/styles/estilo.css" />
-<link rel="shortcut icon" href="/AT/images/favicon.ico"/> 
+<script language="javascript" type="text/javascript" src="js/util.js"></script>
+<link rel="stylesheet" type="text/css" href="styles/estilo.css" />
+<link rel="shortcut icon" href="images/favicon.ico"/> 
 <meta http-equiv="Content-Type" content="text/html; iso-8859-7">
 <meta name="title" content="Sistema Web Boletaje Autobuses ">
 <meta name="ROBOTS" content="INDEX,FOLLOW">
@@ -84,7 +84,7 @@ google_ad_height = 15;
 src="http://pagead2.googlesyndication.com/pagead/show_ads.js">
 </script></div>
 <div id="Cabecera" align="center">
-	<img src="/AT/images/logo.jpg" alt="Autobuses SQLeros.Com.Ar"/>
+	<img src="images/logo.jpg" alt="Autobuses SQLeros.Com.Ar"/>
 </div>
 
 <?php
@@ -285,7 +285,7 @@ src="http://pagead2.googlesyndication.com/pagead/show_ads.js">
 <table id="carrito" cellspacing="0" cellpadding="0">
 	<tr>
 		<td rowspan="5">
-		<img src="/AT/images/bus_top.gif"/>
+		<img src="images/bus_top.gif"/>
 		</td>
 		<td>
 		<?php
@@ -294,16 +294,16 @@ src="http://pagead2.googlesyndication.com/pagead/show_ads.js">
 		{
 			if($estado=="ocupado")
 			{
-				echo "<img src=\"/AT/images/$estado.gif\" id=\"$asiento\"/>";
+				echo "<img src=\"images/$estado.gif\" id=\"$asiento\"/>";
 			}else if($estado=="vacio")
 			{
-				echo "<img src=\"/AT/images/$asiento.jpg\" class=\"links\" id=\"$asiento\" onclick=\"Util.swapImage(this);\"/>";
+				echo "<img src=\"images/$asiento.jpg\" class=\"links\" id=\"$asiento\" onclick=\"Util.swapImage(this);\"/>";
 			}
 		}
 		?>
 		</td>
 		<td rowspan="5">
-		<img src="/AT/images/bus_back.gif" />
+		<img src="images/bus_back.gif" />
 		</td>
 	</tr>
 	<tr>
@@ -314,10 +314,10 @@ src="http://pagead2.googlesyndication.com/pagead/show_ads.js">
 		{
 			if($estado=="ocupado")
 			{
-				echo "<img src=\"/AT/images/$estado.gif\" id=\"$asiento\" />";
+				echo "<img src=\"images/$estado.gif\" id=\"$asiento\" />";
 			}else if($estado=="vacio")
 			{
-				echo "<img src=\"/AT/images/$asiento.jpg\" class=\"links\"  id=\"$asiento\" onclick=\"Util.swapImage(this);\"/>";
+				echo "<img src=\"images/$asiento.jpg\" class=\"links\"  id=\"$asiento\" onclick=\"Util.swapImage(this);\"/>";
 			}
 		}
 		?>
@@ -331,10 +331,10 @@ src="http://pagead2.googlesyndication.com/pagead/show_ads.js">
 		{
 			if($estado=="ocupado")
 			{
-				echo "<img src=\"/AT/images/$estado.gif\" id=\"$asiento\"/>";
+				echo "<img src=\"images/$estado.gif\" id=\"$asiento\"/>";
 			}else if($estado=="vacio")
 			{
-				echo "<img src=\"/AT/images/$asiento.jpg\" class=\"links\"  id=\"$asiento\" onclick=\"Util.swapImage(this);\"/>";
+				echo "<img src=\"images/$asiento.jpg\" class=\"links\"  id=\"$asiento\" onclick=\"Util.swapImage(this);\"/>";
 			}
 		}
 		?>
@@ -348,10 +348,10 @@ src="http://pagead2.googlesyndication.com/pagead/show_ads.js">
 		{
 			if($estado=="ocupado")
 			{
-				echo "<img src=\"/AT/images/$estado.gif\" id=\"$asiento\" />";
+				echo "<img src=\"images/$estado.gif\" id=\"$asiento\" />";
 			}else if($estado=="vacio")
 			{
-				echo "<img src=\"/AT/images/$asiento.jpg\" class=\"links\"  id=\"$asiento\" onclick=\"Util.swapImage(this);\"/>";
+				echo "<img src=\"images/$asiento.jpg\" class=\"links\"  id=\"$asiento\" onclick=\"Util.swapImage(this);\"/>";
 			}
 		}
 		?>
@@ -361,14 +361,14 @@ src="http://pagead2.googlesyndication.com/pagead/show_ads.js">
 <br />
 <div id="ind">
 	<table id="indicaciones" cellpadding="0" cellspacing="0">
-	<tr><td><img src="/AT/images/ocupado.gif">&nbsp;<label class="enfasis"><?php echo $AsientoOcupado;?></label>&nbsp;</label><img src="/AT/images/asientoNormal.gif">&nbsp;<label class="enfasis"><?php echo $AsientoDisponible;?>&nbsp;<img src="/AT/images/seleccionado.gif">&nbsp;<label class="enfasis"><?php echo $AsientoSeleccionado;?></label></tr>
+	<tr><td><img src="images/ocupado.gif">&nbsp;<label class="enfasis"><?php echo $AsientoOcupado;?></label>&nbsp;</label><img src="images/asientoNormal.gif">&nbsp;<label class="enfasis"><?php echo $AsientoDisponible;?>&nbsp;<img src="images/seleccionado.gif">&nbsp;<label class="enfasis"><?php echo $AsientoSeleccionado;?></label></tr>
 	</table>
 </div>
 </div>
 	<table id="continuar" align="center">
 		<tr>
 			<td>
-				<img src="/AT/images/regresar.gif" onclick="Util.Regresar();" class="links" />
+				<img src="images/regresar.gif" onclick="Util.Regresar();" class="links" />
 			</td>
 			<td>
 				&nbsp;
@@ -377,7 +377,7 @@ src="http://pagead2.googlesyndication.com/pagead/show_ads.js">
 				&nbsp;
 			</td>
 			<td>
-				<img src="/AT/images/continuar.gif" id="continuar" onclick="Util.avanzar();" class="links"/>
+				<img src="images/continuar.gif" id="continuar" onclick="Util.avanzar();" class="links"/>
 			</td>
 		</tr>
 	</table>

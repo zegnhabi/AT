@@ -8,10 +8,10 @@ $selectLenguaje="Seleccione Lenguaje";
 $selectOrigen="Seleccione Origen";
 $selectDestino="Seleccione Destino";
 $contacto="Contacto";
-$error="Por Favor Ingrese A La <a href=\"/AT/\" >P&aacute;gina Principal.";
-$excepcion="Ha Sucedido Una Excepci&oacute;n Por Favor Ingrese A La <a href=\"/AT/\" >P&aacute;gina Principal.";
+$error="Por Favor Ingrese A La <a href=\"\" >P&aacute;gina Principal.";
+$excepcion="Ha Sucedido Una Excepci&oacute;n Por Favor Ingrese A La <a href=\"\" >P&aacute;gina Principal.";
 $corridaSinAsientos="La Corrida ya no tiene asientos Libres. Seleccione otra. <a 
-	href=\"/AT/\" >Volver P&aacute;gina Principal.</a>";
+	href=\"\" >Volver P&aacute;gina Principal.</a>";
 $fechaIda="Fecha de Ida";
 $xorigen="Origen";
 $xdestino="Destino";
