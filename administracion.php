@@ -287,8 +287,8 @@
 						<select id="choferautobus">
 						<?php
 						$consulta="SELECT id_chofer as id,nombre FROM chofer;";
-						$tabla=mysql_query($consulta);
-						while($registro=mysql_fetch_array($tabla))
+						$tabla=mysqli_query($consulta);
+						while($registro=mysqli_fetch_array($tabla))
 						{
 							echo "<option value=\"".$registro['id']."\" >".$registro['nombre'];
 						}
@@ -420,7 +420,7 @@
 			</table>
 		</form>
 	</div>
-<!--Inicia el div de los mensajitos Ajax.... ñ_ñ-->
+<!--Inicia el div de los mensajitos Ajax.... ï¿½_ï¿½-->
 <span id="msgbox" style="display:none"></span>
 </div>
 <br/>

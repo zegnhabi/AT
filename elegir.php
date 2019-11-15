@@ -141,11 +141,11 @@ if(isset($_GET['id']))
 	);
 	//Creamos la consulta SQL para los datos de las corridas y los asientos desocupados.
 	$consulta="select id_boleto,asiento from boletos where id_boleto=$id_boleto";
-	$tabla = mysql_query($consulta);
-	$asientosOcupados=mysql_num_rows($tabla);
+	$tabla = mysqli_query($consulta);
+	$asientosOcupados=mysqli_num_rows($tabla);
 	if($asientosOcupados >= 0 && $asientosOcupados < 36)
 	{
-		while ($registro = mysql_fetch_array($tabla))
+		while ($registro = mysqli_fetch_array($tabla))
 		{
 			//variables de filas
 			$i=4;
@@ -211,10 +211,10 @@ src="http://pagead2.googlesyndication.com/pagead/show_ads.js">
 	return 0;
 	}
 	//liberamos la tabla del bloqueo..
-	mysql_free_result($tabla); 
+	mysqli_free_result($tabla); 
 	//Creamos la consulta SQL para los datos de la corrida.
 	$consulta="SELECT * FROM `boleto` WHERE `id` = $id_boleto";
-	$tabla = mysql_query($consulta);
+	$tabla = mysqli_query($consulta);
 ?>
 <div id="Cuerpo"  align="center">
 	<form id="boleto" method="post" action="">
@@ -240,7 +240,7 @@ src="http://pagead2.googlesyndication.com/pagead/show_ads.js">
 		</tr>
 		<tr>
 			<?php 
-			while ($registro = mysql_fetch_array($tabla))
+			while ($registro = mysqli_fetch_array($tabla))
 			{
 			?>
 			<td>
@@ -258,7 +258,7 @@ src="http://pagead2.googlesyndication.com/pagead/show_ads.js">
 			<?php
 			}
 			//liberamos la tabla del bloqueo..
-			mysql_free_result($tabla); 
+			mysqli_free_result($tabla); 
 			?>
 		</tr>
 		<tr>

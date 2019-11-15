@@ -21,7 +21,7 @@ for($ano=2017;$ano<2018;$ano++):
 				VALUES (
 				'$boleto', '$horas:00:00', '09:00:00', '1', 'MONTERREY', 'MONTERREY', '$ano-$mes-$dia', 'CDMX', 'CDMX', '$ano-$mes-$dia', '600'
 				);";
-				$result=mysql_query($sql);
+				$result=mysqli_query($sql);
 				$boleto++;
 			endfor; 
 		endfor;
@@ -48,7 +48,7 @@ for($ano=2017;$ano<2018;$ano++):
 				VALUES (
 				'$boleto', '$horas:00:00', '09:00:00', '2', 'CDMX', 'CDMX', '$ano-$mes-$dia', 'MONTERREY', 'MONTERREY', '$ano-$mes-$dia', '600'
 				);";
-				$result=mysql_query($sql);
+				$result=mysqli_query($sql);
 				$boleto++;
 			endfor; 
 		endfor;

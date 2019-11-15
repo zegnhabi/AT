@@ -38,7 +38,7 @@ session_start();
 	function codigo($codigo){
 	//para ponerlo en una lugar donde se puedan escribir archivos
     $PNG_TEMP_DIR = dirname(__FILE__).DIRECTORY_SEPARATOR.'temp'.DIRECTORY_SEPARATOR;
-    //html PNG prefijo de localización
+    //html PNG prefijo de localizaciï¿½n
     $PNG_WEB_DIR = 'temp/';
     include "QRCode/qrlib.php"; 
     //a webo que necesitas tener derechos para escribir y crear
@@ -47,7 +47,7 @@ session_start();
     //nombre del archivo
     $filename = $PNG_TEMP_DIR.'test.png';
 	    $errorCorrectionLevel = 'H';
-	//Maximo del tamaño en puntos
+	//Maximo del tamaï¿½o en puntos
     $matrixPointSize = 4;
 	//Codigo
     if (isset($codigo)) { 
@@ -75,7 +75,7 @@ session_start();
 <meta name="description" content="sistema para la venta de boletos de una terminal de autobuses">
 <meta name="abstract" content="sistema para la venta de boletos de una terminal de autobuses">
 <meta name="keywords" content="ticket,bus,sqleros,php,mysql,javascript,autobuses, sistema web, GiS,corridas,boletos, boletaje">
-<meta name="author" content="José Ramón Ibáñez">
+<meta name="author" content="Josï¿½ Ramï¿½n Ibï¿½ï¿½ez">
 <meta name="copyright" content="">
 <meta name="rating" content="General">
 <meta http-equiv="Reply-to" content="zegnhabi@gmail.com">
@@ -139,7 +139,7 @@ if(isset($_GET['id']) && isset($_GET['as']) && isset($_GET['no']))
 	{
 		//Creamos la consulta SQL para los datos de la corrida.
 		$consulta="insert into boletos values (null,$id_boleto,$asientos[$i],'".utf8_decode($nombres[$i])."','$fechaHoy')";
-		$tabla = mysql_query($consulta);
+		$tabla = mysqli_query($consulta);
 	}
 	//Creamos la consulta SQL para los datos de los boletos.
 	$consulta="SELECT * FROM `boleto` WHERE `id` = $id_boleto";
@@ -148,8 +148,8 @@ if(isset($_GET['id']) && isset($_GET['as']) && isset($_GET['no']))
 <?php
 	for($i=0;$i<count($asientos);$i++)
 	{
-	$tabla = mysql_query($consulta);
-	$registro = mysql_fetch_array($tabla);
+	$tabla = mysqli_query($consulta);
+	$registro = mysqli_fetch_array($tabla);
 	$codigo=sprintf("Boleto: %s. Origen: %s. Destino: %s. Pasajero: %s. Fecha Salida: %s. Asiento: %s. ",
 								$id_boleto,
 								$registro['ciudad_salida'],

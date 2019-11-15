@@ -96,7 +96,7 @@ if(isset($_GET['id']) && isset($_GET['as']))
 	$asientos=explode(",",$asientos);
 	//Creamos la consulta SQL para los datos de la corrida.
 	$consulta="SELECT * FROM `boleto` WHERE `id` = $id_boleto";
-	$tabla = mysql_query($consulta);
+	$tabla = mysqli_query($consulta);
 ?>
 <div id="Cuerpo"  align="center">
 	<form id="boleto" method="post" action="">
@@ -122,7 +122,7 @@ if(isset($_GET['id']) && isset($_GET['as']))
 		</tr>
 		<tr>
 			<?php 
-			while ($registro = mysql_fetch_array($tabla))
+			while ($registro = mysqli_fetch_array($tabla))
 			{
 			?>
 			<td>
@@ -140,7 +140,7 @@ if(isset($_GET['id']) && isset($_GET['as']))
 			<?php
 			}
 			//liberamos la tabla del bloqueo..
-			mysql_free_result($tabla); 
+			mysqli_free_result($tabla); 
 			?>
 		</tr>
 		<tr>

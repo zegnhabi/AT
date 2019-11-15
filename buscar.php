@@ -49,7 +49,7 @@ session_start();
 <meta name="description" content="sistema para la venta de boletos de una terminal de autobuses">
 <meta name="abstract" content="sistema para la venta de boletos de una terminal de autobuses">
 <meta name="keywords" content="ticket,bus,sqleros,php,mysql,javascript,autobuses, sistema web, GiS,corridas,boletos, boletaje">
-<meta name="author" content="José Ramón Ibáñez">
+<meta name="author" content="Josï¿½ Ramï¿½n Ibï¿½ï¿½ez">
 <meta name="copyright" content="">
 <meta name="rating" content="General">
 <meta http-equiv="Reply-to" content="zegnhabi@gmail.com">
@@ -107,9 +107,9 @@ if(isset($_GET['or']) && isset($_GET['de']) && isset($_GET['fe']) && isset($_GET
 	$hora=(($hora["hours"]==0?12:$hora["hours"])-$diferencia). ":" . $hora["minutes"] . ":" . $hora["seconds"] ; 
 	//Creamos la consulta SQL
 	if($fecha==$fechaHoy)
-		$tabla = mysql_query("select b.id,b.hora_salida,b.precio,b.hora_llegada from boleto b where b.ciudad_salida like('$origen') and b.ciudad_llegada like('$destino') and b.fecha_salida like('$fecha') and b.hora_salida >= '$hora'");
+		$tabla = mysqli_query("select b.id,b.hora_salida,b.precio,b.hora_llegada from boleto b where b.ciudad_salida like('$origen') and b.ciudad_llegada like('$destino') and b.fecha_salida like('$fecha') and b.hora_salida >= '$hora'");
 	else if($fecha>$fechaHoy)
-		$tabla = mysql_query("select b.id,b.hora_salida,b.precio,b.hora_llegada from boleto b where b.ciudad_salida like('$origen') and b.ciudad_llegada like('$destino') and b.fecha_salida like('$fecha')");
+		$tabla = mysqli_query("select b.id,b.hora_salida,b.precio,b.hora_llegada from boleto b where b.ciudad_salida like('$origen') and b.ciudad_llegada like('$destino') and b.fecha_salida like('$fecha')");
 	else
 	{
 ?>
@@ -177,7 +177,7 @@ src="http://pagead2.googlesyndication.com/pagead/show_ads.js">
 		</tr>
 		<?php
 			$fila=1;
-			while ($registro = mysql_fetch_array($tabla)) { 
+			while ($registro = mysqli_fetch_array($tabla)) { 
 		?>
 		<tr class="color<?php if($fila==1){echo $fila;$fila++;}else if($fila==2){echo $fila;$fila=1;}?>" onclick="">
 			<td>
