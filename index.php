@@ -120,7 +120,7 @@ src="http://pagead2.googlesyndication.com/pagead/show_ads.js">
 			<td>
 				<?php
 					//Creamos la consulta SQL
-					$tabla = mysqli_query("SELECT `ciudad` FROM  `vistacorridas` GROUP BY  `ciudad`"); 
+					$tabla = mysqli_query($link, "SELECT `ciudad` FROM  `vistacorridas` GROUP BY  `ciudad`"); 
 				?>
 				<select id="origen">
 				<option value="-1" selected="selected">--<?php echo $selectOrigen;?>--</option>
@@ -146,7 +146,7 @@ src="http://pagead2.googlesyndication.com/pagead/show_ads.js">
 			<td>
 				<?php
 					//Creamos la consulta SQL
-					$tabla = mysqli_query("SELECT `ciudad` as `id` FROM  `vistacorridas` GROUP BY  `ciudad`"); 
+					$tabla = mysqli_query($link, "SELECT `ciudad` as `id` FROM  `vistacorridas` GROUP BY  `ciudad`"); 
 				?>
 				<select id="destino">
 				<option value="-1" selected="selected">--<?php echo $selectDestino;?>--</option>
@@ -202,11 +202,11 @@ google_ad_width = 728;
 google_ad_height = 90;
 </script>
 <script type="text/javascript"
-src="http://pagead2.googlesyndication.com/pagead/show_ads.js">
+src="//pagead2.googlesyndication.com/pagead/show_ads.js">
 </script>
 </div>-->
 <!--jquery-->
-<script src="http://code.jquery.com/jquery.js"></script>
+<script src="//code.jquery.com/jquery.js"></script>
 <script src="js/bootstrap.min.js"></script>
 <!--jquery-->
 </body>
