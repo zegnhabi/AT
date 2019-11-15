@@ -1,12 +1,22 @@
 <?php 
+
 session_start();
-include("db.php");
-$ciudad=$_POST['terminal'];
+
+include("db_safe.php");
+
 //validamos si existe el nombre.. y el pass
-$sqlCad="insert into terminal values (null,'".$ciudad."')";
-$result=mysql_query($sqlCad);
-if(mysql_num_rows($result)>0)
-	echo "yes";
-else
-	echo "yes"; 
-?>
+$stmt = $mysqli->prepare('insert into terminal values (null, ?)');
+
+if (!$stmt->bind_param('s', $_POST['terminal'])) {
+	die("Error binding parameter.");
+}
+
+if (!$stmt->execute()) {
+	die("Error executing query.");
+}
+
+if ($stmt->insert_id) {
+	echo "Yes";
+} else {
+	echo "No";
+}
