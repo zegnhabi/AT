@@ -43,10 +43,10 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <!-- Bootstrap -->
 <link href="css/bootstrap.min.css" rel="stylesheet" media="screen">
-<script language="javascript" type="text/javascript" src="/AT/js/util.js"></script>
-<script language="javascript" type="text/javascript" src="/AT/js/calendario.js"></script>
-<link rel="shortcut icon" href="/AT/images/favicon.ico"/> 
-<!--<link rel="stylesheet" type="text/css" href="/AT/styles/estilo.css" />-->
+<script language="javascript" type="text/javascript" src="js/util.js"></script>
+<script language="javascript" type="text/javascript" src="js/calendario.js"></script>
+<link rel="shortcut icon" href="images/favicon.ico"/> 
+<!--<link rel="stylesheet" type="text/css" href="styles/estilo.css" />-->
 <meta http-equiv="Content-Type" content="text/html; iso-8859-7">
 <meta name="title" content="Sistema Web Boletaje Autobuses ">
 <meta name="ROBOTS" content="INDEX,FOLLOW">
@@ -96,7 +96,7 @@ src="http://pagead2.googlesyndication.com/pagead/show_ads.js">
 </script>
 </div>-->
 <div id="Cabecera" align="center">
-	<img src="/AT/images/logo.jpg" alt="Autobuses X"/>
+	<img src="images/logo.jpg" alt="Autobuses X"/>
 </div>
 <div id="Cuerpo"  align="center">
 	<form id="busqueda" method="post" action="">
@@ -167,7 +167,7 @@ src="http://pagead2.googlesyndication.com/pagead/show_ads.js">
 			<td>
 				<input id="fecha" type="text" maxlength="10" readonly="readonly"> 
 				<a href="javascript:NewCal('fecha','ddmmyyyy')"><!--<img 
-				src="/AT/images/calendario.gif" width="16" height="16" 
+				src="images/calendario.gif" width="16" height="16" 
 				border="0" alt="Selecciona una fecha">--><i class="icon-calendar"></i></a>
 			</td>
 		</tr>
