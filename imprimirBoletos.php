@@ -107,7 +107,7 @@ google_ad_height = 15;
 //-->
 </script>
 <script type="text/javascript"
-src="http://pagead2.googlesyndication.com/pagead/show_ads.js">
+src="https://pagead2.googlesyndication.com/pagead/show_ads.js">
 </script></div>
 <div id="Cabecera" align="center">
 	<img src="images/logo.jpg" alt="Autobuses SQLeros.Com.Ar"/>
@@ -277,7 +277,7 @@ google_ad_height = 90;
 //-->
 </script>
 <script type="text/javascript"
-src="http://pagead2.googlesyndication.com/pagead/show_ads.js">
+src="https://pagead2.googlesyndication.com/pagead/show_ads.js">
 </script>
 </div>
 </body>
@@ -299,7 +299,7 @@ google_ad_height = 90;
 //-->
 </script>
 <script type="text/javascript"
-src="http://pagead2.googlesyndication.com/pagead/show_ads.js">
+src="https://pagead2.googlesyndication.com/pagead/show_ads.js">
 </script>
 </div>
 </body>
