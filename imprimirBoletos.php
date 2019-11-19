@@ -139,7 +139,7 @@ if(isset($_GET['id']) && isset($_GET['as']) && isset($_GET['no']))
 	{
 		//Creamos la consulta SQL para los datos de la corrida.
 		$consulta="insert into boletos values (null,$id_boleto,$asientos[$i],'".utf8_decode($nombres[$i])."','$fechaHoy')";
-		$tabla = mysqli_query($consulta);
+		$tabla = mysqli_query($link, $consulta);
 	}
 	//Creamos la consulta SQL para los datos de los boletos.
 	$consulta="SELECT * FROM `boleto` WHERE `id` = $id_boleto";
@@ -148,7 +148,7 @@ if(isset($_GET['id']) && isset($_GET['as']) && isset($_GET['no']))
 <?php
 	for($i=0;$i<count($asientos);$i++)
 	{
-	$tabla = mysqli_query($consulta);
+	$tabla = mysqli_query($link, $consulta);
 	$registro = mysqli_fetch_array($tabla);
 	$codigo=sprintf("Boleto: %s. Origen: %s. Destino: %s. Pasajero: %s. Fecha Salida: %s. Asiento: %s. ",
 								$id_boleto,

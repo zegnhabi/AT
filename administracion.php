@@ -287,7 +287,7 @@
 						<select id="choferautobus">
 						<?php
 						$consulta="SELECT id_chofer as id,nombre FROM chofer;";
-						$tabla=mysqli_query($consulta);
+						$tabla=mysqli_query($link, $consulta);
 						while($registro=mysqli_fetch_array($tabla))
 						{
 							echo "<option value=\"".$registro['id']."\" >".$registro['nombre'];

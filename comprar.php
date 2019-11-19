@@ -96,7 +96,7 @@ if(isset($_GET['id']) && isset($_GET['as']))
 	$asientos=explode(",",$asientos);
 	//Creamos la consulta SQL para los datos de la corrida.
 	$consulta="SELECT * FROM `boleto` WHERE `id` = $id_boleto";
-	$tabla = mysqli_query($consulta);
+	$tabla = mysqli_query($link, $consulta);
 ?>
 <div id="Cuerpo"  align="center">
 	<form id="boleto" method="post" action="">

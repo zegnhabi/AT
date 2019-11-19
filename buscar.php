@@ -107,9 +107,9 @@ if(isset($_GET['or']) && isset($_GET['de']) && isset($_GET['fe']) && isset($_GET
 	$hora=(($hora["hours"]==0?12:$hora["hours"])-$diferencia). ":" . $hora["minutes"] . ":" . $hora["seconds"] ; 
 	//Creamos la consulta SQL
 	if($fecha==$fechaHoy)
-		$tabla = mysqli_query("select b.id,b.hora_salida,b.precio,b.hora_llegada from boleto b where b.ciudad_salida like('$origen') and b.ciudad_llegada like('$destino') and b.fecha_salida like('$fecha') and b.hora_salida >= '$hora'");
+		$tabla = mysqli_query($link, "select b.id,b.hora_salida,b.precio,b.hora_llegada from boleto b where b.ciudad_salida like('$origen') and b.ciudad_llegada like('$destino') and b.fecha_salida like('$fecha') and b.hora_salida >= '$hora'");
 	else if($fecha>$fechaHoy)
-		$tabla = mysqli_query("select b.id,b.hora_salida,b.precio,b.hora_llegada from boleto b where b.ciudad_salida like('$origen') and b.ciudad_llegada like('$destino') and b.fecha_salida like('$fecha')");
+		$tabla = mysqli_query($link, "select b.id,b.hora_salida,b.precio,b.hora_llegada from boleto b where b.ciudad_salida like('$origen') and b.ciudad_llegada like('$destino') and b.fecha_salida like('$fecha')");
 	else
 	{
 ?>

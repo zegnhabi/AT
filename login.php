@@ -6,7 +6,7 @@ $pass=md5($_POST['password']);
 
 //validamos si existe el nombre.. y el pass
 $sql="SELECT username, password FROM usuarios WHERE username='".$user_name."'";
-$result=mysqli_query($sql);
+$result=mysqli_query($link, $sql);
 $row=mysqli_fetch_array($result);
 
 //si el nombre existe..

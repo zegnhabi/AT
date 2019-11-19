@@ -141,7 +141,7 @@ if(isset($_GET['id']))
 	);
 	//Creamos la consulta SQL para los datos de las corridas y los asientos desocupados.
 	$consulta="select id_boleto,asiento from boletos where id_boleto=$id_boleto";
-	$tabla = mysqli_query($consulta);
+	$tabla = mysqli_query($link, $consulta);
 	$asientosOcupados=mysqli_num_rows($tabla);
 	if($asientosOcupados >= 0 && $asientosOcupados < 36)
 	{
@@ -214,7 +214,7 @@ src="https://pagead2.googlesyndication.com/pagead/show_ads.js">
 	mysqli_free_result($tabla); 
 	//Creamos la consulta SQL para los datos de la corrida.
 	$consulta="SELECT * FROM `boleto` WHERE `id` = $id_boleto";
-	$tabla = mysqli_query($consulta);
+	$tabla = mysqli_query($link, $consulta);
 ?>
 <div id="Cuerpo"  align="center">
 	<form id="boleto" method="post" action="">
