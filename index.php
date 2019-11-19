@@ -186,7 +186,7 @@ src="https://pagead2.googlesyndication.com/pagead/show_ads.js">
 		</tr>
 		<tr>
 			<td>
-				<i class="copy">&reg;2017 <a href="#">Autobuses</a> <a href="mailto:zegnhabi@gmail.com?subject=Comentarios y sugerencias sistema de boletaje"><?php echo $contacto;?></a>
+				<i class="copy">&reg; 2009 -  <?php echo date('Y'); ?> <a href="#">Autobuses</a> <a href="mailto:zegnhabi@gmail.com?subject=Comentarios y sugerencias sistema de boletaje"><?php echo $contacto;?></a>
 <!--<a href="http://adf.ly/8UE6W">Descarga</a></i>-->
 			</td>
 		</tr>
@@ -209,5 +209,10 @@ src="//pagead2.googlesyndication.com/pagead/show_ads.js">
 <script src="//code.jquery.com/jquery.js"></script>
 <script src="js/bootstrap.min.js"></script>
 <!--jquery-->
+<!-- 
+	<?php 
+		echo date('Y-d-m');
+	?>
+-->
 </body>
 </html>			

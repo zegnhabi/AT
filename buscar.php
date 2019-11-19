@@ -107,14 +107,16 @@ if(isset($_GET['or']) && isset($_GET['de']) && isset($_GET['fe']) && isset($_GET
 	$hora=(($hora["hours"]==0?12:$hora["hours"])-$diferencia). ":" . $hora["minutes"] . ":" . $hora["seconds"] ; 
 	//Creamos la consulta SQL
 	if($fecha==$fechaHoy)
-		$tabla = mysqli_query($link, "select b.id,b.hora_salida,b.precio,b.hora_llegada from boleto b where b.ciudad_salida like('$origen') and b.ciudad_llegada like('$destino') and b.fecha_salida like('$fecha') and b.hora_salida >= '$hora'");
+		$tabla = mysqli_query($link, 
+		"select b.id,b.hora_salida,b.precio,b.hora_llegada from boleto b where b.ciudad_salida like('$origen') and b.ciudad_llegada like('$destino') and b.fecha_salida like('$fecha') and b.hora_salida >= '$hora'");
 	else if($fecha>$fechaHoy)
-		$tabla = mysqli_query($link, "select b.id,b.hora_salida,b.precio,b.hora_llegada from boleto b where b.ciudad_salida like('$origen') and b.ciudad_llegada like('$destino') and b.fecha_salida like('$fecha')");
+		$tabla = mysqli_query($link, 
+		"select b.id,b.hora_salida,b.precio,b.hora_llegada from boleto b where b.ciudad_salida like('$origen') and b.ciudad_llegada like('$destino') and b.fecha_salida like('$fecha')");
 	else
 	{
 ?>
 	<div class="error"><?php echo $excepcion;?></div><br />
-	<i class="copy">&reg;2012 Autobuses SQLeros.Com.Ar</i>
+	<i class="copy">&reg; 2009 -  <?php echo date('Y'); ?> Autobuses SQLeros.Com.Ar</i>
 	<div id="adsenseHeader" align="center">
 <script type="text/javascript"><!--
 google_ad_client = "ca-pub-5193806461374156";
@@ -220,7 +222,7 @@ src="https://pagead2.googlesyndication.com/pagead/show_ads.js">
 <?php
 }
 ?>
-<i class="copy">&reg;2012 <a href="http://www.sqleros.com.ar/">SQLeros.Com.Ar</a> <a href="mailto:zegnhabi@gmail.com?subject=Comentarios y sugerencias sistema de boletaje"><? echo $contacto;?></a></i>
+<i class="copy">&reg; 2009 -  <?php echo date('Y'); ?> <a href="http://www.sqleros.com.ar/">SQLeros.Com.Ar</a> <a href="mailto:zegnhabi@gmail.com?subject=Comentarios y sugerencias sistema de boletaje"><? echo $contacto;?></a></i>
 <div id="adsenseHeader" align="center">
 <script type="text/javascript"><!--
 google_ad_client = "ca-pub-5193806461374156";

@@ -429,7 +429,7 @@
 <br/>
 <div id="pie">
 	<span id="msgbox" style="display:none"></span>
-	<i class="copy">&reg;2010 Autobuses SQLeros.Com.Ar</i>
+	<i class="copy">&reg; 2009 -  <?php echo date('Y'); ?> Autobuses SQLeros.Com.Ar</i>
 </div>
 </body>
 </html>

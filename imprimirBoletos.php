@@ -266,7 +266,7 @@ if(isset($_GET['id']) && isset($_GET['as']) && isset($_GET['no']))
 	</div>
 </div>
 <br />
-<i class="copy">&reg;2012 <a href="http://www.sqleros.com.ar">SQLeros.Com.Ar</a> <a href="mailto:zegnhabi@gmail.com?subject=Comentarios y sugerencias sistema de boletaje"> <?php $contacto;?> </a></i>
+<i class="copy">&reg; 2009 -  <?php echo date('Y'); ?> <a href="http://www.sqleros.com.ar">SQLeros.Com.Ar</a> <a href="mailto:zegnhabi@gmail.com?subject=Comentarios y sugerencias sistema de boletaje"> <?php $contacto;?> </a></i>
 <div id="adsenseHeader" align="center">
 <script type="text/javascript"><!--
 google_ad_client = "ca-pub-5193806461374156";
@@ -288,7 +288,7 @@ src="https://pagead2.googlesyndication.com/pagead/show_ads.js">
 <div class="error">
 	<?php echo $excepcion;?>
 </div><br />
-<i class="copy">&reg;2012 <a href="http://www.sqleros.com.ar/">SQLeros.Com.Ar</a> <a href="mailto:zegnhabi@gmail.com?subject=Comentarios y sugerencias sistema de boletaje"> <?php $contacto;?> </a></i>
+<i class="copy">&reg; 2009 -  <?php echo date('Y'); ?> <a href="http://www.sqleros.com.ar/">SQLeros.Com.Ar</a> <a href="mailto:zegnhabi@gmail.com?subject=Comentarios y sugerencias sistema de boletaje"> <?php $contacto;?> </a></i>
 <div id="adsenseHeader" align="center">
 <script type="text/javascript"><!--
 google_ad_client = "ca-pub-5193806461374156";
