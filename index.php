@@ -132,7 +132,7 @@ src="https://pagead2.googlesyndication.com/pagead/show_ads.js">
 				<?php
 					} 
 					//liberamos la tabla del bloqueo..
-					mysqli_free_result($tabla);
+					//mysqli_free_result($tabla);
 				?>
 				</select>
 			</td>
@@ -146,7 +146,7 @@ src="https://pagead2.googlesyndication.com/pagead/show_ads.js">
 			<td>
 				<?php
 					//Creamos la consulta SQL
-					$tabla = mysqli_query($link, "SELECT `ciudad` as `id` FROM  `vistacorridas` GROUP BY  `ciudad`"); 
+					//$tabla = mysqli_query($link, "SELECT `ciudad` as `id` FROM  `vistacorridas` GROUP BY  `ciudad`"); 
 				?>
 				<select id="destino">
 				<option value="-1" selected="selected">--<?php echo $selectDestino;?>--</option>
