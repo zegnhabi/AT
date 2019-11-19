@@ -209,6 +209,6 @@ src="//pagead2.googlesyndication.com/pagead/show_ads.js">
 <script src="//code.jquery.com/jquery.js"></script>
 <script src="js/bootstrap.min.js"></script>
 <!--jquery-->
-<!--<?php echo date('Y-d-m, hh:mm:ss'); ?> -->
+<!--<?php echo date('Y-d-m, H:i:s'); ?> -->
 </body>
 </html>			
