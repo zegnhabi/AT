@@ -1,7 +1,7 @@
 <?php
 $boleto=0;
 include("db.php");
-for($ano=2017;$ano<2018;$ano++):
+for($ano=2019;$ano<2030;$ano++):
 	for($mes=4;$mes<13;$mes++):
 		for($dia=1;$dia<32;$dia++):
 			for($horas=17;$horas<=20;$horas += 3):
@@ -28,7 +28,7 @@ for($ano=2017;$ano<2018;$ano++):
 	endfor;
 endfor;
 echo "<div>Boleto: $boleto</div>";
-for($ano=2017;$ano<2018;$ano++):
+for($ano=2019;$ano<2030;$ano++):
 	for($mes=4;$mes<13;$mes++):
 		for($dia=1;$dia<32;$dia++):
 			for($horas=17;$horas<=20;$horas += 3):
