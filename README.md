@@ -1,6 +1,7 @@
 Sistema de Boletaje para Terminales de Autobuses
-[English](https://at-sqleros.herokuapp.com/)
 ================================
+[English](https://at-sqleros.herokuapp.com/)
+
 Hola el día de hoy les presento una de mis mas recientes creaciones es un pequeño sistema para la venta de boletos de una terminal de autobuses, es algo sencillo y todavía le falta pulirlo mas pero para los fines didácticos es mas que suficiente.
 
 Las tecnologías aplicadas a esta pagina web son PHP,MySQL y JavaScript, la temática es simple tenemos en un nuestro servidor la BD con las tablas correspondientes. Y la interfaz web nos lleva de la mano para comprar el boleto. 
