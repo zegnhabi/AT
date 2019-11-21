@@ -8,7 +8,8 @@ The technologies applied to this web page are PHP, MySQL and JavaScript, the the
 ![Selection of Departures, Destinations](https://1.bp.blogspot.com/-TjzUefAxLOw/T-axSq3A1KI/AAAAAAAAAgY/njROs72UR3w/s320/sshot-3.png)
 - After clicking on the "Search" button, you will be taken to the next page on which we will select the run of our preference.
 ![Run Selection](https://2.bp.blogspot.com/--hO1-x19unc/T-axTVu8dJI/AAAAAAAAAgg/yXGI1S_H4HM/s320/sshot-4.png)
-- According to the previous selection, it will show us the runs that are available. Once the run is selected we will click on continue. And the following screen will appear.![enter image description here](https://1.bp.blogspot.com/-X_n0ZKSCNP4/T-axT87U42I/AAAAAAAAAgo/zeH6V6l7tYQ/s320/sshot-5.png)
+- According to the previous selection, it will show us the runs that are available. Once the run is selected we will click on continue. And the following screen will appear.
+![enter image description here](https://1.bp.blogspot.com/-X_n0ZKSCNP4/T-axT87U42I/AAAAAAAAAgo/zeH6V6l7tYQ/s320/sshot-5.png)
 - This page shows the data as: Date of departure of the run, Time of departure, Origin and Destination of the run. We will also select the number of select tickets on the left side. As seen in the following screen.
 ![enter image description here](https://1.bp.blogspot.com/-X_n0ZKSCNP4/T-axT87U42I/AAAAAAAAAgo/zeH6V6l7tYQ/s320/sshot-5.png)
 - Following on this page we only have to subtract according to the number of tickets we select, select the number of seats available on the bus. Clicking on the vacant seats.
