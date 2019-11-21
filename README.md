@@ -1,6 +1,6 @@
 Ticket System for Bus Terminals
 ================================
-[English](https://at-sqleros.herokuapp.com/)
+[Español](https://github.com/zegnhabi/AT/blob/master/README_es.md)
 
 Hello today I present one of my most recent creations is a small system for the sale of tickets from a bus terminal, it is something simple and still needs to be polished more but for didactic purposes it is more than enough.
 The technologies applied to this web page are PHP, MySQL and JavaScript, the theme is simple, we have a database with the corresponding tables on our server. And the web interface takes us from the amano to buy the ticket.
