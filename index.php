@@ -73,11 +73,16 @@
   })();
 </script>-->
 <script type="text/javascript">
-    var adfly_id = 1721590;
-    var popunder_frequency_delay = 0;
-    var adfly_google_compliant = false;
+var adfly_id = 1721590;
+var adfly_advert = 'banner';
+var adfly_protocol = 'https';
+var adfly_domain = 'j.gs';
+var frequency_cap = '5';
+var frequency_delay = '5';
+var init_delay = '3';
+var popunder = true;
 </script>
-<script src="https://cdn.adf.ly/js/display.js"></script>
+<script src="https://cdn.adf.ly/js/entry.js"></script>
 <title><?php echo $title; ?></title>
 </head>
 <body onload="Util.fechaHoy();">
