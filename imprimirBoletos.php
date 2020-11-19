@@ -110,7 +110,7 @@ google_ad_height = 15;
 src="https://pagead2.googlesyndication.com/pagead/show_ads.js">
 </script></div>
 <div id="Cabecera" align="center">
-	<img src="images/logo.jpg" alt="Autobuses SQLeros.Com.Ar"/>
+	<img src="images/logo.jpg" alt="Autobuses at-sqleros.herokuapp.com"/>
 </div>
 
 <?php
@@ -162,7 +162,7 @@ if(isset($_GET['id']) && isset($_GET['as']) && isset($_GET['no']))
 	<table id="<?php echo "cuerpoBoleto$i";?>" style="border:1px dotted;">
 		<tr align="center">
 			<td colspan="2">
-				<tt><?php echo $marca="Autobuses SQLeros.Com.Ar S.A. de C.V";?></tt>
+				<tt><?php echo $marca="Autobuses at-sqleros.herokuapp.com S.A. de C.V";?></tt>
 			</td>
 		</tr>
 		<tr align="left">
@@ -266,7 +266,7 @@ if(isset($_GET['id']) && isset($_GET['as']) && isset($_GET['no']))
 	</div>
 </div>
 <br />
-<i class="copy">&reg; 2009 -  <?php echo date('Y'); ?> <a href="http://www.sqleros.com.ar">SQLeros.Com.Ar</a> <a href="mailto:zegnhabi@gmail.com?subject=Comentarios y sugerencias sistema de boletaje"> <?php $contacto;?> </a></i>
+<i class="copy">&reg; 2009 -  <?php echo date('Y'); ?> <a href="http://www.at-sqleros.herokuapp.com">at-sqleros.herokuapp.com</a> <a href="mailto:zegnhabi@gmail.com?subject=Comentarios y sugerencias sistema de boletaje"> <?php $contacto;?> </a></i>
 <div id="adsenseHeader" align="center">
 <script type="text/javascript"><!--
 google_ad_client = "ca-pub-5193806461374156";
@@ -288,7 +288,7 @@ src="https://pagead2.googlesyndication.com/pagead/show_ads.js">
 <div class="error">
 	<?php echo $excepcion;?>
 </div><br />
-<i class="copy">&reg; 2009 -  <?php echo date('Y'); ?> <a href="http://www.sqleros.com.ar/">SQLeros.Com.Ar</a> <a href="mailto:zegnhabi@gmail.com?subject=Comentarios y sugerencias sistema de boletaje"> <?php $contacto;?> </a></i>
+<i class="copy">&reg; 2009 -  <?php echo date('Y'); ?> <a href="http://www.at-sqleros.herokuapp.com/">at-sqleros.herokuapp.com</a> <a href="mailto:zegnhabi@gmail.com?subject=Comentarios y sugerencias sistema de boletaje"> <?php $contacto;?> </a></i>
 <div id="adsenseHeader" align="center">
 <script type="text/javascript"><!--
 google_ad_client = "ca-pub-5193806461374156";

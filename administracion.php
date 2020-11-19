@@ -12,7 +12,7 @@
 <link rel="stylesheet" type="text/css" href="styles/estilo.css" />
 <script language="javascript" type="text/javascript" src="js/calendario.js"></script>
 <script src="js/jquery.js" type="text/javascript" language="javascript"></script>
-	<title>Administracion de Autobuses SQLeros.Com.Ar</title>
+	<title>Administracion de Autobuses at-sqleros.herokuapp.com</title>
 <script language="javascript">
 	$(document).ready(function(){
 			//Menu altas callback..
@@ -183,7 +183,7 @@
 </head>
 <body>
 <div id="Cabecera" align="center">
-	<img src="images/logo.jpg" alt="Autobuses SQLeros.Com.Ar"/>
+	<img src="images/logo.jpg" alt="Autobuses at-sqleros.herokuapp.com"/>
 </div>
 <div id="nombreAdmin" align="center">
 	<label> Bienvenido: <?php echo $_SESSION['uname'];?></label>
@@ -429,7 +429,7 @@
 <br/>
 <div id="pie">
 	<span id="msgbox" style="display:none"></span>
-	<i class="copy">&reg; 2009 -  <?php echo date('Y'); ?> Autobuses SQLeros.Com.Ar</i>
+	<i class="copy">&reg; 2009 -  <?php echo date('Y'); ?> Autobuses at-sqleros.herokuapp.com</i>
 </div>
 </body>
 </html>

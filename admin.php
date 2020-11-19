@@ -31,7 +31,7 @@
   })();
 </script>
 <script src="js/jquery.js" type="text/javascript" language="javascript"></script>
-	<title>Administracion de Autobuses SQLeros.Com.Ar</title>
+	<title>Administracion de Autobuses at-sqleros.herokuapp.com</title>
 <script language="javascript">
 $(document).ready(function()
 {
@@ -79,7 +79,7 @@ $(document).ready(function()
 </head>
 <body>
 <div id="Cabecera" align="center">
-	<img src="images/logo.jpg" alt="Autobuses SQLeros.Com.Ar"/>
+	<img src="images/logo.jpg" alt="Autobuses at-sqleros.herokuapp.com"/>
 </div>
 <div id="loginForm">
 	<form method="post" action="" id="login_form">
@@ -100,7 +100,7 @@ $(document).ready(function()
 </form>
 </div>
 <div>
-<i class="copy">&reg; 2009 -  <?php echo date('Y'); ?> <a href="http://www.sqleros.com.ar/wps">SQLeros.Com.Ar</a> <a href="mailto:zegnhabi@gmail.com?subject=Comentarios y sugerencias sistema de boletaje"> Contacto </a></i>
+<i class="copy">&reg; 2009 -  <?php echo date('Y'); ?> <a href="http://www.at-sqleros.herokuapp.com/">at-sqleros.herokuapp.com</a> <a href="mailto:zegnhabi@gmail.com?subject=Comentarios y sugerencias sistema de boletaje"> Contacto </a></i>
 </div>
 </body>
 </html>

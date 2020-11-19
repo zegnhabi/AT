@@ -1,9 +1,9 @@
 <?php
-$title="Boletaje Autobuses SQLeros.Com.Ar [ P&aacute;gina Principal ]";
-$title2="Boletaje Autobuses SQLeros.Com.Ar [ Seleccionar Corrida ]";
-$title3="Boletaje Autobuses SQLeros.Com.Ar[ Elegir Asientos ]";
-$title4="Boletaje Autobuses SQLeros.Com.Ar[ Comprar Boletos ]";
-$title5="Boletaje Autobuses SQLeros.Com.Ar[ Imprimir Boletos ]";
+$title="Boletaje Autobuses at-sqleros.herokuapp.com [ P&aacute;gina Principal ]";
+$title2="Boletaje Autobuses at-sqleros.herokuapp.com [ Seleccionar Corrida ]";
+$title3="Boletaje Autobuses at-sqleros.herokuapp.com[ Elegir Asientos ]";
+$title4="Boletaje Autobuses at-sqleros.herokuapp.com[ Comprar Boletos ]";
+$title5="Boletaje Autobuses at-sqleros.herokuapp.com[ Imprimir Boletos ]";
 $selectLenguaje="Seleccione Lenguaje";
 $selectOrigen="Seleccione Origen";
 $selectDestino="Seleccione Destino";

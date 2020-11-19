@@ -1,9 +1,9 @@
 <?php
-$title="Bus-TicketingSQLeros.Com.Ar [ Homepage]";
-$title2="Bus-Ticketing  SQLeros.Com.Ar [ Select run ]";
-$title3="Bus-Ticketing  SQLeros.Com.Ar[ Choose Seats ]";
-$title4="Bus-Ticketing  SQLeros.Com.Ar[ Buy Tickets ]";
-$title5="Bus-Ticketing  SQLeros.Com.Ar[ Print Tickets ]";
+$title="Bus-Ticketingat-sqleros.herokuapp.com [ Homepage]";
+$title2="Bus-Ticketing  at-sqleros.herokuapp.com [ Select run ]";
+$title3="Bus-Ticketing  at-sqleros.herokuapp.com[ Choose Seats ]";
+$title4="Bus-Ticketing  at-sqleros.herokuapp.com[ Buy Tickets ]";
+$title5="Bus-Ticketing  at-sqleros.herokuapp.com[ Print Tickets ]";
 $selectLenguaje="Select Language";
 $selectOrigen="Select Provenance";
 $selectDestino="Select Destination";
