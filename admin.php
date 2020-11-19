@@ -100,7 +100,7 @@ $(document).ready(function()
 </form>
 </div>
 <div>
-<i class="copy">&reg; 2009 -  <?php echo date('Y'); ?> <a href="http://www.at-sqleros.herokuapp.com/">at-sqleros.herokuapp.com</a> <a href="mailto:zegnhabi@gmail.com?subject=Comentarios y sugerencias sistema de boletaje"> Contacto </a></i>
+<i class="copy">&reg; 2009 -  <?php echo date('Y'); ?> <a href="http://at-sqleros.herokuapp.com/">at-sqleros.herokuapp.com</a> <a href="mailto:zegnhabi@gmail.com?subject=Comentarios y sugerencias sistema de boletaje"> Contacto </a></i>
 </div>
 </body>
 </html>

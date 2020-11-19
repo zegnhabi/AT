@@ -222,7 +222,7 @@ src="https://pagead2.googlesyndication.com/pagead/show_ads.js">
 <?php
 }
 ?>
-<i class="copy">&reg; 2009 -  <?php echo date('Y'); ?> <a href="http://www.at-sqleros.herokuapp.com/">at-sqleros.herokuapp.com</a> <a href="mailto:zegnhabi@gmail.com?subject=Comentarios y sugerencias sistema de boletaje"><? echo $contacto;?></a></i>
+<i class="copy">&reg; 2009 -  <?php echo date('Y'); ?> <a href="http://at-sqleros.herokuapp.com/">at-sqleros.herokuapp.com</a> <a href="mailto:zegnhabi@gmail.com?subject=Comentarios y sugerencias sistema de boletaje"><? echo $contacto;?></a></i>
 <div id="adsenseHeader" align="center">
 <script type="text/javascript"><!--
 google_ad_client = "ca-pub-5193806461374156";
