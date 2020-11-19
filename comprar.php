@@ -181,7 +181,7 @@ if(isset($_GET['id']) && isset($_GET['as']))
 	<input type="hidden" id="id_boleto" value="<?php echo $id_boleto; ?>" />
 	</form>
 </div>
-<i class="copy">&reg; 2009 -  <?php echo date('Y'); ?> <a href="http://at-sqleros.herokuapp.com/wps">at-sqleros.herokuapp.com</a> <a href="mailto:zegnhabi@gmail.com?subject=Comentarios y sugerencias sistema de boletaje"> <?php echo $contacto;?> </a></i>
+<i class="copy">&reg; 2009 -  <?php echo date('Y'); ?> <a href="https://at-sqleros.herokuapp.com/wps">at-sqleros.herokuapp.com</a> <a href="mailto:zegnhabi@gmail.com?subject=Comentarios y sugerencias sistema de boletaje"> <?php echo $contacto;?> </a></i>
 <div id="adsenseHeader" align="center">
 <script type="text/javascript"><!--
 google_ad_client = "ca-pub-5193806461374156";
@@ -204,7 +204,7 @@ src="https://pagead2.googlesyndication.com/pagead/show_ads.js">
 <div class="error">
 	<?php echo $excepcion;?>
 </div><br />
-<i class="copy">&reg; 2009 -  <?php echo date('Y'); ?> <a href="http://at-sqleros.herokuapp.com">at-sqleros.herokuapp.com</a> <a href="mailto:zegnhabi@gmail.com?subject=Comentarios y sugerencias sistema de boletaje"> <?php echo $contacto;?> </a></i>
+<i class="copy">&reg; 2009 -  <?php echo date('Y'); ?> <a href="https://at-sqleros.herokuapp.com">at-sqleros.herokuapp.com</a> <a href="mailto:zegnhabi@gmail.com?subject=Comentarios y sugerencias sistema de boletaje"> <?php echo $contacto;?> </a></i>
 <div id="adsenseHeader" align="center">
 <script type="text/javascript"><!--
 google_ad_client = "ca-pub-5193806461374156";
