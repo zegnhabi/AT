@@ -72,14 +72,12 @@
     var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(ga, s);
   })();
 </script>-->
-<!--<script>
-var adfly_id = 1721590;
-var adfly_advert = 'banner';
-var frequency_cap = 5;
-var frequency_delay = 5;
-var init_delay = 3;
+<script type="text/javascript">
+    var adfly_id = 1721590;
+    var popunder_frequency_delay = 0;
+    var adfly_google_compliant = false;
 </script>
-<script src="http://adf.ly/js/entry.js"></script> -->
+<script src="https://cdn.adf.ly/js/display.js"></script>
 <title><?php echo $title; ?></title>
 </head>
 <body onload="Util.fechaHoy();">
@@ -187,7 +185,7 @@ src="https://pagead2.googlesyndication.com/pagead/show_ads.js">
 		<tr>
 			<td>
 				<i class="copy">&reg; 2009 -  <?php echo date('Y'); ?> <a href="#">Autobuses</a> <a href="mailto:zegnhabi@gmail.com?subject=Comentarios y sugerencias sistema de boletaje"><?php echo $contacto;?></a>
-<!--<a href="http://adf.ly/8UE6W">Descarga</a></i>-->
+<a href="http://adf.ly/8UE6W">Descarga</a></i>
 			</td>
 		</tr>
 		</table>
