@@ -1,0 +1,10 @@
+/vendor
+/node_modules
+.env
+/storage/framework/views/*.php
+/storage/framework/cache/*
+/storage/logs/*.log
+/bootstrap/cache/*.php
+/storage/framework/sessions/*
+!storage/framework/sessions/.gitkeep
+composer.lock

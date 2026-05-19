@@ -1,0 +1,83 @@
+@extends('layouts.app')
+
+@section('title', __('messages.title2'))
+@section('content')
+<div class="row justify-content-center">
+    <div class="col-md-8">
+        <div class="card shadow-sm">
+            <div class="card-header bg-warning text-dark fw-bold">
+                {{ __('messages.select_trip') }}
+            </div>
+            <div class="card-body">
+                <div class="row mb-3 text-center fw-bold small text-uppercase text-muted">
+                    <div class="col-4">{{ __('messages.date_label') }}</div>
+                    <div class="col-4">{{ __('messages.origin') }}</div>
+                    <div class="col-4">{{ __('messages.destination') }}</div>
+                </div>
+                <div class="row mb-3 text-center fw-semibold">
+                    <div class="col-4">{{ \Carbon\Carbon::parse($formattedDate)->format('d-m-Y') }}</div>
+                    <div class="col-4">{{ $origin }}</div>
+                    <div class="col-4">{{ $destination }}</div>
+                </div>
+
+                <hr>
+
+                <div class="row text-center fw-bold small text-uppercase text-muted mb-2">
+                    <div class="col-4">{{ __('messages.schedule') }}</div>
+                    <div class="col-4">{{ __('messages.price') }}</div>
+                    <div class="col-4">{{ __('messages.travel_time') }}</div>
+                </div>
+
+                @forelse($trips as $trip)
+                <div class="row align-items-center py-2 {{ $loop->even ? 'bg-light rounded' : '' }}">
+                    <div class="col-4 text-center">
+                        <input type="radio" name="trip_id" value="{{ $trip->id }}"
+                               class="form-check-input trip-select me-2"
+                               data-id="{{ $trip->id }}">
+                        {{ \Carbon\Carbon::parse($trip->departure_time)->format('H:i') }}
+                    </div>
+                    <div class="col-4 text-center fw-bold text-success">
+                        ${{ number_format($trip->price, 2) }}
+                    </div>
+                    <div class="col-4 text-center">
+                        {{ \Carbon\Carbon::parse($trip->arrival_time)->format('H:i') }}
+                    </div>
+                </div>
+                @empty
+                <div class="alert alert-info text-center my-3">{{ __('messages.no_trips') }}</div>
+                @endforelse
+
+                <hr>
+
+                <div class="d-flex justify-content-between">
+                    <a href="{{ route('home') }}" class="btn btn-outline-secondary">
+                        &larr; {{ __('messages.back') }}
+                    </a>
+                    <button id="continueBtn" class="btn btn-warning" disabled>
+                        {{ __('messages.continue') }} &rarr;
+                    </button>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+@endsection
+
+@push('scripts')
+<script>
+$(function() {
+    let selectedId = null;
+
+    $('.trip-select').on('change', function() {
+        selectedId = $(this).data('id');
+        $('#continueBtn').prop('disabled', false);
+    });
+
+    $('#continueBtn').on('click', function() {
+        if (selectedId) {
+            window.location.href = '{{ url("elegir") }}/' + selectedId;
+        }
+    });
+});
+</script>
+@endpush

@@ -1,5 +1,29 @@
 {
+    "name": "at/bus-ticketing",
+    "description": "Modern bus ticketing system built with Laravel",
+    "type": "project",
     "require": {
-      "ext-gd": "*"
-    }
-  }
+        "php": "^8.2",
+        "laravel/framework": "^11.0",
+        "simplesoftwareio/simple-qrcode": "^4.2",
+        "ext-gd": "*"
+    },
+    "require-dev": {
+        "fakerphp/faker": "^1.23",
+        "laravel/sail": "^1.26"
+    },
+    "autoload": {
+        "psr-4": {
+            "App\\": "app/",
+            "Database\\Seeders\\": "database/seeders/",
+            "Database\\Factories\\": "database/factories/"
+        }
+    },
+    "scripts": {
+        "post-autoload-dump": [
+            "Illuminate\\Foundation\\ComposerScripts::postAutoloadDump"
+        ]
+    },
+    "minimum-stability": "dev",
+    "prefer-stable": true
+}

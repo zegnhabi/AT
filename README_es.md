@@ -1,41 +1,80 @@
-Sistema de Boletaje para Terminales de Autobuses
-================================
-[English](https://github.com/zegnhabi/AT/blob/master/README.md)
+# Sistema de Boletaje para Autobuses
 
-Hola el día de hoy les presento una de mis mas recientes creaciones es un pequeño sistema para la venta de boletos de una terminal de autobuses, es algo sencillo y todavía le falta pulirlo mas pero para los fines didácticos es mas que suficiente.
+Sistema web para la venta de boletos de autobuses. Buscar corridas, seleccionar asientos, registrar pasajeros e imprimir boletos con código QR.
 
-Las tecnologías aplicadas a esta pagina web son PHP,MySQL y JavaScript, la temática es simple tenemos en un nuestro servidor la BD con las tablas correspondientes. Y la interfaz web nos lleva de la mano para comprar el boleto. 
+---
 
-- Iniciando por seleccionar el origen-destino y la fecha de salida de la corrida del autobús.
+## Changelog
 
-![Selección de Salidas, Destinos](https://1.bp.blogspot.com/-TjzUefAxLOw/T-axSq3A1KI/AAAAAAAAAgY/njROs72UR3w/s320/sshot-3.png)
+### [2.0.4] — 2026-05-18 — Personalización de marca blanca
 
-- Después de dar clic en el botón "Buscar", nos llevara  a la siguiente pagina en la cual seleccionaremos la corrida de nuestra preferencia.
+- Nueva sección `/admin/marca` para personalizar colores, logo, favicon, nombre y eslogan
+- 5 selectores de color con vista previa en vivo
+- Subida de logo y favicon con botón de restaurar
+- Colores aplicados como CSS variables en frontend y admin
+- Ver detalle completo en `README.md`
 
-![Selección de Corrida](https://2.bp.blogspot.com/--hO1-x19unc/T-axTVu8dJI/AAAAAAAAAgg/yXGI1S_H4HM/s320/sshot-4.png)
+### [2.0.3] — 2026-05-18 — Backoffice administrativo
 
-- De acuerdo a la selección previa nos mostrara las corridas que estén disponibles .Una vez seleccionada la corrida daremos clic en continuar. Y la siguiente pantalla aparecerá.
+- Nuevo panel `/admin/` con dashboard, CRUD de choferes/autobuses/ciudades/viajes, corte de caja y arqueo
+- Navbar propia con enlace al frontend, footer del frontend con enlace al admin
+- Ver detalle completo en `README.md`
 
-![enter image description here](https://1.bp.blogspot.com/-X_n0ZKSCNP4/T-axT87U42I/AAAAAAAAAgo/zeH6V6l7tYQ/s320/sshot-5.png)
+### [2.0.2] — 2026-05-18 — Datepicker, layout asientos y QR
 
-- En esta página se muestran los datos como: Fecha de salida de la corrida, Hora de salida, Origen y Destino de la corrida. Además seleccionaremos el número de boletos del select de lado izquierdo. Como se ve en la siguiente pantalla.
+- **Datepicker**: Campo de texto reemplazado por `<input type="date">` nativo HTML5 con validación de fecha futura
+- **Layout asientos**: Imágenes fijadas a 35×24px para alineación uniforme en todas las filas
+- **QR**: Cambiado de PNG (requería Imagick) a SVG (sin dependencias extra)
+- Ver detalle completo en `README.md`
 
-![enter image description here](https://1.bp.blogspot.com/-X_n0ZKSCNP4/T-axT87U42I/AAAAAAAAAgo/zeH6V6l7tYQ/s320/sshot-5.png)
+### [2.0.1] — 2026-05-18 — Correcciones post-lanzamiento
 
-- Siguiendo en esta página solo nos resta de acuerdo al número de boletos que seleccionamos seleccionar el número de asiento disponible en el autobús. Dando clic sobre los asientos desocupados.
+- **Date picker**: Se eliminó el bucle infinito de alerts (readonly + prompt → campo editable directo)
+- **Búsqueda hoy**: El `TripSeeder` ahora incluye viajes desde el día actual
+- **Horarios**: Agregados 6 horarios distribuidos (mañana, tarde, noche) para evitar filtrado total
+- **Mensajes**: "Ha Sucedido Una Excepción" reemplazado por "No hay corridas disponibles"
+- **Permisos**: `storage/` ahora es propiedad de `www-data` en la imagen Docker
+- **Assets**: Nginx configurado con `location /images/` para servir correctamente las imágenes
+- **Migraciones**: Orden corregido (drivers antes que buses)
+- Ver detalle completo en `README.md`
 
-![enter image description here](https://1.bp.blogspot.com/-X_n0ZKSCNP4/T-axT87U42I/AAAAAAAAAgo/zeH6V6l7tYQ/s320/sshot-5.png)
+### [2.0.0] — 2026-05-18 — Modernización completa
 
-- Para nuestro caso hemos seleccionado el asiento número 4, y como se puede observar y de acuerdo con la simbología este haciendo ha sido seleccionado. Dándole un clic, ahora nos resta dar clic en “Continuar”. Ahora veremos la siguiente pantalla, que en la cual ingresaremos el nombre del pasajero.
+### [1.0.0] — 2009 — Versión original
 
-![enter image description here](https://2.bp.blogspot.com/-I4JYIgffto0/T-axUgYsDQI/AAAAAAAAAgw/ttND4-myk6Y/s320/sshot-6.png)
+- PHP 5 + MySQL + JavaScript
+- Ubicado en `Legacy/`
 
-- En este caso he puesto mi nombre. Ahora basta con dar clic en “Continuar”, confirmar la petición del boleto, para la venta. Nos muestra una ventana de vista previa del boleto para la impresión. Mostrando las acciones de “Imprimir” e ir al “Inicio”.
+---
 
-![enter image description here](https://3.bp.blogspot.com/-XlF-cGS-Xx0/T-axWAgET2I/AAAAAAAAAhA/80oM3PB_l_A/s320/sshot-8.png)
+## Stack
 
-- Y después de imprimir el boleto, terminamos la venta.
+| Componente     | v2 (moderno)                        |
+|----------------|--------------------------------------|
+| Backend        | Laravel 11 (PHP 8.2)                 |
+| Base de datos  | PostgreSQL 16                        |
+| ORM            | Eloquent + Migraciones               |
+| Frontend       | HTML5 + Bootstrap 5.3                |
+| QR             | simple-qrcode (base64)               |
+| i18n           | Laravel Translation                  |
+| Contenedor     | Podman / Docker Compose              |
 
-![enter image description here](https://2.bp.blogspot.com/-fbdXxBxoRNs/T-axW5kWATI/AAAAAAAAAhI/mObJq8r2PsM/s320/sshot-9.png)
+---
 
-[Demo](https://at-sqleros.herokuapp.com/)
+## Levantar
+
+```bash
+podman-compose up -d
+podman exec bus_ticketing_app php artisan migrate --seed
+# http://localhost:8080
+```
+
+## Desarrollo local
+
+```bash
+cp .env.example .env
+composer install
+php artisan key:generate
+php artisan migrate --seed
+php artisan serve --port=8080
+```

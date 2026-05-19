@@ -1,0 +1,63 @@
+services:
+  app:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    container_name: bus_ticketing_app
+    working_dir: /var/www/html
+    volumes:
+      - .:/var/www/html
+    environment:
+      - APP_ENV=local
+      - APP_DEBUG=true
+      - DB_CONNECTION=pgsql
+      - DB_HOST=db
+      - DB_PORT=5432
+      - DB_DATABASE=bus_ticketing
+      - DB_USERNAME=busapp
+      - DB_PASSWORD=busapp_secret
+    depends_on:
+      db:
+        condition: service_healthy
+    networks:
+      - bus-network
+
+  nginx:
+    image: nginx:alpine
+    container_name: bus_ticketing_nginx
+    ports:
+      - "8080:80"
+    volumes:
+      - .:/var/www/html
+      - ./docker/nginx.conf:/etc/nginx/conf.d/default.conf
+    depends_on:
+      - app
+    networks:
+      - bus-network
+
+  db:
+    image: postgres:16-alpine
+    container_name: bus_ticketing_db
+    environment:
+      POSTGRES_DB: bus_ticketing
+      POSTGRES_USER: busapp
+      POSTGRES_PASSWORD: busapp_secret
+      TZ: America/Monterrey
+    ports:
+      - "5432:5432"
+    volumes:
+      - pgdata:/var/lib/postgresql/data
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U busapp -d bus_ticketing"]
+      interval: 10s
+      timeout: 5s
+      retries: 5
+    networks:
+      - bus-network
+
+volumes:
+  pgdata:
+
+networks:
+  bus-network:
+    driver: bridge

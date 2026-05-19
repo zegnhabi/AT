@@ -1,0 +1,53 @@
+@extends('admin.layouts.app')
+
+@section('title', 'Autobuses')
+@section('content')
+<div class="d-flex justify-content-between align-items-center page-title flex-wrap gap-2">
+    <div><i class="bi bi-truck-front-fill"></i> Autobuses</div>
+    <a href="{{ route('admin.buses.create') }}" class="btn btn-admin-primary btn-sm">
+        <i class="bi bi-plus-lg"></i> Nuevo autobús
+    </a>
+</div>
+
+<div class="card card-admin">
+    <div class="table-responsive">
+        <table class="table table-admin">
+            <thead>
+                <tr><th>ID</th><th>Asientos</th><th>Modelo</th><th>N° Serie</th><th>Chofer asignado</th><th class="text-end">Acciones</th></tr>
+            </thead>
+            <tbody>
+                @foreach($buses as $b)
+                <tr>
+                    <td class="text-muted">{{ $b->id }}</td>
+                    <td><span class="badge bg-info bg-opacity-10 text-info badge-status"><i class="bi bi-grid-3x3 me-1"></i>{{ $b->seat_count }}</span></td>
+                    <td>{{ $b->model_year ?? '—' }}</td>
+                    <td><code class="text-muted">{{ $b->serial_number ?? '—' }}</code></td>
+                    <td>
+                        @if($b->driver)
+                            <i class="bi bi-person-circle text-success me-1"></i>{{ $b->driver->name }}
+                        @else
+                            <span class="text-muted"><i class="bi bi-dash-circle me-1"></i>Sin asignar</span>
+                        @endif
+                    </td>
+                    <td class="text-end">
+                        <a href="{{ route('admin.buses.edit', $b) }}" class="btn btn-sm btn-admin-outline">
+                            <i class="bi bi-pencil"></i>
+                        </a>
+                        <form action="{{ route('admin.buses.destroy', $b) }}" method="POST" class="d-inline"
+                              onsubmit="return confirm('¿Eliminar este autobús? También se eliminarán sus viajes.');">
+                            @csrf @method('DELETE')
+                            <button class="btn btn-sm btn-admin-danger"><i class="bi bi-trash"></i></button>
+                        </form>
+                    </td>
+                </tr>
+                @endforeach
+            </tbody>
+        </table>
+    </div>
+    @if($buses->hasPages())
+    <div class="card-footer bg-white border-top d-flex justify-content-center py-3">
+        {{ $buses->links() }}
+    </div>
+    @endif
+</div>
+@endsection
