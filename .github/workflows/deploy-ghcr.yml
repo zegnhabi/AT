@@ -7,7 +7,7 @@ on:
 
 env:
   REGISTRY: ghcr.io
-  IMAGE_NAME: ${{ github.repository }}
+  IMAGE_NAME: zegnhabi/at
 
 jobs:
   test:
@@ -87,5 +87,5 @@ jobs:
           context: .
           file: Dockerfile.portainer
           push: true
-          tags: ${{ env.REGISTRY }}/${{ env.IMAGE_NAME }}-portainer:latest
+          tags: ghcr.io/zegnhabi/at-portainer:latest
           labels: ${{ steps.meta.outputs.labels }}
