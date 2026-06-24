@@ -4,15 +4,6 @@
 @section('content')
 <div class="d-flex justify-content-between align-items-center page-title flex-wrap gap-2">
     <div><i class="bi bi-geo-alt-fill"></i> Ciudades</div>
-    <div class="d-flex align-items-center gap-2">
-        <label class="small text-muted mb-0">Mostrar:</label>
-        <select id="perPageSelect" class="form-select form-select-sm" style="width:auto;" onchange="changePerPage(this)">
-            @foreach([5, 10, 25, 50] as $size)
-                <option value="{{ $size }}" {{ $perPage == $size ? 'selected' : '' }}>{{ $size }}</option>
-            @endforeach
-            <option value="all" {{ $perPage == 'all' ? 'selected' : '' }}>Todos</option>
-        </select>
-    </div>
 </div>
 
 <div class="card card-admin">

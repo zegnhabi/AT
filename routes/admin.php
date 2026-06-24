@@ -25,7 +25,9 @@ Route::prefix('admin')->name('admin.')->group(function () {
     Route::delete('viajes/{trip}', [TripController::class, 'destroy'])->name('trips.destroy');
 
     Route::get('corte', [CashierController::class, 'corte'])->name('cashier.corte');
+    Route::get('corte/exportar', [CashierController::class, 'exportCorte'])->name('cashier.corte.export');
     Route::get('arqueo', [CashierController::class, 'arqueo'])->name('cashier.arqueo');
+    Route::get('arqueo/exportar', [CashierController::class, 'exportArqueo'])->name('cashier.arqueo.export');
 
     Route::get('marca', [BrandingController::class, 'index'])->name('branding');
     Route::post('marca', [BrandingController::class, 'update']);

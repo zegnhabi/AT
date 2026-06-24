@@ -6,6 +6,7 @@ use App\Http\Controllers\Controller;
 use App\Models\Ticket;
 use App\Models\Trip;
 use Illuminate\Http\Request;
+use Illuminate\Http\Response;
 use Illuminate\Support\Facades\DB;
 
 class CashierController extends Controller
@@ -80,5 +81,94 @@ class CashierController extends Controller
         return view('admin.cashier.arqueo', compact(
             'tickets', 'summary', 'startDate', 'endDate', 'perPage'
         ));
+    }
+
+    public function exportCorte(Request $request)
+    {
+        $date = $request->input('date', now()->format('Y-m-d'));
+
+        $tickets = Ticket::where('sale_date', $date)
+            ->with('trip')
+            ->orderBy('created_at')
+            ->get();
+
+        $filename = "corte_caja_{$date}.csv";
+        $headers = [
+            'Content-Type' => 'text/csv',
+            'Content-Disposition' => "attachment; filename=\"{$filename}\"",
+        ];
+
+        return response()->stream(function () use ($tickets, $date) {
+            $handle = fopen('php://output', 'w');
+
+            fputcsv($handle, ['Corte de Caja - ' . \Carbon\Carbon::parse($date)->format('d/m/Y')]);
+            fputcsv($handle, []);
+            fputcsv($handle, ['Folio', 'Pasajero', 'Origen', 'Destino', 'Fecha viaje', 'Hora', 'Asiento', 'Monto']);
+
+            foreach ($tickets as $t) {
+                fputcsv($handle, [
+                    $t->folio,
+                    $t->passenger_name,
+                    $t->trip->departure_city,
+                    $t->trip->arrival_city,
+                    $t->trip->departure_date->format('d/m/Y'),
+                    substr($t->trip->departure_time, 0, 5),
+                    $t->seat_number,
+                    number_format($t->trip->price, 2),
+                ]);
+            }
+
+            fputcsv($handle, []);
+            fputcsv($handle, ['', '', '', '', '', '', 'TOTAL', number_format($tickets->sum(fn($t) => $t->trip->price), 2)]);
+            fputcsv($handle, ['', '', '', '', '', '', 'BOLETOS', $tickets->count()]);
+
+            fclose($handle);
+        }, 200, $headers);
+    }
+
+    public function exportArqueo(Request $request)
+    {
+        $startDate = $request->input('start', now()->startOfMonth()->format('Y-m-d'));
+        $endDate   = $request->input('end', now()->format('Y-m-d'));
+
+        $tickets = Ticket::whereBetween('sale_date', [$startDate, $endDate])
+            ->with('trip')
+            ->orderBy('sale_date')
+            ->orderBy('created_at')
+            ->get();
+
+        $filename = "arqueo_{$startDate}_{$endDate}.csv";
+        $headers = [
+            'Content-Type' => 'text/csv',
+            'Content-Disposition' => "attachment; filename=\"{$filename}\"",
+        ];
+
+        return response()->stream(function () use ($tickets, $startDate, $endDate) {
+            $handle = fopen('php://output', 'w');
+
+            fputcsv($handle, ['Arqueo de Caja - ' . \Carbon\Carbon::parse($startDate)->format('d/m/Y') . ' al ' . \Carbon\Carbon::parse($endDate)->format('d/m/Y')]);
+            fputcsv($handle, []);
+            fputcsv($handle, ['Folio', 'Fecha venta', 'Pasajero', 'Origen', 'Destino', 'Fecha viaje', 'Hora', 'Asiento', 'Monto']);
+
+            foreach ($tickets as $t) {
+                fputcsv($handle, [
+                    $t->folio,
+                    $t->sale_date->format('d/m/Y'),
+                    $t->passenger_name,
+                    $t->trip->departure_city,
+                    $t->trip->arrival_city,
+                    $t->trip->departure_date->format('d/m/Y'),
+                    substr($t->trip->departure_time, 0, 5),
+                    $t->seat_number,
+                    number_format($t->trip->price, 2),
+                ]);
+            }
+
+            fputcsv($handle, []);
+            fputcsv($handle, ['', '', '', '', '', '', '', 'TOTAL', number_format($tickets->sum(fn($t) => $t->trip->price), 2)]);
+            fputcsv($handle, ['', '', '', '', '', '', '', 'BOLETOS', $tickets->count()]);
+
+            fclose($handle);
+        }, 200, $headers);
     }
 }

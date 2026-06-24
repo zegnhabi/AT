@@ -19,15 +19,12 @@
             </div>
             <button class="btn btn-admin-primary btn-sm"><i class="bi bi-search"></i> Consultar</button>
         </form>
-        <div class="d-flex align-items-center gap-1">
-            <label class="small text-muted mb-0">Mostrar:</label>
-            <select class="form-select form-select-sm per-page-select" style="width:auto;">
-                @foreach([5, 10, 25, 50] as $size)
-                    <option value="{{ $size }}" {{ $perPage == $size ? 'selected' : '' }}>{{ $size }}</option>
-                @endforeach
-                <option value="all" {{ $perPage == 'all' ? 'selected' : '' }}>Todos</option>
-            </select>
-        </div>
+        <a href="{{ route('admin.cashier.arqueo.export', ['start' => $startDate, 'end' => $endDate]) }}" class="btn btn-sm btn-admin-outline" title="Exportar CSV">
+            <i class="bi bi-download"></i> Exportar
+        </a>
+        <button onclick="window.print()" class="btn btn-sm btn-admin-outline" title="Imprimir">
+            <i class="bi bi-printer"></i> Imprimir
+        </button>
     </div>
 </div>
 
@@ -110,21 +107,69 @@
             </tbody>
         </table>
     </div>
-    @if($tickets->hasPages())
     <div class="card-footer bg-white border-top d-flex justify-content-center py-3">
         {{ $tickets->links('vendor.pagination.bootstrap-5') }}
     </div>
-    @endif
 </div>
 
-<script>
-document.querySelectorAll('.per-page-select').forEach(function(el) {
-    el.addEventListener('change', function() {
-        var url = new URL(window.location);
-        url.searchParams.set('per_page', this.value);
-        url.searchParams.delete('page');
-        window.location = url;
-    });
-});
-</script>
+<style>
+#print-area { display: none; }
+@media print {
+    body * { visibility: hidden !important; }
+    body::before { content: none !important; }
+    #print-area, #print-area * { visibility: visible !important; }
+    #print-area { display: block !important; position: absolute; left: 0; top: 0; width: 100%; padding: 20px; background: #fff !important; }
+    .print-header { text-align: center; margin-bottom: 15px; border-bottom: 2px solid #000; padding-bottom: 10px; }
+    .print-header h2 { font-size: 1.2rem; margin: 0; }
+    .print-header p { font-size: .85rem; margin: 2px 0 0; color: #333; }
+    .print-table { width: 100%; border-collapse: collapse; font-size: .8rem; margin-top: 10px; }
+    .print-table th { background: #eee !important; -webkit-print-color-adjust: exact; print-color-adjust: exact; }
+    .print-table th, .print-table td { border: 1px solid #333; padding: 4px 8px; text-align: left; }
+    .print-summary { margin-top: 10px; font-size: .8rem; }
+    .print-summary td { padding: 2px 8px; }
+}
+</style>
+
+<div id="print-area">
+    <div class="print-header">
+        <h2>Arqueo de Caja</h2>
+        <p>Período: {{ \Carbon\Carbon::parse($startDate)->format('d/m/Y') }} al {{ \Carbon\Carbon::parse($endDate)->format('d/m/Y') }}</p>
+    </div>
+
+    @if($summary)
+    <div class="print-summary">
+        <table>
+            <tr><td><strong>Boletos vendidos:</strong></td><td>{{ $summary->total_tickets }}</td></tr>
+            <tr><td><strong>Ingreso total:</strong></td><td>${{ number_format($summary->total_revenue, 2) }}</td></tr>
+            <tr><td><strong>Viajes con ventas:</strong></td><td>{{ $summary->total_trips }}</td></tr>
+        </table>
+    </div>
+    @endif
+
+    <h3 style="font-size:1rem;margin:15px 0 5px;">Detalle de transacciones</h3>
+    <table class="print-table">
+        <thead>
+            <tr><th>#</th><th>Folio</th><th>Fecha venta</th><th>Pasajero</th><th>Ruta</th><th>Fecha viaje</th><th>Hora</th><th>Asiento</th><th>Monto</th></tr>
+        </thead>
+        <tbody>
+            @foreach($tickets as $idx => $t)
+            <tr>
+                <td>{{ $idx + 1 }}</td>
+                <td>{{ $t->folio }}</td>
+                <td>{{ $t->sale_date->format('d/m/Y') }}</td>
+                <td>{{ $t->passenger_name }}</td>
+                <td>{{ $t->trip->departure_city }} → {{ $t->trip->arrival_city }}</td>
+                <td>{{ $t->trip->departure_date->format('d/m/Y') }}</td>
+                <td>{{ substr($t->trip->departure_time, 0, 5) }}</td>
+                <td>{{ $t->seat_number }}</td>
+                <td>${{ number_format($t->trip->price, 2) }}</td>
+            </tr>
+            @endforeach
+        </tbody>
+    </table>
+
+    <div style="margin-top:15px;font-size:.75rem;text-align:right;color:#666;">
+        Impreso: {{ now()->format('d/m/Y H:i') }} · Total: {{ $tickets->total() }} registro(s)
+    </div>
+</div>
 @endsection
