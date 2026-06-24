@@ -5,7 +5,7 @@ services:
     image: postgres:16-alpine
     environment:
       POSTGRES_USER: ${DB_USERNAME:-busapp}
-      POSTGRES_PASSWORD: ${DB_PASSWORD}
+      POSTGRES_PASSWORD: ${DB_PASSWORD:-busapp_secret}
       POSTGRES_DB: ${DB_DATABASE:-bus_ticketing}
       TZ: ${TZ:-America/Monterrey}
     volumes:
@@ -30,7 +30,7 @@ services:
       - DB_PORT=5432
       - DB_DATABASE=${DB_DATABASE:-bus_ticketing}
       - DB_USERNAME=${DB_USERNAME:-busapp}
-      - DB_PASSWORD=${DB_PASSWORD}
+      - DB_PASSWORD=${DB_PASSWORD:-busapp_secret}
       - SESSION_DRIVER=file
       - SESSION_LIFETIME=120
       - FILESYSTEM_DISK=local
