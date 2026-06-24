@@ -3,6 +3,10 @@ set -e
 
 cd /var/www/html
 
+if [ ! -f .env ]; then
+    cp .env.example .env
+fi
+
 composer install --no-interaction --no-dev --optimize-autoloader --no-progress 2>/dev/null || true
 
 if ! grep -q "^APP_KEY=" .env 2>/dev/null || [ -z "$(grep '^APP_KEY=' .env | cut -d'=' -f2)" ]; then
