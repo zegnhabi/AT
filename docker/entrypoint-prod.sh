@@ -4,7 +4,11 @@ set -e
 cd /var/www/html
 
 if [ ! -f .env ]; then
-    cp .env.example .env
+    if [ -f .env.example ]; then
+        cp .env.example .env
+    else
+        touch .env
+    fi
 fi
 
 composer install --no-interaction --no-dev --optimize-autoloader --no-progress 2>/dev/null || true
