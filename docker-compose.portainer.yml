@@ -1,0 +1,69 @@
+version: "3.8"
+
+services:
+  at-db:
+    image: postgres:16-alpine
+    environment:
+      POSTGRES_USER: ${DB_USERNAME:-busapp}
+      POSTGRES_PASSWORD: ${DB_PASSWORD}
+      POSTGRES_DB: ${DB_DATABASE:-bus_ticketing}
+      TZ: ${TZ:-America/Monterrey}
+    volumes:
+      - pg_data:/var/lib/postgresql/data
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U ${DB_USERNAME:-busapp} -d ${DB_DATABASE:-bus_ticketing}"]
+      interval: 5s
+      timeout: 5s
+      retries: 5
+    restart: unless-stopped
+    networks:
+      - general_network
+
+  at-app:
+    build:
+      context: .
+      dockerfile: Dockerfile.portainer
+    environment:
+      - APP_NAME=${APP_NAME:-BusTicketing}
+      - APP_ENV=${APP_ENV:-production}
+      - APP_KEY=${APP_KEY}
+      - APP_DEBUG=${APP_DEBUG:-false}
+      - APP_URL=https://at.mvps.com.mx
+      - DB_CONNECTION=pgsql
+      - DB_HOST=at-db
+      - DB_PORT=5432
+      - DB_DATABASE=${DB_DATABASE:-bus_ticketing}
+      - DB_USERNAME=${DB_USERNAME:-busapp}
+      - DB_PASSWORD=${DB_PASSWORD}
+      - SESSION_DRIVER=file
+      - SESSION_LIFETIME=120
+      - FILESYSTEM_DISK=local
+    volumes:
+      - app_storage:/var/www/html/storage
+      - app_bootstrap:/var/www/html/bootstrap/cache
+    depends_on:
+      at-db:
+        condition: service_healthy
+    restart: unless-stopped
+    networks:
+      - traefik_public
+      - general_network
+    deploy:
+      labels:
+        - traefik.enable=true
+        - traefik.http.routers.at-app.rule=Host(`at.mvps.com.mx`)
+        - traefik.http.routers.at-app.service=at-app
+        - traefik.http.routers.at-app.entrypoints=websecure
+        - traefik.http.routers.at-app.tls=true
+        - traefik.http.services.at-app.loadbalancer.server.port=80
+
+volumes:
+  pg_data:
+  app_storage:
+  app_bootstrap:
+
+networks:
+  traefik_public:
+    external: true
+  general_network:
+    external: true
