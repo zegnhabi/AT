@@ -42,8 +42,7 @@ services:
       - app_storage:/var/www/html/storage
       - app_bootstrap:/var/www/html/bootstrap/cache
     depends_on:
-      at-db:
-        condition: service_healthy
+      - at-db
     restart: unless-stopped
     networks:
       - traefik_public
