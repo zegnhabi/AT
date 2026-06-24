@@ -67,3 +67,15 @@ php artisan key:generate
 php artisan migrate --seed
 php artisan serve --port=8080
 ```
+
+## Deploy en Portainer
+
+```bash
+# Ver guía completa
+cat DEPLOY_PORTAINER.md
+```
+
+1. Crear redes `traefik_public` y `general_network` en Portainer
+2. Crear stack con `docker-compose.portainer.yml`
+3. Setear `APP_KEY` y `DB_PASSWORD` como variables
+4. Deploy

@@ -1,5 +1,23 @@
 # Changelog
 
+### [2.0.10] — 2026-06-24 — Deploy Portainer, fixes CI/CD
+
+#### Nuevo: Deploy para Portainer + Traefik
+- `docker-compose.portainer.yml` con Traefik labels para `at.mvps.com.mx`
+- Imagen única `ghcr.io/zegnhabi/at:latest` (nginx + php-fpm + supervisor)
+- Entrypoint de producción: composer, key, migrate, cache, supervisord
+- Red `backend` interna para DNS entre contenedores
+- `DEPLOY_PORTAINER.md` con guía paso a paso
+
+#### Corregido: CI/CD
+- Tests con SQLite compatible (EXTRACT → strftime para SQLite)
+- DivisionByZeroError en `per_page=all` con 0 resultados
+- APP_KEY agregado a phpunit.xml
+- Migraciones SQLite en CI antes de tests
+
+#### Corregido: UI
+- `#print-area` oculto en pantalla en corte de caja (solo visible al imprimir)
+
 ### [2.0.9] — 2026-06-23 — Módulo de idiomas, fix CI/CD
 
 #### Nuevo: Configuración de idiomas en Personalización
