@@ -35,8 +35,9 @@ jobs:
           DB_CONNECTION: sqlite
           DB_DATABASE: database/database.sqlite
         run: |
-          touch database/database.sqlite
+          cp .env.example .env
           php artisan key:generate --force
+          touch database/database.sqlite
           php artisan migrate --force
 
       - name: Run tests
