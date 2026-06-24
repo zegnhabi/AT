@@ -16,6 +16,8 @@ services:
       timeout: 5s
       retries: 5
     restart: unless-stopped
+    networks:
+      - backend
 
   at-app:
     image: ghcr.io/zegnhabi/at:latest
@@ -41,6 +43,7 @@ services:
       - at-db
     restart: unless-stopped
     networks:
+      - backend
       - traefik_public
     deploy:
       labels:
@@ -57,5 +60,6 @@ volumes:
   app_bootstrap:
 
 networks:
+  backend:
   traefik_public:
     external: true
