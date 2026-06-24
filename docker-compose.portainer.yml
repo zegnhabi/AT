@@ -20,9 +20,7 @@ services:
       - general_network
 
   at-app:
-    build:
-      context: .
-      dockerfile: Dockerfile.portainer
+    image: ghcr.io/zegnhabi/at-portainer:latest
     environment:
       - APP_NAME=${APP_NAME:-BusTicketing}
       - APP_ENV=${APP_ENV:-production}
