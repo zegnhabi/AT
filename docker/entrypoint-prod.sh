@@ -11,11 +11,28 @@ if [ ! -f .env ]; then
     fi
 fi
 
+# Write env vars to .env if not present
+for var in APP_KEY APP_NAME APP_ENV APP_DEBUG APP_URL DB_DATABASE DB_USERNAME DB_PASSWORD; do
+    val=$(printenv $var 2>/dev/null)
+    if [ -n "$val" ]; then
+        if grep -q "^${var}=" .env 2>/dev/null; then
+            sed -i "s|^${var}=.*|${var}=${val}|" .env
+        else
+            echo "${var}=${val}" >> .env
+        fi
+    fi
+done
+
 composer install --no-interaction --no-dev --optimize-autoloader --no-progress 2>/dev/null || true
 
-if ! grep -q "^APP_KEY=" .env 2>/dev/null || [ -z "$(grep '^APP_KEY=' .env | cut -d'=' -f2)" ]; then
-    php artisan key:generate --force
-fi
+php artisan key:generate --force 2>/dev/null || true
+
+# Wait for database
+echo "Waiting for database..."
+for i in $(seq 1 30); do
+    php artisan db:monitor 2>/dev/null && break
+    sleep 2
+done
 
 php artisan migrate --force 2>/dev/null || true
 php artisan config:cache 2>/dev/null || true
