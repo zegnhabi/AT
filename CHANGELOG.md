@@ -1,5 +1,16 @@
 # Changelog
 
+### [2.0.9] — 2026-06-23 — Módulo de idiomas, fix CI/CD
+
+#### Nuevo: Configuración de idiomas en Personalización
+- Selector de idioma predeterminado del sistema (es, en, de, fr)
+- Selector de idiomas habilitados (checkboxes para activar/desactivar idiomas)
+- Idioma predeterminado aplicado como locale inicial de la aplicación
+
+#### Corregido: CI/CD
+- `APP_KEY` agregado a `phpunit.xml` (resolvía `MissingAppKeyException`)
+- Test de asientos simplificado para no depender de datos en BD
+
 ### [2.0.8] — 2026-06-23 — Asientos dinámicos y buses de 2 pisos
 
 #### Nuevo: Sistema de asientos dinámico

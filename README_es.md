@@ -28,8 +28,25 @@ Sistema web para la venta de boletos de autobuses. Buscar corridas, seleccionar 
 | ORM            | Eloquent + Migraciones               |
 | Frontend       | HTML5 + Bootstrap 5.3                |
 | QR             | simple-qrcode (base64)               |
-| i18n           | Laravel Translation                  |
+| i18n           | Laravel Translation (4 idiomas)      |
+| Testing        | PHPUnit 11 (15 tests)                |
+| CI/CD          | GitHub Actions → GHCR               |
 | Contenedor     | Podman / Docker Compose              |
+
+## Funcionalidades
+
+- Búsqueda de corridas por origen, destino y fecha
+- Selección de asientos dinámica (1-100 asientos, 1-2 pisos)
+- Compra de 1 a 5 boletos con nombre de pasajero
+- Impresión de boletos con código QR
+- Panel administrativo con dashboard, CRUD de choferes/autobuses/ciudades/viajes
+- Corte de caja diario con exportar CSV e imprimir
+- Arqueo por rango de fechas con exportar CSV e imprimir
+- Impresión de lista de pasajeros por viaje
+- Personalización de marca (colores, logo, favicon)
+- Configuración de idiomas (es, en, de, fr)
+- Paginación unificada con selector de items por página
+- PHPUnit tests + CI/CD con GitHub Actions
 
 ---
 
