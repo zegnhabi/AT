@@ -80,12 +80,3 @@ jobs:
 
       - name: Print image URL
         run: echo "Image pushed to ${{ env.REGISTRY }}/${{ env.IMAGE_NAME }}:latest"
-
-      - name: Build and push portainer image
-        uses: docker/build-push-action@v5
-        with:
-          context: .
-          file: Dockerfile.portainer
-          push: true
-          tags: ghcr.io/zegnhabi/at-portainer:latest
-          labels: ${{ steps.meta.outputs.labels }}

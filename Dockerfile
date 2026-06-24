@@ -9,6 +9,8 @@ RUN apt-get update && apt-get install -y \
     unzip \
     git \
     curl \
+    nginx \
+    supervisor \
     && docker-php-ext-configure gd --with-freetype --with-jpeg \
     && docker-php-ext-install -j$(nproc) gd pdo pdo_pgsql \
     && rm -rf /var/lib/apt/lists/*
@@ -17,15 +19,21 @@ COPY --from=composer:latest /usr/bin/composer /usr/bin/composer
 
 WORKDIR /var/www/html
 
-RUN mkdir -p storage/framework/views \
-    storage/framework/cache \
-    storage/framework/sessions \
-    storage/logs \
-    bootstrap/cache
+COPY . .
 
-COPY docker/entrypoint.sh /usr/local/bin/entrypoint.sh
-RUN chmod +x /usr/local/bin/entrypoint.sh
+COPY docker/nginx-portainer.conf /etc/nginx/conf.d/default.conf
+COPY docker/supervisord.conf /etc/supervisor/conf.d/supervisord.conf
+COPY docker/entrypoint-prod.sh /usr/local/bin/entrypoint-prod.sh
+RUN chmod +x /usr/local/bin/entrypoint-prod.sh
 
-EXPOSE 9000
+RUN mkdir -p /run/nginx \
+    && rm -f /etc/nginx/sites-enabled/default \
+    && mkdir -p storage/framework/views \
+    && mkdir -p storage/framework/cache \
+    && mkdir -p storage/framework/sessions \
+    && mkdir -p storage/logs \
+    && mkdir -p bootstrap/cache
 
-ENTRYPOINT ["entrypoint.sh"]
+EXPOSE 80
+
+ENTRYPOINT ["entrypoint-prod.sh"]

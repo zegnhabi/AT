@@ -20,7 +20,7 @@ services:
       - general_network
 
   at-app:
-    image: ghcr.io/zegnhabi/at-portainer:latest
+    image: ghcr.io/zegnhabi/at:latest
     environment:
       - APP_NAME=${APP_NAME:-BusTicketing}
       - APP_ENV=${APP_ENV:-production}
