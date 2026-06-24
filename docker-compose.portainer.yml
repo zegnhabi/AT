@@ -17,6 +17,7 @@ services:
       retries: 5
     restart: unless-stopped
     networks:
+      - at_internal
       - general_network
 
   at-app:
@@ -43,8 +44,8 @@ services:
       - at-db
     restart: unless-stopped
     networks:
+      - at_internal
       - traefik_public
-      - general_network
     deploy:
       labels:
         - traefik.enable=true
@@ -60,6 +61,7 @@ volumes:
   app_bootstrap:
 
 networks:
+  at_internal:
   traefik_public:
     external: true
   general_network:
