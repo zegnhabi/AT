@@ -11,8 +11,7 @@ if [ ! -f .env ]; then
     fi
 fi
 
-# Write env vars to .env if not present
-for var in APP_KEY APP_NAME APP_ENV APP_DEBUG APP_URL DB_DATABASE DB_USERNAME DB_PASSWORD; do
+for var in APP_KEY APP_NAME APP_ENV APP_DEBUG APP_URL DB_HOST DB_PORT DB_DATABASE DB_USERNAME DB_PASSWORD; do
     val=$(printenv $var 2>/dev/null)
     if [ -n "$val" ]; then
         if grep -q "^${var}=" .env 2>/dev/null; then
@@ -27,10 +26,14 @@ composer install --no-interaction --no-dev --optimize-autoloader --no-progress 2
 
 php artisan key:generate --force 2>/dev/null || true
 
-# Wait for database
-echo "Waiting for database..."
+# Wait for database TCP connection
+echo "Waiting for database at ${DB_HOST:-db}:${DB_PORT:-5432}..."
 for i in $(seq 1 30); do
-    php artisan db:monitor 2>/dev/null && break
+    if bash -c "echo >/dev/tcp/${DB_HOST:-db}/${DB_PORT:-5432}" 2>/dev/null; then
+        echo "Database is ready!"
+        break
+    fi
+    echo "Attempt $i/30 - waiting 2s..."
     sleep 2
 done
 
