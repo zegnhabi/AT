@@ -7,4 +7,4 @@
 /bootstrap/cache/*.php
 /storage/framework/sessions/*
 !storage/framework/sessions/.gitkeep
-composer.lock
+.phpunit.result.cache

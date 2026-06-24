@@ -101,11 +101,12 @@
 </div>
 
 <style>
+#print-area { display: none; }
 @media print {
     body * { visibility: hidden !important; }
     body::before { content: none !important; }
     #print-area, #print-area * { visibility: visible !important; }
-    #print-area { position: absolute; left: 0; top: 0; width: 100%; padding: 20px; background: #fff !important; }
+    #print-area { display: block !important; position: absolute; left: 0; top: 0; width: 100%; padding: 20px; background: #fff !important; }
     .print-header { text-align: center; margin-bottom: 15px; border-bottom: 2px solid #000; padding-bottom: 10px; }
     .print-header h2 { font-size: 1.2rem; margin: 0; }
     .print-header p { font-size: .85rem; margin: 2px 0 0; color: #333; }

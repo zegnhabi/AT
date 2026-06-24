@@ -17,8 +17,10 @@ Sistema web para la venta de boletos de autobuses. Buscar corridas, seleccionar 
 
 ## Changelog
 
-### [2.0.6] — 2026-06-23 — Paginación unificada, impresión de pasajeros y deploy GHCR
+### [2.0.6] — 2026-06-23 — Testing, paginación unificada e impresión de pasajeros
 
+- **Suite de tests PHPUnit 11**: 16 tests Feature cubriendo homepage, búsquedas, rutas admin, paginación, asientos
+- **CI/CD con tests**: Job `test` ejecuta PHPUnit antes del build Docker; `build-and-push` solo corre si pasan
 - **Impresión de pasajeros**: Botón "Imprimir" en detalle de viaje con vista optimizada para papel
 - **Paginación unificada**: Dropdown "Mostrar" integrado en el paginador de todas las vistas admin
 - **Paginador siempre visible**: Se muestra incluso con "Todos" seleccionados

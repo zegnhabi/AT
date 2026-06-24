@@ -17,7 +17,19 @@ Sistema web para la venta de boletos de autobuses. Permite buscar corridas por o
 
 ## Changelog
 
-### [2.0.6] — 2026-06-23 — Paginación unificada, impresión de pasajeros y deploy GHCR
+### [2.0.6] — 2026-06-23 — Testing, paginación unificada e impresión de pasajeros
+
+#### Nuevo: Suite de tests con PHPUnit 11
+- **16 tests Feature** cubriendo: homepage, búsqueda, todas las rutas admin, paginación con per_page, asientos, locale switch
+- `phpunit.xml` configurado con SQLite in-memory para tests rápidos
+- Estructura `tests/Feature/` y `tests/Unit/` con TestCase base
+- `autoload-dev` agregado en `composer.json` para namespace `Tests\`
+- `composer.lock` agregado al repositorio (requerido por Dependabot)
+
+#### Nuevo: CI/CD con stage de tests
+- **Job `test`** ejecuta PHPUnit antes del build del Docker image
+- **Job `build-and-push`** solo se ejecuta si los tests pasan (`needs: test`)
+- Setup PHP 8.2 con extensiones necesarias (pgsql, gd, mbstring, zip)
 
 #### Nuevo: Impresión de lista de pasajeros
 - Botón "Imprimir" en el detalle de viaje (`/admin/viajes/:id`) visible solo cuando hay boletos vendidos
