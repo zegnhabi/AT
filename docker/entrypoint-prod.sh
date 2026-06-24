@@ -26,10 +26,9 @@ composer install --no-interaction --no-dev --optimize-autoloader --no-progress 2
 
 php artisan key:generate --force 2>/dev/null || true
 
-# Wait for database TCP connection
 echo "Waiting for database at ${DB_HOST:-db}:${DB_PORT:-5432}..."
 for i in $(seq 1 30); do
-    if bash -c "echo >/dev/tcp/${DB_HOST:-db}/${DB_PORT:-5432}" 2>/dev/null; then
+    if php -r "if(@fsockopen('${DB_HOST:-db}',${DB_PORT:-5432}))exit(0);exit(1);" 2>/dev/null; then
         echo "Database is ready!"
         break
     fi

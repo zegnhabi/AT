@@ -16,9 +16,6 @@ services:
       timeout: 5s
       retries: 5
     restart: unless-stopped
-    networks:
-      - at_internal
-      - general_network
 
   at-app:
     image: ghcr.io/zegnhabi/at:latest
@@ -44,7 +41,6 @@ services:
       - at-db
     restart: unless-stopped
     networks:
-      - at_internal
       - traefik_public
     deploy:
       labels:
@@ -61,8 +57,5 @@ volumes:
   app_bootstrap:
 
 networks:
-  at_internal:
   traefik_public:
-    external: true
-  general_network:
     external: true
