@@ -4,23 +4,26 @@
 @section('content')
 <div class="d-flex justify-content-between align-items-center page-title flex-wrap gap-2">
     <div><i class="bi bi-ticket-perforated-fill"></i> Viajes</div>
-    <form class="d-flex gap-2 filter-bar p-2 m-0" method="GET">
-        <div class="input-group input-group-sm" style="width:auto;">
-            <span class="input-group-text bg-white"><i class="bi bi-geo-alt text-muted"></i></span>
-            <select name="city" class="form-select border-start-0" style="width:auto;">
-                <option value="">Todas</option>
-                @foreach($cities as $c)
-                    <option value="{{ $c }}" @selected(request('city') === $c)>{{ $c }}</option>
-                @endforeach
-            </select>
-        </div>
-        <div class="input-group input-group-sm" style="width:auto;">
-            <span class="input-group-text bg-white"><i class="bi bi-calendar3 text-muted"></i></span>
-            <input type="date" name="date" class="form-control border-start-0" style="width:auto;"
-                   value="{{ request('date', now()->format('Y-m-d')) }}">
-        </div>
-        <button class="btn btn-admin-primary btn-sm"><i class="bi bi-funnel"></i> Filtrar</button>
-    </form>
+    <div class="d-flex align-items-center gap-2 flex-wrap">
+        <form class="d-flex gap-2 filter-bar p-2 m-0" method="GET">
+            <input type="hidden" name="per_page" value="{{ $perPage }}">
+            <div class="input-group input-group-sm" style="width:auto;">
+                <span class="input-group-text bg-white"><i class="bi bi-geo-alt text-muted"></i></span>
+                <select name="city" class="form-select border-start-0" style="width:auto;">
+                    <option value="">Todas</option>
+                    @foreach($cities as $c)
+                        <option value="{{ $c }}" @selected(request('city') === $c)>{{ $c }}</option>
+                    @endforeach
+                </select>
+            </div>
+            <div class="input-group input-group-sm" style="width:auto;">
+                <span class="input-group-text bg-white"><i class="bi bi-calendar3 text-muted"></i></span>
+                <input type="date" name="date" class="form-control border-start-0" style="width:auto;"
+                       value="{{ request('date', now()->format('Y-m-d')) }}">
+            </div>
+            <button class="btn btn-admin-primary btn-sm"><i class="bi bi-funnel"></i> Filtrar</button>
+        </form>
+    </div>
 </div>
 
 <div class="card card-admin">
@@ -71,10 +74,8 @@
             </tbody>
         </table>
     </div>
-    @if($trips->hasPages())
     <div class="card-footer bg-white border-top d-flex justify-content-center py-3">
-        {{ $trips->links() }}
+        {{ $trips->links('vendor.pagination.bootstrap-5') }}
     </div>
-    @endif
 </div>
 @endsection

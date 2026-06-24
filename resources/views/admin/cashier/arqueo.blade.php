@@ -4,19 +4,31 @@
 @section('content')
 <div class="d-flex justify-content-between align-items-center page-title flex-wrap gap-2">
     <div><i class="bi bi-calculator-fill"></i> Arqueo de caja</div>
-    <form method="GET" class="d-flex gap-2 filter-bar p-2 m-0">
-        <div class="input-group input-group-sm" style="width:auto;">
-            <span class="input-group-text bg-white"><i class="bi bi-calendar-range text-muted"></i></span>
-            <input type="date" name="start" class="form-control border-start-0" style="width:auto;"
-                   value="{{ $startDate }}">
+    <div class="d-flex align-items-center gap-2 flex-wrap">
+        <form method="GET" class="d-flex gap-2 filter-bar p-2 m-0">
+            <input type="hidden" name="per_page" value="{{ $perPage }}">
+            <div class="input-group input-group-sm" style="width:auto;">
+                <span class="input-group-text bg-white"><i class="bi bi-calendar-range text-muted"></i></span>
+                <input type="date" name="start" class="form-control border-start-0" style="width:auto;"
+                       value="{{ $startDate }}">
+            </div>
+            <div class="input-group input-group-sm" style="width:auto;">
+                <span class="input-group-text bg-white"><i class="bi bi-calendar-check text-muted"></i></span>
+                <input type="date" name="end" class="form-control border-start-0" style="width:auto;"
+                       value="{{ $endDate }}">
+            </div>
+            <button class="btn btn-admin-primary btn-sm"><i class="bi bi-search"></i> Consultar</button>
+        </form>
+        <div class="d-flex align-items-center gap-1">
+            <label class="small text-muted mb-0">Mostrar:</label>
+            <select class="form-select form-select-sm per-page-select" style="width:auto;">
+                @foreach([5, 10, 25, 50] as $size)
+                    <option value="{{ $size }}" {{ $perPage == $size ? 'selected' : '' }}>{{ $size }}</option>
+                @endforeach
+                <option value="all" {{ $perPage == 'all' ? 'selected' : '' }}>Todos</option>
+            </select>
         </div>
-        <div class="input-group input-group-sm" style="width:auto;">
-            <span class="input-group-text bg-white"><i class="bi bi-calendar-check text-muted"></i></span>
-            <input type="date" name="end" class="form-control border-start-0" style="width:auto;"
-                   value="{{ $endDate }}">
-        </div>
-        <button class="btn btn-admin-primary btn-sm"><i class="bi bi-search"></i> Consultar</button>
-    </form>
+    </div>
 </div>
 
 @if($summary)
@@ -100,8 +112,19 @@
     </div>
     @if($tickets->hasPages())
     <div class="card-footer bg-white border-top d-flex justify-content-center py-3">
-        {{ $tickets->links() }}
+        {{ $tickets->links('vendor.pagination.bootstrap-5') }}
     </div>
     @endif
 </div>
+
+<script>
+document.querySelectorAll('.per-page-select').forEach(function(el) {
+    el.addEventListener('change', function() {
+        var url = new URL(window.location);
+        url.searchParams.set('per_page', this.value);
+        url.searchParams.delete('page');
+        window.location = url;
+    });
+});
+</script>
 @endsection

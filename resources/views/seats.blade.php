@@ -3,86 +3,119 @@
 @section('title', __('messages.title3'))
 @section('content')
 <div class="row justify-content-center">
-    <div class="col-md-8">
-        <div class="card shadow-sm">
-            <div class="card-header bg-warning text-dark fw-bold">
-                {{ __('messages.select_seats') }}
-            </div>
-            <div class="card-body">
-                <div class="row text-center small fw-bold text-muted text-uppercase mb-2">
-                    <div class="col-3">{{ __('messages.date_label') }}</div>
-                    <div class="col-3">{{ __('messages.time') }}</div>
-                    <div class="col-3">{{ __('messages.from') }}</div>
-                    <div class="col-3">{{ __('messages.to') }}</div>
+    <div class="col-lg-10">
+        <div class="seat-card">
+            <div class="seat-card-header">
+                <div class="d-flex align-items-center gap-3">
+                    <div class="header-icon">
+                        <i class="bi bi-bus-front-fill"></i>
+                    </div>
+                    <div>
+                        <h5 class="mb-0 fw-bold">{{ __('messages.select_seats') }}</h5>
+                        <small class="opacity-75">{{ $trip->departure_city }} → {{ $trip->arrival_city }}</small>
+                    </div>
                 </div>
-                <div class="row text-center fw-semibold mb-3">
-                    <div class="col-3">{{ $trip->departure_date->format('d-m-Y') }}</div>
-                    <div class="col-3">{{ substr($trip->departure_time, 0, 5) }}</div>
-                    <div class="col-3">{{ $trip->departure_city }}</div>
-                    <div class="col-3">{{ $trip->arrival_city }}</div>
+            </div>
+            <div class="seat-card-body">
+
+                <div class="trip-bar">
+                    <div class="trip-stop">
+                        <div class="stop-dot origin"></div>
+                        <div class="stop-info">
+                            <span class="stop-label">{{ __('messages.from') }}</span>
+                            <span class="stop-city">{{ $trip->departure_city }}</span>
+                        </div>
+                    </div>
+                    <div class="trip-line">
+                        <div class="trip-line-inner">
+                            <i class="bi bi-chevron-right"></i>
+                        </div>
+                    </div>
+                    <div class="trip-stop">
+                        <div class="stop-dot destination"></div>
+                        <div class="stop-info">
+                            <span class="stop-label">{{ __('messages.to') }}</span>
+                            <span class="stop-city">{{ $trip->arrival_city }}</span>
+                        </div>
+                    </div>
+                    <div class="trip-meta ms-auto text-end">
+                        <div class="trip-date"><i class="bi bi-calendar3 me-1"></i>{{ $trip->departure_date->format('d/m/Y') }}</div>
+                        <div class="trip-time"><i class="bi bi-clock me-1"></i>{{ substr($trip->departure_time, 0, 5) }}</div>
+                    </div>
                 </div>
 
-                <div class="row mb-3">
-                    <div class="col-md-6">
-                        <label class="fw-semibold">{{ __('messages.select_ticket_count') }}</label>
-                        <select id="num_boletos" class="form-select">
+                <div class="controls-bar">
+                    <div class="d-flex align-items-center gap-3">
+                        <label class="controls-label">{{ __('messages.select_ticket_count') }}</label>
+                        <select id="num_boletos" class="modern-select">
                             @foreach(range(1, 5) as $i)
-                                <option value="{{ $i }}">{{ $i }}</option>
+                                <option value="{{ $i }}">{{ $i }} {{ $i === 1 ? 'boleto' : 'boletos' }}</option>
                             @endforeach
                         </select>
                     </div>
+                    <div class="legend">
+                        <span class="legend-pill"><span class="lg-dot lg-available"></span>{{ __('messages.seat_available') }}</span>
+                        <span class="legend-pill"><span class="lg-dot lg-selected"></span>{{ __('messages.seat_selected') }}</span>
+                        <span class="legend-pill"><span class="lg-dot lg-occupied"></span>{{ __('messages.seat_occupied') }}</span>
+                    </div>
                 </div>
 
-                <div class="d-flex flex-column align-items-center mb-3">
-                    <div class="mb-2">
-                        <img src="/images/bus_top.gif" alt="Front" style="height:130px;">
-                    </div>
+                <div class="bus-h-scroll">
+                    <div class="bus-h">
+                        <div class="bus-nose">
+                            <div class="nose-inner">
+                                <div class="windshield"></div>
+                                <div class="headlight"></div>
+                            </div>
+                        </div>
 
-                    @foreach($seatRows as $rowSeats)
-                    <div class="d-flex justify-content-center" style="gap:3px;">
-                        @foreach($rowSeats as $seatCode)
+                        <div class="bus-cabin">
                             @php
-                                $seatNumber = (int) substr($seatCode, 2);
-                                $isOccupied = in_array($seatNumber, $occupiedSeats);
+                                $rowIndices = [0, 1, -1, 2, 3];
                             @endphp
-                            @if($isOccupied)
-                                <img src="/images/ocupado.gif" class="seat-occupied"
-                                     style="width:35px;height:24px;"
-                                     alt="{{ __('messages.seat_occupied') }}" title="{{ __('messages.seat_occupied') }}">
-                            @else
-                                <img src="/images/{{ $seatCode }}.jpg"
-                                     class="seat-available seat-img cursor-pointer"
-                                     id="{{ $seatCode }}" data-seat="{{ $seatNumber }}"
-                                     style="width:35px;height:24px;"
-                                     alt="{{ __('messages.seat_available') }} {{ $seatNumber }}"
-                                     title="{{ __('messages.seat_available') }} {{ $seatNumber }}">
-                            @endif
-                        @endforeach
-                    </div>
-                    @endforeach
 
-                    <div class="mt-2">
-                        <img src="/images/bus_back.gif" alt="Back" style="height:130px;">
+                            @foreach($rowIndices as $rowIdx)
+                                @if($rowIdx === -1)
+                                    <div class="bus-aisle">
+                                        <span class="aisle-label">PASILLO</span>
+                                    </div>
+                                @else
+                                    <div class="bus-seat-row">
+                                        @foreach($seatRows as $rowSeats)
+                                            @php
+                                                $seatCode = $rowSeats[$rowIdx];
+                                                $seatNumber = (int) substr($seatCode, 2);
+                                                $isOccupied = in_array($seatNumber, $occupiedSeats);
+                                            @endphp
+                                            <div class="seat {{ $isOccupied ? 'occupied' : 'available' }}"
+                                                 @unless($isOccupied) data-seat="{{ $seatNumber }}" id="{{ $seatCode }}" @endunless>
+                                                <span class="seat-num">{{ $seatNumber }}</span>
+                                            </div>
+                                        @endforeach
+                                    </div>
+                                @endif
+                            @endforeach
+                        </div>
+
+                        <div class="bus-tail">
+                            <div class="taillight"></div>
+                        </div>
                     </div>
                 </div>
 
-                <div class="text-center mb-3 small">
-                    <img src="/images/ocupado.gif" class="me-1">{{ __('messages.seat_occupied') }}
-                    <img src="/images/asientoNormal.gif" class="ms-3 me-1">{{ __('messages.seat_available') }}
-                    <img src="/images/seleccionado.gif" class="ms-3 me-1">{{ __('messages.seat_selected') }}
-                </div>
+                <div id="selectedSummary" class="selection-summary"></div>
 
                 <form id="purchaseForm" action="{{ route('purchase') }}" method="POST">
                     @csrf
                     <input type="hidden" name="trip_id" value="{{ $trip->id }}">
                     <div id="passengerFields"></div>
 
-                    <div class="d-flex justify-content-between mt-3">
-                        <a href="{{ route('home') }}" class="btn btn-outline-secondary">
-                            &larr; {{ __('messages.back') }}
+                    <div class="action-bar">
+                        <a href="{{ route('home') }}" class="btn-back">
+                            <i class="bi bi-arrow-left"></i> {{ __('messages.back') }}
                         </a>
-                        <button type="submit" class="btn btn-warning" id="continueBtn" disabled>
-                            {{ __('messages.continue') }} &rarr;
+                        <button type="submit" class="btn-continue" id="continueBtn" disabled>
+                            {{ __('messages.continue') }} <i class="bi bi-arrow-right"></i>
                         </button>
                     </div>
                 </form>
@@ -92,9 +125,411 @@
 </div>
 
 <style>
-.seat-available { cursor: pointer; }
-.seat-occupied { opacity: 0.6; cursor: not-allowed; }
-.seat-selected { outline: 3px solid #ffc107; outline-offset: -1px; border-radius: 2px; }
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap');
+
+.seat-card {
+    background: #fff;
+    border-radius: 20px;
+    box-shadow: 0 4px 24px rgba(0,0,0,.08), 0 1px 2px rgba(0,0,0,.04);
+    overflow: hidden;
+    border: 1px solid rgba(0,0,0,.04);
+}
+.seat-card-header {
+    background: linear-gradient(135deg, var(--brand-primary, #f59e0b), #d97706);
+    color: #fff;
+    padding: 1.25rem 1.5rem;
+}
+.header-icon {
+    width: 44px;
+    height: 44px;
+    background: rgba(255,255,255,.2);
+    border-radius: 12px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 1.2rem;
+    backdrop-filter: blur(4px);
+}
+.seat-card-body {
+    padding: 1.5rem;
+}
+
+.trip-bar {
+    display: flex;
+    align-items: center;
+    gap: 1rem;
+    background: #f8fafc;
+    border-radius: 14px;
+    padding: .85rem 1.25rem;
+    margin-bottom: 1.25rem;
+    border: 1px solid #e2e8f0;
+}
+.trip-stop {
+    display: flex;
+    align-items: center;
+    gap: .6rem;
+}
+.stop-dot {
+    width: 12px;
+    height: 12px;
+    border-radius: 50%;
+    flex-shrink: 0;
+}
+.stop-dot.origin { background: var(--brand-accent, #3b82f6); box-shadow: 0 0 0 3px rgba(59,130,246,.2); }
+.stop-dot.destination { background: #ef4444; box-shadow: 0 0 0 3px rgba(239,68,68,.2); }
+.stop-label {
+    font-size: .6rem;
+    text-transform: uppercase;
+    letter-spacing: .5px;
+    color: #94a3b8;
+    display: block;
+}
+.stop-city {
+    font-size: .85rem;
+    font-weight: 600;
+    color: #1e293b;
+    display: block;
+}
+.trip-line {
+    flex: 1;
+    height: 2px;
+    background: #e2e8f0;
+    position: relative;
+    min-width: 40px;
+}
+.trip-line-inner {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    color: #94a3b8;
+    font-size: .7rem;
+    background: #f8fafc;
+    padding: 0 4px;
+}
+.trip-meta {
+    flex-shrink: 0;
+}
+.trip-date, .trip-time {
+    font-size: .8rem;
+    font-weight: 600;
+    color: #334155;
+}
+
+.controls-bar {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    flex-wrap: wrap;
+    gap: .75rem;
+    margin-bottom: 1.25rem;
+}
+.controls-label {
+    font-size: .75rem;
+    font-weight: 600;
+    color: #64748b;
+    text-transform: uppercase;
+    letter-spacing: .5px;
+}
+.modern-select {
+    appearance: none;
+    background: #fff url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='12' viewBox='0 0 12 12'%3E%3Cpath fill='%2364748b' d='M2 4l4 4 4-4'/%3E%3C/svg%3E") no-repeat right 10px center;
+    border: 1.5px solid #e2e8f0;
+    border-radius: 10px;
+    padding: .45rem 2rem .45rem .75rem;
+    font-size: .85rem;
+    font-weight: 500;
+    color: #1e293b;
+    cursor: pointer;
+    transition: border-color .15s;
+}
+.modern-select:focus {
+    outline: none;
+    border-color: var(--brand-accent, #3b82f6);
+    box-shadow: 0 0 0 3px rgba(59,130,246,.12);
+}
+
+.legend {
+    display: flex;
+    gap: .75rem;
+}
+.legend-pill {
+    display: inline-flex;
+    align-items: center;
+    gap: 5px;
+    font-size: .7rem;
+    color: #64748b;
+    font-weight: 500;
+}
+.lg-dot {
+    width: 10px;
+    height: 10px;
+    border-radius: 3px;
+}
+.lg-available { background: #bbf7d0; border: 1.5px solid #4ade80; }
+.lg-selected  { background: var(--brand-primary, #fbbf24); border: 1.5px solid #f59e0b; }
+.lg-occupied  { background: #e2e8f0; border: 1.5px solid #cbd5e1; }
+
+.bus-h-scroll {
+    overflow-x: auto;
+    padding: .5rem 0 1rem;
+    display: flex;
+    justify-content: center;
+}
+.bus-h {
+    display: flex;
+    align-items: stretch;
+    min-width: fit-content;
+}
+
+.bus-nose {
+    width: 40px;
+    background: linear-gradient(180deg, #475569, #334155);
+    border-radius: 16px 0 0 16px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-shrink: 0;
+    position: relative;
+}
+.nose-inner {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 6px;
+}
+.windshield {
+    width: 20px;
+    height: 28px;
+    background: linear-gradient(180deg, rgba(148,163,184,.3), rgba(148,163,184,.1));
+    border-radius: 6px 6px 3px 3px;
+    border: 1px solid rgba(255,255,255,.08);
+}
+.headlight {
+    width: 8px;
+    height: 8px;
+    background: #fbbf24;
+    border-radius: 50%;
+    box-shadow: 0 0 6px rgba(251,191,36,.6);
+}
+
+.bus-cabin {
+    background: linear-gradient(180deg, #f1f5f9, #e2e8f0);
+    border-top: 3px solid #334155;
+    border-bottom: 3px solid #334155;
+    display: flex;
+    flex-direction: column;
+}
+
+.bus-seat-row {
+    display: flex;
+    gap: 3px;
+    padding: 3px 6px;
+    align-items: center;
+}
+
+.bus-aisle {
+    height: 20px;
+    margin: 0 6px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    position: relative;
+    background: linear-gradient(90deg,
+        transparent 0%, rgba(148,163,184,.15) 10%,
+        rgba(148,163,184,.15) 90%, transparent 100%);
+}
+.bus-aisle::before,
+.bus-aisle::after {
+    content: '';
+    position: absolute;
+    left: 0;
+    right: 0;
+    height: 1px;
+}
+.bus-aisle::before { top: 0; background: repeating-linear-gradient(90deg, #cbd5e1 0, #cbd5e1 4px, transparent 4px, transparent 8px); }
+.bus-aisle::after { bottom: 0; background: repeating-linear-gradient(90deg, #cbd5e1 0, #cbd5e1 4px, transparent 4px, transparent 8px); }
+.aisle-label {
+    font-size: .5rem;
+    font-weight: 700;
+    color: #94a3b8;
+    letter-spacing: 2px;
+    text-transform: uppercase;
+    background: #f1f5f9;
+    padding: 0 6px;
+}
+
+.seat {
+    width: 30px;
+    height: 22px;
+    border-radius: 5px 5px 3px 3px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    user-select: none;
+    transition: all .18s cubic-bezier(.4,0,.2,1);
+    cursor: default;
+    flex-shrink: 0;
+    position: relative;
+}
+.seat-num {
+    font-size: .55rem;
+    font-weight: 700;
+    line-height: 1;
+}
+
+.seat.available {
+    background: linear-gradient(180deg, #dcfce7, #bbf7d0);
+    border: 1.5px solid #86efac;
+    color: #166534;
+    cursor: pointer;
+    box-shadow: 0 1px 2px rgba(0,0,0,.05);
+}
+.seat.available:hover {
+    background: linear-gradient(180deg, #bbf7d0, #86efac);
+    transform: translateY(-2px) scale(1.08);
+    box-shadow: 0 4px 12px rgba(74,222,128,.35);
+}
+
+.seat.selected {
+    background: linear-gradient(180deg, var(--brand-primary, #fbbf24), #f59e0b);
+    border: 1.5px solid #d97706;
+    color: #78350f;
+    transform: translateY(-2px) scale(1.08);
+    box-shadow: 0 4px 14px rgba(245,158,11,.4);
+}
+.seat.selected::after {
+    content: '✓';
+    position: absolute;
+    top: -4px;
+    right: -4px;
+    width: 12px;
+    height: 12px;
+    background: #fff;
+    border-radius: 50%;
+    font-size: .45rem;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: #166534;
+    box-shadow: 0 1px 3px rgba(0,0,0,.15);
+}
+
+.seat.occupied {
+    background: linear-gradient(180deg, #f1f5f9, #e2e8f0);
+    border: 1.5px solid #cbd5e1;
+    color: #94a3b8;
+    cursor: not-allowed;
+}
+
+.bus-tail {
+    width: 22px;
+    background: linear-gradient(180deg, #475569, #334155);
+    border-radius: 0 12px 12px 0;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-shrink: 0;
+}
+.taillight {
+    width: 6px;
+    height: 18px;
+    background: linear-gradient(180deg, #f87171, #ef4444);
+    border-radius: 3px;
+    box-shadow: 0 0 8px rgba(239,68,68,.5);
+}
+
+.selection-summary {
+    text-align: center;
+    font-size: .8rem;
+    color: #64748b;
+    min-height: 24px;
+    margin-bottom: .5rem;
+    font-weight: 500;
+}
+
+.action-bar {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding-top: 1rem;
+    border-top: 1px solid #f1f5f9;
+    margin-top: .5rem;
+}
+.btn-back {
+    display: inline-flex;
+    align-items: center;
+    gap: .4rem;
+    padding: .55rem 1.1rem;
+    border-radius: 10px;
+    font-size: .85rem;
+    font-weight: 500;
+    color: #64748b;
+    text-decoration: none;
+    border: 1.5px solid #e2e8f0;
+    background: #fff;
+    transition: all .15s;
+}
+.btn-back:hover {
+    background: #f8fafc;
+    border-color: #cbd5e1;
+    color: #334155;
+}
+.btn-continue {
+    display: inline-flex;
+    align-items: center;
+    gap: .4rem;
+    padding: .55rem 1.4rem;
+    border-radius: 10px;
+    font-size: .85rem;
+    font-weight: 600;
+    color: #fff;
+    border: none;
+    background: linear-gradient(135deg, var(--brand-accent, #3b82f6), #2563eb);
+    cursor: pointer;
+    transition: all .18s;
+    box-shadow: 0 2px 8px rgba(37,99,235,.25);
+}
+.btn-continue:hover:not(:disabled) {
+    transform: translateY(-1px);
+    box-shadow: 0 4px 14px rgba(37,99,235,.35);
+}
+.btn-continue:disabled {
+    opacity: .45;
+    cursor: not-allowed;
+    box-shadow: none;
+}
+
+.passenger-row {
+    display: flex;
+    align-items: center;
+    gap: .75rem;
+    padding: .6rem .8rem;
+    background: #f8fafc;
+    border-radius: 10px;
+    margin-bottom: .5rem;
+    border: 1px solid #e2e8f0;
+}
+.passenger-seat {
+    font-size: .75rem;
+    font-weight: 700;
+    color: var(--brand-accent, #3b82f6);
+    min-width: 42px;
+}
+.passenger-input {
+    flex: 1;
+    border: 1.5px solid #e2e8f0;
+    border-radius: 8px;
+    padding: .4rem .7rem;
+    font-size: .8rem;
+    color: #1e293b;
+    transition: border-color .15s;
+}
+.passenger-input:focus {
+    outline: none;
+    border-color: var(--brand-accent, #3b82f6);
+    box-shadow: 0 0 0 3px rgba(59,130,246,.1);
+}
 </style>
 @endsection
 
@@ -104,46 +539,45 @@ $(function() {
     let selectedSeats = [];
     let maxSeats = parseInt($('#num_boletos').val());
 
-    function updatePassengerFields() {
+    function updateUI() {
         const disabled = selectedSeats.length !== maxSeats;
         $('#continueBtn').prop('disabled', disabled);
 
         let html = '';
+        let summary = [];
         selectedSeats.forEach(function(seat) {
-            html += '<div class="row mb-2 align-items-center">';
-            html += '<div class="col-3 fw-semibold">' + '{{ __('messages.seat') }}' + ' ' + seat + '</div>';
-            html += '<div class="col-9">';
+            summary.push('#' + seat);
+            html += '<div class="passenger-row">';
+            html += '<span class="passenger-seat">{{ __("messages.seat") }} ' + seat + '</span>';
             html += '<input type="hidden" name="seats[]" value="' + seat + '">';
-            html += '<input type="text" name="names[]" class="form-control"';
-            html += ' placeholder="{{ __('messages.passenger_name') }}" required maxlength="65">';
-            html += '</div></div>';
+            html += '<input type="text" name="names[]" class="passenger-input"';
+            html += ' placeholder="{{ __("messages.passenger_name") }}" required maxlength="65">';
+            html += '</div>';
         });
         $('#passengerFields').html(html);
+        $('#selectedSummary').text(summary.length ? summary.join('  ·  ') : '');
     }
 
-    $(document).on('click', '.seat-available', function() {
+    $(document).on('click', '.seat.available', function() {
         const seat = $(this).data('seat');
-        const $img = $(this);
-
-        if ($img.hasClass('seat-selected')) {
-            $img.removeClass('seat-selected').attr('src', '/images/as' + String(seat).padStart(2, '0') + '.jpg');
+        if ($(this).hasClass('selected')) {
+            $(this).removeClass('selected').addClass('available');
             selectedSeats = $.grep(selectedSeats, function(s) { return s !== seat; });
         } else {
             if (selectedSeats.length >= maxSeats) return;
-            $img.addClass('seat-selected').attr('src', '/images/seleccionado.gif');
+            $(this).removeClass('available').addClass('selected');
             selectedSeats.push(seat);
         }
-        updatePassengerFields();
+        updateUI();
     });
 
     $('#num_boletos').on('change', function() {
         maxSeats = parseInt($(this).val());
         while (selectedSeats.length > maxSeats) {
             const removed = selectedSeats.pop();
-            const $img = $('[data-seat="' + removed + '"]');
-            $img.removeClass('seat-selected').attr('src', '/images/as' + String(removed).padStart(2, '0') + '.jpg');
+            $('[data-seat="' + removed + '"]').removeClass('selected').addClass('available');
         }
-        updatePassengerFields();
+        updateUI();
     });
 });
 </script>

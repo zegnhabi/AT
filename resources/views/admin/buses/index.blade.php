@@ -44,10 +44,8 @@
             </tbody>
         </table>
     </div>
-    @if($buses->hasPages())
     <div class="card-footer bg-white border-top d-flex justify-content-center py-3">
-        {{ $buses->links() }}
+        {{ $buses->links('vendor.pagination.bootstrap-5') }}
     </div>
-    @endif
 </div>
 @endsection

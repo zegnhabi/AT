@@ -13,6 +13,9 @@ class TripController extends Controller
 {
     public function index(Request $request)
     {
+        $perPage = $request->input('per_page', 5);
+        $perPage = in_array($perPage, [5, 10, 25, 50, 'all']) ? $perPage : 5;
+
         $query = Trip::with('bus.driver', 'tickets');
 
         if ($request->filled('city')) {
@@ -27,12 +30,24 @@ class TripController extends Controller
         }
 
         $trips = $query->orderByDesc('departure_date')
-            ->orderBy('departure_time')
-            ->paginate(15);
+            ->orderBy('departure_time');
+
+        if ($perPage === 'all') {
+            $trips = $trips->get();
+            $trips = new \Illuminate\Pagination\LengthAwarePaginator(
+                $trips,
+                $trips->count(),
+                $trips->count(),
+                1,
+                ['path' => $request->url(), 'query' => array_merge($request->query(), ['per_page' => 'all'])]
+            );
+        } else {
+            $trips = $trips->paginate($perPage)->withQueryString();
+        }
 
         $cities = Trip::select('departure_city')->distinct()->orderBy('departure_city')->pluck('departure_city');
 
-        return view('admin.trips.index', compact('trips', 'cities'));
+        return view('admin.trips.index', compact('trips', 'cities', 'perPage'));
     }
 
     public function show(Trip $trip)

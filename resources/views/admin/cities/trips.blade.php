@@ -45,7 +45,7 @@
     </div>
     @if($trips->hasPages())
     <div class="card-footer bg-white border-top d-flex justify-content-center py-3">
-        {{ $trips->links() }}
+        {{ $trips->links('vendor.pagination.bootstrap-5') }}
     </div>
     @endif
 </div>

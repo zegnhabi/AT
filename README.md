@@ -2,9 +2,64 @@
 
 Sistema web para la venta de boletos de autobuses. Permite buscar corridas por origen/destino/fecha, seleccionar asientos en un mapa visual, registrar pasajeros e imprimir boletos con código QR.
 
----
+<div align="center">
+
+![PHP](https://img.shields.io/badge/PHP-8.2-777BB4?style=flat&logo=php&logoColor=white)
+![Laravel](https://img.shields.io/badge/Laravel-11-FF2D20?style=flat&logo=laravel&logoColor=white)
+![PostgreSQL](https://img.shields.io/badge/PostgreSQL-16-4169E1?style=flat&logo=postgresql&logoColor=white)
+![Bootstrap](https://img.shields.io/badge/Bootstrap-5.3-7952B3?style=flat&logo=bootstrap&logoColor=white)
+![Docker](https://img.shields.io/badge/Docker-24-2496ED?style=flat&logo=docker&logoColor=white)
+![Nginx](https://img.shields.io/badge/Nginx-1.25-009639?style=flat&logo=nginx&logoColor=white)
+![jQuery](https://img.shields.io/badge/jQuery-3.7-0769AD?style=flat&logo=jquery&logoColor=white)
+![GitHub](https://img.shields.io/badge/License-MIT-green?style=flat)
+
+</div>
 
 ## Changelog
+
+### [2.0.6] — 2026-06-23 — Paginación unificada, impresión de pasajeros y deploy GHCR
+
+#### Nuevo: Impresión de lista de pasajeros
+- Botón "Imprimir" en el detalle de viaje (`/admin/viajes/:id`) visible solo cuando hay boletos vendidos
+- Vista de impresión optimizada: tabla limpia con columna `#` correlativa, encabezado con ruta/fecha/autobús/chofer
+- Pie de página con timestamp de impresión y total de pasajeros
+- CSS `@media print` oculta el UI admin completo mostrando solo la tabla de pasajeros
+
+#### Corregido: Paginación admin unificada
+- **Selector de items por página en el paginador**: Dropdown "Mostrar 5/10/25/50/Todos" integrado dentro de la barra de paginación en todas las vistas admin (viajes, ciudades, autobuses, choferes, arqueo)
+- **Paginador siempre visible**: El selector se muestra incluso cuando se selecciona "Todos" (sin páginas), permitiendo cambiar el tamaño de página en cualquier momento
+- **Flechas del mismo tamaño**: Removida clase `pagination-sm` para que `<` y `>` tengan el mismo tamaño que los números de página
+- **Default 5 items**: Todos los controllers ahora usan 5 como valor por defecto (era 15 en viajes)
+
+#### Mejorado: Paginación con ventana dinámica
+- Paginador muestra ~2 páginas alrededor de la actual con `…` para saltos
+- Texto informativo: "Mostrar [dropdown] · Página **1** de **12**" o "Mostrar [dropdown] · **180** registro(s)" cuando todos se muestran
+- Preserva filtros activos (fechas, ciudades) al cambiar tamaño de página
+
+### [2.0.5] — 2026-06-23 — Layout asientos, paginación y deploy
+
+#### Corregido: Layout de selección de asientos
+- **Vista horizontal**: El mapa de asientos ahora se muestra de izquierda a derecha (frente → trasera del bus)
+- **Layout 2+2 con pasillo**: Cada columna muestra 2 filas arriba del pasillo y 2 filas abajo
+- **Bus CSS puro**: Reemplazadas las imágenes tiny `bus_top.gif` (57px) y `bus_back.gif` (21px) por un diseño CSS con nariz redondeada, parabrisas, ventanas, pasillo completo y luces traseras
+- **Asientos CSS**: Cajas con números en vez de imágenes JPG diminutas, con hover, transiciones y check badge en selección
+- **Look and feel moderno**: Gradient header, trip bar estilo roadmap, leyenda con pills, botones con gradiente y sombra
+
+#### Corregido: Paginación admin
+- **Flechas gigantes**: Reemplazada la paginación default de Laravel (Tailwind SVG) por vista custom Bootstrap con iconos `bi-chevron-left/right`
+- **Ventana de páginas**: Paginador limitado a 2 páginas a cada lado con `…` para saltos (ej: `< 1 2 3 … 12 >`)
+- **Selector de items por página**: Agregado dropdown en Ciudades y Viajes con opciones 5, 10, 25, 50 y "Todos"
+- **Conteo corregido**: Ciudades ahora cuenta ciudades distintas (no filas de viajes)
+
+#### Nuevo: Deploy a GHCR
+- Workflow `.github/workflows/deploy-ghcr.yml` para build y push automático a GitHub Container Registry
+- Trigger en push a `main` o manual (`workflow_dispatch`)
+- Tags: `latest` + SHA del commit
+- `.dockerignore` agregado para excluir archivos innecesarios del build context
+
+#### Infraestructura
+- `Dockerfile` simplificado: el `APP_KEY` y dependencias se generan en el entrypoint
+- `docker/entrypoint.sh` creado: ejecuta `composer install`, genera `APP_KEY` si falta, y arranca `php-fpm`
 
 ### [2.0.4] — 2026-05-18 — Personalización de marca blanca
 

@@ -49,12 +49,23 @@ class CashierController extends Controller
     {
         $startDate = $request->input('start', now()->startOfMonth()->format('Y-m-d'));
         $endDate   = $request->input('end', now()->format('Y-m-d'));
+        $perPage   = $request->input('per_page', 30);
+        $perPage   = in_array($perPage, [5, 10, 25, 50, 'all']) ? $perPage : 30;
 
-        $tickets = Ticket::whereBetween('sale_date', [$startDate, $endDate])
+        $query = Ticket::whereBetween('sale_date', [$startDate, $endDate])
             ->with('trip')
             ->orderBy('sale_date')
-            ->orderBy('created_at')
-            ->paginate(30);
+            ->orderBy('created_at');
+
+        if ($perPage === 'all') {
+            $tickets = $query->get();
+            $tickets = new \Illuminate\Pagination\LengthAwarePaginator(
+                $tickets, $tickets->count(), $tickets->count(), 1,
+                ['path' => $request->url(), 'query' => array_merge($request->query(), ['per_page' => 'all'])]
+            );
+        } else {
+            $tickets = $query->paginate($perPage)->withQueryString();
+        }
 
         $summary = Ticket::whereBetween('sale_date', [$startDate, $endDate])
             ->join('trips', 'tickets.trip_id', '=', 'trips.id')
@@ -67,7 +78,7 @@ class CashierController extends Controller
             )->first();
 
         return view('admin.cashier.arqueo', compact(
-            'tickets', 'summary', 'startDate', 'endDate'
+            'tickets', 'summary', 'startDate', 'endDate', 'perPage'
         ));
     }
 }

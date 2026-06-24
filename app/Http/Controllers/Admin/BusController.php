@@ -9,10 +9,24 @@ use Illuminate\Http\Request;
 
 class BusController extends Controller
 {
-    public function index()
+    public function index(Request $request)
     {
-        $buses = Bus::with('driver')->orderBy('id')->paginate(10);
-        return view('admin.buses.index', compact('buses'));
+        $perPage = $request->input('per_page', 10);
+        $perPage = in_array($perPage, [5, 10, 25, 50, 'all']) ? $perPage : 10;
+
+        $query = Bus::with('driver')->orderBy('id');
+
+        if ($perPage === 'all') {
+            $buses = $query->get();
+            $buses = new \Illuminate\Pagination\LengthAwarePaginator(
+                $buses, $buses->count(), $buses->count(), 1,
+                ['path' => $request->url(), 'query' => array_merge($request->query(), ['per_page' => 'all'])]
+            );
+        } else {
+            $buses = $query->paginate($perPage)->withQueryString();
+        }
+
+        return view('admin.buses.index', compact('buses', 'perPage'));
     }
 
     public function create()

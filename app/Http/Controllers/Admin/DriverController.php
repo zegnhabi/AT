@@ -8,10 +8,24 @@ use Illuminate\Http\Request;
 
 class DriverController extends Controller
 {
-    public function index()
+    public function index(Request $request)
     {
-        $drivers = Driver::withCount('buses')->orderBy('name')->paginate(10);
-        return view('admin.drivers.index', compact('drivers'));
+        $perPage = $request->input('per_page', 10);
+        $perPage = in_array($perPage, [5, 10, 25, 50, 'all']) ? $perPage : 10;
+
+        $query = Driver::withCount('buses')->orderBy('name');
+
+        if ($perPage === 'all') {
+            $drivers = $query->get();
+            $drivers = new \Illuminate\Pagination\LengthAwarePaginator(
+                $drivers, $drivers->count(), $drivers->count(), 1,
+                ['path' => $request->url(), 'query' => array_merge($request->query(), ['per_page' => 'all'])]
+            );
+        } else {
+            $drivers = $query->paginate($perPage)->withQueryString();
+        }
+
+        return view('admin.drivers.index', compact('drivers', 'perPage'));
     }
 
     public function create()

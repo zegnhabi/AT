@@ -20,10 +20,15 @@ class SeatController extends Controller
         }
 
         $seatRows = [
-            ['as01', 'as05', 'as09', 'as13', 'as17', 'as21', 'as25', 'as29', 'as33'],
-            ['as02', 'as06', 'as10', 'as14', 'as18', 'as22', 'as26', 'as30', 'as34'],
-            ['as03', 'as07', 'as11', 'as15', 'as19', 'as23', 'as27', 'as31', 'as35'],
-            ['as04', 'as08', 'as12', 'as16', 'as20', 'as24', 'as28', 'as32', 'as36'],
+            ['as01', 'as02', 'as03', 'as04'],
+            ['as05', 'as06', 'as07', 'as08'],
+            ['as09', 'as10', 'as11', 'as12'],
+            ['as13', 'as14', 'as15', 'as16'],
+            ['as17', 'as18', 'as19', 'as20'],
+            ['as21', 'as22', 'as23', 'as24'],
+            ['as25', 'as26', 'as27', 'as28'],
+            ['as29', 'as30', 'as31', 'as32'],
+            ['as33', 'as34', 'as35', 'as36'],
         ];
 
         return view('seats', compact('trip', 'seatRows', 'occupiedSeats'));

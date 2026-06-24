@@ -46,7 +46,7 @@
     </div>
     @if($drivers->hasPages())
     <div class="card-footer bg-white border-top d-flex justify-content-center py-3">
-        {{ $drivers->links() }}
+        {{ $drivers->links('vendor.pagination.bootstrap-5') }}
     </div>
     @endif
 </div>

@@ -17,29 +17,15 @@ COPY --from=composer:latest /usr/bin/composer /usr/bin/composer
 
 WORKDIR /var/www/html
 
-COPY composer.json composer.lock* ./
-COPY . .
-
 RUN mkdir -p storage/framework/views \
     storage/framework/cache \
     storage/framework/sessions \
     storage/logs \
     bootstrap/cache
 
-RUN composer install --no-interaction --no-dev --optimize-autoloader
-
-RUN chown -R www-data:www-data /var/www/html/storage /var/www/html/bootstrap/cache
-
-USER www-data
-
-RUN php artisan key:generate
-
-USER root
-
-COPY . .
-
-RUN chown -R www-data:www-data /var/www/html/storage /var/www/html/bootstrap/cache
+COPY docker/entrypoint.sh /usr/local/bin/entrypoint.sh
+RUN chmod +x /usr/local/bin/entrypoint.sh
 
 EXPOSE 9000
 
-CMD ["php-fpm"]
+ENTRYPOINT ["entrypoint.sh"]

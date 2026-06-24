@@ -2,9 +2,40 @@
 
 Sistema web para la venta de boletos de autobuses. Buscar corridas, seleccionar asientos, registrar pasajeros e imprimir boletos con código QR.
 
----
+<div align="center">
+
+![PHP](https://img.shields.io/badge/PHP-8.2-777BB4?style=flat&logo=php&logoColor=white)
+![Laravel](https://img.shields.io/badge/Laravel-11-FF2D20?style=flat&logo=laravel&logoColor=white)
+![PostgreSQL](https://img.shields.io/badge/PostgreSQL-16-4169E1?style=flat&logo=postgresql&logoColor=white)
+![Bootstrap](https://img.shields.io/badge/Bootstrap-5.3-7952B3?style=flat&logo=bootstrap&logoColor=white)
+![Docker](https://img.shields.io/badge/Docker-24-2496ED?style=flat&logo=docker&logoColor=white)
+![Nginx](https://img.shields.io/badge/Nginx-1.25-009639?style=flat&logo=nginx&logoColor=white)
+![jQuery](https://img.shields.io/badge/jQuery-3.7-0769AD?style=flat&logo=jquery&logoColor=white)
+![GitHub](https://img.shields.io/badge/License-MIT-green?style=flat)
+
+</div>
 
 ## Changelog
+
+### [2.0.6] — 2026-06-23 — Paginación unificada, impresión de pasajeros y deploy GHCR
+
+- **Impresión de pasajeros**: Botón "Imprimir" en detalle de viaje con vista optimizada para papel
+- **Paginación unificada**: Dropdown "Mostrar" integrado en el paginador de todas las vistas admin
+- **Paginador siempre visible**: Se muestra incluso con "Todos" seleccionados
+- **Flechas tamaño uniforme**: `<` y `>` del mismo tamaño que los números de página
+- **Default 5 items**: Todos los controllers usan 5 como valor por defecto
+- Ver detalle completo en `README.md`
+
+### [2.0.5] — 2026-06-23 — Layout asientos, paginación y deploy
+
+- **Mapa de asientos horizontal**: Vista de izquierda a derecha (frente → trasera del bus) con layout 2+2 y pasillo
+- **Bus CSS puro**: Reemplazadas imágenes tiny por diseño CSS con nariz, parabrisas, ventanas, pasillo y luces
+- **Asientos CSS**: Cajas con números, hover, transiciones y check badge
+- **Look moderno**: Gradient header, trip bar, leyenda con pills, botones con gradiente
+- **Paginación admin**: Flechas con iconos Bootstrap, ventana de páginas con `…`, selector de items por página (5/10/25/50/Todos)
+- **Deploy GHCR**: Workflow para build y push automático a GitHub Container Registry
+- **Docker**: Entrypoint con `composer install` y generación automática de `APP_KEY`
+- Ver detalle completo en `README.md`
 
 ### [2.0.4] — 2026-05-18 — Personalización de marca blanca
 

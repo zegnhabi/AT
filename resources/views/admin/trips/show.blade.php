@@ -61,7 +61,14 @@
         <div class="card card-admin h-100">
             <div class="card-header bg-white d-flex justify-content-between align-items-center">
                 <span><i class="bi bi-people text-primary me-1"></i> Pasajeros</span>
-                <span class="badge bg-primary badge-status">{{ $trip->tickets->count() }} boleto(s)</span>
+                <div class="d-flex align-items-center gap-2">
+                    <span class="badge bg-primary badge-status">{{ $trip->tickets->count() }} boleto(s)</span>
+                    @if(!$trip->tickets->isEmpty())
+                    <button onclick="window.print()" class="btn btn-sm btn-admin-outline" title="Imprimir lista">
+                        <i class="bi bi-printer"></i> Imprimir
+                    </button>
+                    @endif
+                </div>
             </div>
             <div class="card-body p-0">
                 @if($trip->tickets->isEmpty())
@@ -91,5 +98,56 @@
             </div>
         </div>
     </div>
+</div>
+
+<style>
+@media print {
+    body * { visibility: hidden !important; }
+    body::before { content: none !important; }
+    #print-area, #print-area * { visibility: visible !important; }
+    #print-area { position: absolute; left: 0; top: 0; width: 100%; padding: 20px; background: #fff !important; }
+    .print-header { text-align: center; margin-bottom: 15px; border-bottom: 2px solid #000; padding-bottom: 10px; }
+    .print-header h2 { font-size: 1.2rem; margin: 0; }
+    .print-header p { font-size: .85rem; margin: 2px 0 0; color: #333; }
+    .print-table { width: 100%; border-collapse: collapse; font-size: .8rem; }
+    .print-table th { background: #eee !important; -webkit-print-color-adjust: exact; print-color-adjust: exact; }
+    .print-table th, .print-table td { border: 1px solid #333; padding: 4px 8px; text-align: left; }
+    .print-footer { margin-top: 15px; font-size: .75rem; text-align: right; color: #666; }
+}
+</style>
+
+<div id="print-area">
+    <div class="print-header">
+        <h2>Lista de pasajeros</h2>
+        <p>
+            Viaje #{{ $trip->id }} ·
+            {{ $trip->departure_city }} → {{ $trip->arrival_city }} ·
+            {{ $trip->departure_date->format('d-m-Y') }} {{ substr($trip->departure_time, 0, 5) }}
+        </p>
+        <p>Autobús #{{ $trip->bus_id }} · Chofer: {{ $trip->bus->driver->name ?? '—' }}</p>
+    </div>
+    @if(!$trip->tickets->isEmpty())
+    <table class="print-table">
+        <thead>
+            <tr><th>#</th><th>Folio</th><th>Asiento</th><th>Pasajero</th><th>Fecha venta</th></tr>
+        </thead>
+        <tbody>
+            @foreach($trip->tickets as $idx => $tk)
+            <tr>
+                <td>{{ $idx + 1 }}</td>
+                <td>{{ $tk->folio }}</td>
+                <td>{{ $tk->seat_number }}</td>
+                <td>{{ $tk->passenger_name }}</td>
+                <td>{{ $tk->sale_date->format('d-m-Y') }}</td>
+            </tr>
+            @endforeach
+        </tbody>
+    </table>
+    <div class="print-footer">
+        Impreso: {{ now()->format('d-m-Y H:i') }} · Total: {{ $trip->tickets->count() }} pasajero(s)
+    </div>
+    @else
+    <p style="text-align:center;color:#999;">No hay pasajeros registrados</p>
+    @endif
 </div>
 @endsection
