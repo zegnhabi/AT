@@ -51,11 +51,19 @@ class DashboardController extends Controller
             $revenueWeek->push(['date' => now()->subDays($i)->format('d-m-Y'), 'revenue' => $rev]);
         }
 
-        $ticketsByHour = Ticket::where('sale_date', $today)
-            ->select(DB::raw("EXTRACT(HOUR FROM created_at)::int as hour"), DB::raw('count(*)::int as total'))
-            ->groupBy(DB::raw("EXTRACT(HOUR FROM created_at)::int"))
-            ->orderBy('hour')
-            ->pluck('total', 'hour');
+        if (DB::getDriverName() === 'sqlite') {
+            $ticketsByHour = Ticket::where('sale_date', $today)
+                ->select(DB::raw("strftime('%H', created_at) as hour"), DB::raw('count(*) as total'))
+                ->groupBy(DB::raw("strftime('%H', created_at)"))
+                ->orderBy('hour')
+                ->pluck('total', 'hour');
+        } else {
+            $ticketsByHour = Ticket::where('sale_date', $today)
+                ->select(DB::raw("EXTRACT(HOUR FROM created_at)::int as hour"), DB::raw('count(*)::int as total'))
+                ->groupBy(DB::raw("EXTRACT(HOUR FROM created_at)::int"))
+                ->orderBy('hour')
+                ->pluck('total', 'hour');
+        }
 
         return view('admin.dashboard', compact(
             'tripsToday', 'ticketsToday', 'revenueToday',

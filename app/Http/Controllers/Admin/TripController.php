@@ -37,7 +37,7 @@ class TripController extends Controller
             $trips = new \Illuminate\Pagination\LengthAwarePaginator(
                 $trips,
                 $trips->count(),
-                $trips->count(),
+                max($trips->count(), 1),
                 1,
                 ['path' => $request->url(), 'query' => array_merge($request->query(), ['per_page' => 'all'])]
             );
