@@ -50,7 +50,7 @@ class AdminDashboardTest extends TestCase
 
     public function test_admin_branding_page_loads(): void
     {
-        $response = $this->get('/admin/marca');
+        $response = $this->get('/admin/personalizacion');
         $response->assertStatus(200);
     }
 

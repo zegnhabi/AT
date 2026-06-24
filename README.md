@@ -28,9 +28,11 @@ Sistema web para la venta de boletos de autobuses. Permite buscar corridas por o
 | **ORM**        | SQL manual               | Eloquent ORM + Migraciones          |
 | **Frontend**   | XHTML 1.0 + Bootstrap 2  | HTML5 + Bootstrap 5.3               |
 | **QR**         | phpqrcode (archivo PNG)  | simple-qrcode (base64 inline)       |
-| **i18n**       | `include()` condicional  | Laravel Translation + JSON          |
+| **i18n**       | `include()` condicional  | Laravel Translation + JSON + DB     |
+| **PWA**        | —                        | Service Worker + Manifest           |
 | **Contenedor** | —                        | Podman / Docker Compose             |
 | **Servidor**   | Apache / Heroku           | Nginx + PHP-FPM                     |
+| **CI/CD**      | —                        | GitHub Actions → GHCR               |
 
 ---
 
@@ -75,6 +77,14 @@ php artisan migrate --seed
 php artisan serve --host=0.0.0.0 --port=8080
 ```
 
+### Testing
+
+```bash
+touch database/database.sqlite
+php artisan migrate --force
+php vendor/bin/phpunit
+```
+
 ### Comandos útiles (Podman)
 
 ```bash
@@ -91,6 +101,28 @@ podman exec bus_ticketing_app php artisan migrate --seed
 # Acceder al contenedor
 podman exec -it bus_ticketing_app bash
 ```
+
+---
+
+## Funcionalidades
+
+### Público
+- Búsqueda de corridas por origen, destino y fecha (incluye paradas intermedias)
+- Selección de asientos en mapa visual (horizontal bus, 4 asientos por columna, 1-2 pisos)
+- Compra de 1 a 5 boletos con nombre de pasajero
+- Impresión de boletos con código QR
+- PWA: instalable como app, funciona offline parcial
+- 4 idiomas: español, inglés, alemán, francés
+
+### Admin (`/admin/*`)
+- Dashboard con KPIs (viajes/boletos/ingresos hoy, ocupación)
+- CRUD completo: choferes, autobuses, ciudades, viajes
+- Paradas intermedias por viaje
+- Corte de caja diario y arqueo por fechas (exportar CSV, imprimir)
+- Impresión de lista de pasajeros por viaje
+- Personalización de marca: colores, logo, favicon, idiomas disponibles
+- Traducciones gestionadas desde BD con import de archivos PHP
+- Panel completamente localizado en 4 idiomas
 
 ---
 
@@ -112,52 +144,49 @@ podman exec -it bus_ticketing_app bash
 ```
 AT/
 ├── app/
-│   ├── Console/Kernel.php
-│   ├── Exceptions/Handler.php
 │   ├── Http/
 │   │   ├── Controllers/
 │   │   │   ├── Controller.php
 │   │   │   ├── HomeController.php
 │   │   │   ├── LocaleController.php
 │   │   │   ├── SeatController.php
-│   │   │   └── TicketController.php
-│   │   ├── Kernel.php
+│   │   │   ├── TicketController.php
+│   │   │   └── Admin/
+│   │   │       ├── BrandingController.php
+│   │   │       ├── BusController.php
+│   │   │       ├── CityController.php
+│   │   │       ├── DashboardController.php
+│   │   │       ├── DriverController.php
+│   │   │       └── TripController.php
 │   │   └── Middleware/SetLocale.php
 │   ├── Models/
 │   │   ├── Bus.php
 │   │   ├── Driver.php
-│   │   ├── Route.php
 │   │   ├── Ticket.php
-│   │   └── Trip.php
-│   └── Providers/AppServiceProvider.php
-├── bootstrap/app.php
-├── config/
-│   ├── app.php
-│   ├── database.php
-│   ├── filesystems.php
-│   ├── session.php
-│   └── view.php
+│   │   ├── Translation.php
+│   │   ├── Trip.php
+│   │   └── TripStop.php
+│   └── Providers/
+│       ├── AppServiceProvider.php
+│       └── TranslationServiceProvider.php
 ├── database/
 │   ├── migrations/
 │   │   ├── 0001_create_buses_table.php
 │   │   ├── 0002_create_drivers_table.php
-│   │   ├── 0003_create_routes_table.php
-│   │   ├── 0004_create_trips_table.php
-│   │   └── 0005_create_tickets_table.php
+│   │   ├── 0003_create_trips_table.php
+│   │   ├── 0004_create_tickets_table.php
+│   │   ├── 0005_create_settings_table.php
+│   │   ├── 0006_create_trip_stops_table.php
+│   │   └── 0007_create_translations_table.php
 │   └── seeders/
 │       ├── DatabaseSeeder.php
 │       ├── DriverSeeder.php
 │       ├── BusSeeder.php
-│       └── TripSeeder.php
+│       ├── TripSeeder.php
+│       └── TranslationSeeder.php
 ├── docker/
+│   ├── entrypoint-prod.sh
 │   └── nginx.conf
-├── docker-compose.yml
-├── Dockerfile
-├── images/                      # Assets gráficos (compartidos con legacy)
-├── Legacy/                      # Código original PHP 5 + MySQL
-├── public/
-│   ├── .htaccess
-│   └── index.php                # Front controller Laravel
 ├── resources/
 │   ├── lang/
 │   │   ├── de/messages.php
@@ -169,18 +198,28 @@ AT/
 │       ├── search.blade.php
 │       ├── seats.blade.php
 │       ├── tickets.blade.php
-│       └── layouts/app.blade.php
+│       └── admin/
+│           ├── layouts/app.blade.php
+│           ├── dashboard.blade.php
+│           ├── drivers/
+│           ├── buses/
+│           ├── trips/
+│           ├── cities/
+│           ├── branding/index.blade.php
+│           └── cashier/
 ├── routes/
-│   └── web.php
-├── storage/                     # Logs, cache, sesiones, vistas compiladas
-├── .env.example
-├── .gitignore
-├── artisan
-├── composer.json
-├── Dockerfile
+│   ├── web.php
+│   ├── admin.php
+│   └── console.php
+├── public/
+│   ├── manifest.json
+│   ├── sw.js
+│   └── images/
 ├── docker-compose.yml
+├── Dockerfile
 ├── README.md
-└── README_es.md
+├── README_es.md
+└── CHANGELOG.md
 ```
 
 ---

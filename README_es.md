@@ -28,25 +28,31 @@ Sistema web para la venta de boletos de autobuses. Buscar corridas, seleccionar 
 | ORM            | Eloquent + Migraciones               |
 | Frontend       | HTML5 + Bootstrap 5.3                |
 | QR             | simple-qrcode (base64)               |
-| i18n           | Laravel Translation (4 idiomas)      |
-| Testing        | PHPUnit 11 (15 tests)                |
+| i18n           | Laravel Translation + DB (4 idiomas) |
+| PWA            | Service Worker + Manifest            |
+| Testing        | PHPUnit 11 (14 tests)                |
 | CI/CD          | GitHub Actions → GHCR               |
 | Contenedor     | Podman / Docker Compose              |
 
 ## Funcionalidades
 
-- Búsqueda de corridas por origen, destino y fecha
-- Selección de asientos dinámica (1-100 asientos, 1-2 pisos)
+### Público
+- Búsqueda de corridas por origen, destino y fecha (incluye paradas intermedias)
+- Selección de asientos en mapa visual (horizontal bus, 4 asientos por columna, 1-2 pisos)
 - Compra de 1 a 5 boletos con nombre de pasajero
 - Impresión de boletos con código QR
-- Panel administrativo con dashboard, CRUD de choferes/autobuses/ciudades/viajes
-- Corte de caja diario con exportar CSV e imprimir
-- Arqueo por rango de fechas con exportar CSV e imprimir
+- PWA: instalable como app
+- 4 idiomas: español, inglés, alemán, francés
+
+### Admin (`/admin/*`)
+- Dashboard con KPIs (viajes/boletos/ingresos hoy, ocupación)
+- CRUD completo: choferes, autobuses, ciudades, viajes
+- Paradas intermedias por viaje
+- Corte de caja diario y arqueo por fechas (exportar CSV, imprimir)
 - Impresión de lista de pasajeros por viaje
-- Personalización de marca (colores, logo, favicon)
-- Configuración de idiomas (es, en, de, fr)
-- Paginación unificada con selector de items por página
-- PHPUnit tests + CI/CD con GitHub Actions
+- Personalización de marca: colores, logo, favicon, idiomas disponibles
+- Traducciones gestionadas desde BD con import de archivos PHP
+- Panel completamente localizado en 4 idiomas
 
 ---
 
@@ -68,10 +74,17 @@ php artisan migrate --seed
 php artisan serve --port=8080
 ```
 
+## Testing
+
+```bash
+touch database/database.sqlite
+php artisan migrate --force
+php vendor/bin/phpunit
+```
+
 ## Deploy en Portainer
 
 ```bash
-# Ver guía completa
 cat DEPLOY_PORTAINER.md
 ```
 

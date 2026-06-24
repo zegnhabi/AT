@@ -1,9 +1,9 @@
 @extends('admin.layouts.app')
 
-@section('title', 'Arqueo')
+@section('title', __('messages.admin_arqueo_title'))
 @section('content')
 <div class="d-flex justify-content-between align-items-center page-title flex-wrap gap-2">
-    <div><i class="bi bi-calculator-fill"></i> Arqueo de caja</div>
+    <div><i class="bi bi-calculator-fill"></i> {{ __('messages.admin_arqueo_title') }}</div>
     <div class="d-flex align-items-center gap-2 flex-wrap">
         <form method="GET" class="d-flex gap-2 filter-bar p-2 m-0">
             <input type="hidden" name="per_page" value="{{ $perPage }}">
@@ -17,13 +17,13 @@
                 <input type="date" name="end" class="form-control border-start-0" style="width:auto;"
                        value="{{ $endDate }}">
             </div>
-            <button class="btn btn-admin-primary btn-sm"><i class="bi bi-search"></i> Consultar</button>
+            <button class="btn btn-admin-primary btn-sm"><i class="bi bi-search"></i> {{ __('messages.admin_arqueo_query') }}</button>
         </form>
-        <a href="{{ route('admin.cashier.arqueo.export', ['start' => $startDate, 'end' => $endDate]) }}" class="btn btn-sm btn-admin-outline" title="Exportar CSV">
-            <i class="bi bi-download"></i> Exportar
+        <a href="{{ route('admin.cashier.arqueo.export', ['start' => $startDate, 'end' => $endDate]) }}" class="btn btn-sm btn-admin-outline" title="{{ __('messages.admin_arqueo_export_csv') }}">
+            <i class="bi bi-download"></i> {{ __('messages.admin_arqueo_export') }}
         </a>
-        <button onclick="window.print()" class="btn btn-sm btn-admin-outline" title="Imprimir">
-            <i class="bi bi-printer"></i> Imprimir
+        <button onclick="window.print()" class="btn btn-sm btn-admin-outline" title="{{ __('messages.admin_arqueo_print') }}">
+            <i class="bi bi-printer"></i> {{ __('messages.admin_arqueo_print') }}
         </button>
     </div>
 </div>
@@ -34,7 +34,7 @@
         <div class="card card-admin position-relative">
             <div class="card-body card-gradient-success" style="border-radius:12px;">
                 <div class="kpi-value">{{ $summary->total_tickets }}</div>
-                <div class="kpi-label"><i class="bi bi-ticket me-1"></i> Boletos vendidos</div>
+                <div class="kpi-label"><i class="bi bi-ticket me-1"></i> {{ __('messages.admin_arqueo_tickets_sold') }}</div>
                 <i class="bi bi-ticket-perforated-fill kpi-icon"></i>
             </div>
         </div>
@@ -43,7 +43,7 @@
         <div class="card card-admin position-relative">
             <div class="card-body card-gradient-warning" style="border-radius:12px;">
                 <div class="kpi-value">${{ number_format($summary->total_revenue, 2) }}</div>
-                <div class="kpi-label"><i class="bi bi-currency-dollar me-1"></i> Ingreso total</div>
+                <div class="kpi-label"><i class="bi bi-currency-dollar me-1"></i> {{ __('messages.admin_arqueo_total_revenue') }}</div>
                 <i class="bi bi-cash-stack kpi-icon"></i>
             </div>
         </div>
@@ -52,7 +52,7 @@
         <div class="card card-admin position-relative">
             <div class="card-body card-gradient-info" style="border-radius:12px;">
                 <div class="kpi-value">{{ $summary->total_trips }}</div>
-                <div class="kpi-label"><i class="bi bi-bus-front me-1"></i> Viajes con ventas</div>
+                <div class="kpi-label"><i class="bi bi-bus-front me-1"></i> {{ __('messages.admin_arqueo_trips_with_sales') }}</div>
                 <i class="bi bi-bus-front-fill kpi-icon"></i>
             </div>
         </div>
@@ -65,7 +65,7 @@
                     <i class="bi bi-arrow-right mx-1" style="font-size:1rem;"></i>
                     {{ \Carbon\Carbon::parse($summary->last_date)->format('d-m-Y') }}
                 </div>
-                <div class="kpi-label"><i class="bi bi-calendar-range me-1"></i> Período</div>
+                <div class="kpi-label"><i class="bi bi-calendar-range me-1"></i> {{ __('messages.admin_arqueo_period') }}</div>
                 <i class="bi bi-clock-history kpi-icon"></i>
             </div>
         </div>
@@ -75,13 +75,13 @@
 
 <div class="card card-admin">
     <div class="card-header bg-white d-flex justify-content-between align-items-center">
-        <span><i class="bi bi-list-check text-primary me-1"></i> Detalle de transacciones</span>
-        <span class="badge bg-primary badge-status">{{ $tickets->total() }} registro(s)</span>
+        <span><i class="bi bi-list-check text-primary me-1"></i> {{ __('messages.admin_arqueo_transaction_detail') }}</span>
+        <span class="badge bg-primary badge-status">{{ $tickets->total() }} {{ __('messages.admin_arqueo_record_count') }}</span>
     </div>
     <div class="table-responsive" style="max-height:550px;">
         <table class="table table-admin">
             <thead>
-                <tr><th>Folio</th><th>Fecha venta</th><th>Pasajero</th><th>Ruta</th><th>Fecha viaje</th><th>Hora</th><th class="text-center">Asiento</th><th class="text-end">Monto</th></tr>
+                <tr><th>{{ __('messages.admin_arqueo_folio') }}</th><th>{{ __('messages.admin_arqueo_sale_date') }}</th><th>{{ __('messages.admin_arqueo_passenger') }}</th><th>{{ __('messages.admin_arqueo_route') }}</th><th>{{ __('messages.admin_arqueo_trip_date') }}</th><th>{{ __('messages.admin_arqueo_time') }}</th><th class="text-center">{{ __('messages.admin_arqueo_seat') }}</th><th class="text-end">{{ __('messages.admin_arqueo_amount') }}</th></tr>
             </thead>
             <tbody>
                 @forelse($tickets as $t)
@@ -101,7 +101,7 @@
                 </tr>
                 @empty
                 <tr><td colspan="8" class="text-center text-muted py-4">
-                    <i class="bi bi-inbox me-2" style="font-size:1.5rem;"></i><br>Sin transacciones en este período
+                    <i class="bi bi-inbox me-2" style="font-size:1.5rem;"></i><br>{{ __('messages.admin_arqueo_no_transactions') }}
                 </td></tr>
                 @endforelse
             </tbody>
@@ -132,24 +132,24 @@
 
 <div id="print-area">
     <div class="print-header">
-        <h2>Arqueo de Caja</h2>
-        <p>Período: {{ \Carbon\Carbon::parse($startDate)->format('d/m/Y') }} al {{ \Carbon\Carbon::parse($endDate)->format('d/m/Y') }}</p>
+        <h2>{{ __('messages.admin_arqueo_title') }}</h2>
+        <p>{{ __('messages.admin_arqueo_period') }} {{ \Carbon\Carbon::parse($startDate)->format('d/m/Y') }} al {{ \Carbon\Carbon::parse($endDate)->format('d/m/Y') }}</p>
     </div>
 
     @if($summary)
     <div class="print-summary">
         <table>
-            <tr><td><strong>Boletos vendidos:</strong></td><td>{{ $summary->total_tickets }}</td></tr>
-            <tr><td><strong>Ingreso total:</strong></td><td>${{ number_format($summary->total_revenue, 2) }}</td></tr>
-            <tr><td><strong>Viajes con ventas:</strong></td><td>{{ $summary->total_trips }}</td></tr>
+            <tr><td><strong>{{ __('messages.admin_arqueo_tickets_sold') }}:</strong></td><td>{{ $summary->total_tickets }}</td></tr>
+            <tr><td><strong>{{ __('messages.admin_arqueo_total_revenue') }}:</strong></td><td>${{ number_format($summary->total_revenue, 2) }}</td></tr>
+            <tr><td><strong>{{ __('messages.admin_arqueo_trips_with_sales') }}:</strong></td><td>{{ $summary->total_trips }}</td></tr>
         </table>
     </div>
     @endif
 
-    <h3 style="font-size:1rem;margin:15px 0 5px;">Detalle de transacciones</h3>
+    <h3 style="font-size:1rem;margin:15px 0 5px;">{{ __('messages.admin_arqueo_transaction_detail') }}</h3>
     <table class="print-table">
         <thead>
-            <tr><th>#</th><th>Folio</th><th>Fecha venta</th><th>Pasajero</th><th>Ruta</th><th>Fecha viaje</th><th>Hora</th><th>Asiento</th><th>Monto</th></tr>
+            <tr><th>#</th><th>{{ __('messages.admin_arqueo_folio') }}</th><th>{{ __('messages.admin_arqueo_sale_date') }}</th><th>{{ __('messages.admin_arqueo_passenger') }}</th><th>{{ __('messages.admin_arqueo_route') }}</th><th>{{ __('messages.admin_arqueo_trip_date') }}</th><th>{{ __('messages.admin_arqueo_time') }}</th><th>{{ __('messages.admin_arqueo_seat') }}</th><th>{{ __('messages.admin_arqueo_amount') }}</th></tr>
         </thead>
         <tbody>
             @foreach($tickets as $idx => $t)
@@ -169,7 +169,7 @@
     </table>
 
     <div style="margin-top:15px;font-size:.75rem;text-align:right;color:#666;">
-        Impreso: {{ now()->format('d/m/Y H:i') }} · Total: {{ $tickets->total() }} registro(s)
+        {{ __('messages.admin_arqueo_printed') }} {{ now()->format('d/m/Y H:i') }} · {{ __('messages.admin_arqueo_total') }} {{ $tickets->total() }} {{ __('messages.admin_arqueo_record_count') }}
     </div>
 </div>
 @endsection

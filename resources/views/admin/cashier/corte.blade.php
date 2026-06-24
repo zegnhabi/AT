@@ -1,9 +1,9 @@
 @extends('admin.layouts.app')
 
-@section('title', 'Corte de Caja')
+@section('title', __('messages.admin_corte_title'))
 @section('content')
 <div class="d-flex justify-content-between align-items-center page-title flex-wrap gap-2">
-    <div><i class="bi bi-cash-stack"></i> Corte de caja</div>
+    <div><i class="bi bi-cash-stack"></i> {{ __('messages.admin_corte_title') }}</div>
     <div class="d-flex align-items-center gap-2 flex-wrap">
         <form method="GET" class="d-flex gap-2 filter-bar p-2 m-0">
             <div class="input-group input-group-sm" style="width:auto;">
@@ -11,13 +11,13 @@
                 <input type="date" name="date" class="form-control border-start-0" style="width:auto;"
                        value="{{ $date }}">
             </div>
-            <button class="btn btn-admin-primary btn-sm"><i class="bi bi-search"></i> Consultar</button>
+            <button class="btn btn-admin-primary btn-sm"><i class="bi bi-search"></i> {{ __('messages.admin_corte_query') }}</button>
         </form>
-        <a href="{{ route('admin.cashier.corte.export', ['date' => $date]) }}" class="btn btn-sm btn-admin-outline" title="Exportar CSV">
-            <i class="bi bi-download"></i> Exportar
+        <a href="{{ route('admin.cashier.corte.export', ['date' => $date]) }}" class="btn btn-sm btn-admin-outline" title="{{ __('messages.admin_corte_export_csv') }}">
+            <i class="bi bi-download"></i> {{ __('messages.admin_corte_export') }}
         </a>
-        <button onclick="window.print()" class="btn btn-sm btn-admin-outline" title="Imprimir">
-            <i class="bi bi-printer"></i> Imprimir
+        <button onclick="window.print()" class="btn btn-sm btn-admin-outline" title="{{ __('messages.admin_corte_print') }}">
+            <i class="bi bi-printer"></i> {{ __('messages.admin_corte_print') }}
         </button>
     </div>
 </div>
@@ -27,7 +27,7 @@
         <div class="card card-admin position-relative">
             <div class="card-body card-gradient-success" style="border-radius:12px;">
                 <div class="kpi-value">{{ $totalTickets }}</div>
-                <div class="kpi-label"><i class="bi bi-ticket me-1"></i> Boletos vendidos</div>
+                <div class="kpi-label"><i class="bi bi-ticket me-1"></i> {{ __('messages.admin_corte_tickets_sold') }}</div>
                 <i class="bi bi-ticket-perforated-fill kpi-icon"></i>
             </div>
         </div>
@@ -36,7 +36,7 @@
         <div class="card card-admin position-relative">
             <div class="card-body card-gradient-warning" style="border-radius:12px;">
                 <div class="kpi-value">${{ number_format($totalRevenue, 2) }}</div>
-                <div class="kpi-label"><i class="bi bi-currency-dollar me-1"></i> Ingreso total</div>
+                <div class="kpi-label"><i class="bi bi-currency-dollar me-1"></i> {{ __('messages.admin_corte_total_revenue') }}</div>
                 <i class="bi bi-cash-stack kpi-icon"></i>
             </div>
         </div>
@@ -45,7 +45,7 @@
         <div class="card card-admin position-relative">
             <div class="card-body card-gradient-info" style="border-radius:12px;">
                 <div class="kpi-value">${{ number_format($revenueYesterday, 2) }}</div>
-                <div class="kpi-label"><i class="bi bi-arrow-left-circle me-1"></i> Ingreso ayer</div>
+                <div class="kpi-label"><i class="bi bi-arrow-left-circle me-1"></i> {{ __('messages.admin_corte_yesterday_revenue') }}</div>
                 <i class="bi bi-calendar2-day kpi-icon"></i>
             </div>
         </div>
@@ -54,7 +54,7 @@
         <div class="card card-admin position-relative">
             <div class="card-body card-gradient-secondary" style="border-radius:12px;">
                 <div class="kpi-value">${{ number_format($revenueWeek, 2) }}</div>
-                <div class="kpi-label"><i class="bi bi-calendar-range me-1"></i> Últimos 7 días</div>
+                <div class="kpi-label"><i class="bi bi-calendar-range me-1"></i> {{ __('messages.admin_corte_last_7_days') }}</div>
                 <i class="bi bi-graph-up kpi-icon"></i>
             </div>
         </div>
@@ -65,11 +65,11 @@
     <div class="col-md-5">
         <div class="card card-admin h-100">
             <div class="card-header bg-white">
-                <i class="bi bi-pie-chart text-primary me-1"></i> Resumen por ruta
+                <i class="bi bi-pie-chart text-primary me-1"></i> {{ __('messages.admin_corte_summary_by_route') }}
             </div>
             <div class="card-body p-0">
                 <table class="table table-admin">
-                    <thead><tr><th>Ruta</th><th class="text-center">Boletos</th><th class="text-end">Ingreso</th></tr></thead>
+                    <thead><tr><th>{{ __('messages.admin_corte_route') }}</th><th class="text-center">{{ __('messages.admin_corte_tickets') }}</th><th class="text-end">{{ __('messages.admin_corte_revenue') }}</th></tr></thead>
                     <tbody>
                         @forelse($byRoute as $route => $data)
                         <tr>
@@ -83,7 +83,7 @@
                             <td class="text-end fw-semibold" style="color:var(--admin-success);">${{ number_format($data['revenue'], 2) }}</td>
                         </tr>
                         @empty
-                        <tr><td colspan="3" class="text-center text-muted py-3">Sin ventas en esta fecha</td></tr>
+                        <tr><td colspan="3" class="text-center text-muted py-3">{{ __('messages.admin_corte_no_sales_date') }}</td></tr>
                         @endforelse
                     </tbody>
                 </table>
@@ -94,13 +94,13 @@
     <div class="col-md-7">
         <div class="card card-admin h-100">
             <div class="card-header bg-white">
-                <i class="bi bi-receipt text-warning me-1"></i> Detalle de ventas
+                <i class="bi bi-receipt text-warning me-1"></i> {{ __('messages.admin_corte_sales_detail') }}
             </div>
             <div class="card-body p-0">
                 <div class="table-responsive" style="max-height:350px;">
                     <table class="table table-admin">
                         <thead>
-                            <tr><th>Folio</th><th>Pasajero</th><th>Ruta</th><th class="text-center">Asiento</th><th class="text-end">Monto</th></tr>
+                            <tr><th>{{ __('messages.admin_corte_folio') }}</th><th>{{ __('messages.admin_corte_passenger') }}</th><th>{{ __('messages.admin_corte_route') }}</th><th class="text-center">{{ __('messages.admin_corte_seat') }}</th><th class="text-end">{{ __('messages.admin_corte_amount') }}</th></tr>
                         </thead>
                         <tbody>
                             @forelse($tickets as $t)
@@ -116,7 +116,7 @@
                                 <td class="text-end fw-semibold" style="color:var(--admin-success);">${{ number_format($t->trip->price, 2) }}</td>
                             </tr>
                             @empty
-                            <tr><td colspan="5" class="text-center text-muted py-4">Sin ventas en esta fecha</td></tr>
+                            <tr><td colspan="5" class="text-center text-muted py-4">{{ __('messages.admin_corte_no_sales_date') }}</td></tr>
                             @endforelse
                         </tbody>
                     </table>
@@ -146,23 +146,23 @@
 
 <div id="print-area">
     <div class="print-header">
-        <h2>Corte de Caja</h2>
-        <p>Fecha: {{ \Carbon\Carbon::parse($date)->format('d/m/Y') }}</p>
+        <h2>{{ __('messages.admin_corte_title') }}</h2>
+        <p>{{ __('messages.admin_corte_print_date') }} {{ \Carbon\Carbon::parse($date)->format('d/m/Y') }}</p>
     </div>
 
     <div class="print-summary">
         <table>
-            <tr><td><strong>Boletos vendidos:</strong></td><td>{{ $totalTickets }}</td></tr>
-            <tr><td><strong>Ingreso total:</strong></td><td>${{ number_format($totalRevenue, 2) }}</td></tr>
-            <tr><td><strong>Ingreso ayer:</strong></td><td>${{ number_format($revenueYesterday, 2) }}</td></tr>
-            <tr><td><strong>Últimos 7 días:</strong></td><td>${{ number_format($revenueWeek, 2) }}</td></tr>
+            <tr><td><strong>{{ __('messages.admin_corte_tickets_sold') }}:</strong></td><td>{{ $totalTickets }}</td></tr>
+            <tr><td><strong>{{ __('messages.admin_corte_total_revenue') }}:</strong></td><td>${{ number_format($totalRevenue, 2) }}</td></tr>
+            <tr><td><strong>{{ __('messages.admin_corte_yesterday_revenue') }}:</strong></td><td>${{ number_format($revenueYesterday, 2) }}</td></tr>
+            <tr><td><strong>{{ __('messages.admin_corte_last_7_days') }}:</strong></td><td>${{ number_format($revenueWeek, 2) }}</td></tr>
         </table>
     </div>
 
     @if(!$byRoute->isEmpty())
-    <h3 style="font-size:1rem;margin:15px 0 5px;">Resumen por ruta</h3>
+    <h3 style="font-size:1rem;margin:15px 0 5px;">{{ __('messages.admin_corte_summary_by_route') }}</h3>
     <table class="print-table">
-        <thead><tr><th>Ruta</th><th>Boletos</th><th>Ingreso</th></tr></thead>
+        <thead><tr><th>{{ __('messages.admin_corte_route') }}</th><th>{{ __('messages.admin_corte_tickets') }}</th><th>{{ __('messages.admin_corte_revenue') }}</th></tr></thead>
         <tbody>
             @foreach($byRoute as $route => $data)
             <tr>
@@ -175,10 +175,10 @@
     </table>
     @endif
 
-    <h3 style="font-size:1rem;margin:15px 0 5px;">Detalle de ventas</h3>
+    <h3 style="font-size:1rem;margin:15px 0 5px;">{{ __('messages.admin_corte_sales_detail') }}</h3>
     <table class="print-table">
         <thead>
-            <tr><th>#</th><th>Folio</th><th>Pasajero</th><th>Ruta</th><th>Asiento</th><th>Monto</th></tr>
+            <tr><th>#</th><th>{{ __('messages.admin_corte_folio') }}</th><th>{{ __('messages.admin_corte_passenger') }}</th><th>{{ __('messages.admin_corte_route') }}</th><th>{{ __('messages.admin_corte_seat') }}</th><th>{{ __('messages.admin_corte_amount') }}</th></tr>
         </thead>
         <tbody>
             @foreach($tickets as $idx => $t)
@@ -195,7 +195,7 @@
     </table>
 
     <div style="margin-top:15px;font-size:.75rem;text-align:right;color:#666;">
-        Impreso: {{ now()->format('d/m/Y H:i') }} · Total: {{ $totalTickets }} boleto(s) · Ingreso: ${{ number_format($totalRevenue, 2) }}
+        {{ __('messages.admin_corte_printed') }} {{ now()->format('d/m/Y H:i') }} · {{ __('messages.admin_corte_total') }} {{ $totalTickets }} {{ __('messages.admin_corte_ticket_count') }} · {{ __('messages.admin_corte_revenue') }} ${{ number_format($totalRevenue, 2) }}
     </div>
 </div>
 @endsection

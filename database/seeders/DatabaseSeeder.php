@@ -12,6 +12,7 @@ class DatabaseSeeder extends Seeder
             DriverSeeder::class,
             BusSeeder::class,
             TripSeeder::class,
+            TranslationSeeder::class,
         ]);
     }
 }

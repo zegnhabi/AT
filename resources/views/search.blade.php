@@ -56,6 +56,16 @@
                         ${{ number_format($trip->price, 2) }}
                     </div>
                 </div>
+                @if($trip->stops->isNotEmpty())
+                <div class="px-4 pb-2">
+                    <small class="text-muted">
+                        <i class="bi bi-signpost-2 me-1"></i>Paradas:
+                        @foreach($trip->stops as $i => $stop)
+                            {{ $stop->city }}{{ $i < $trip->stops->count() - 1 ? ' · ' : '' }}
+                        @endforeach
+                    </small>
+                </div>
+                @endif
                 @empty
                 <div class="alert alert-info text-center my-3">{{ __('messages.no_trips') }}</div>
                 @endforelse

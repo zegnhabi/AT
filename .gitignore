@@ -8,3 +8,5 @@
 /storage/framework/sessions/*
 !storage/framework/sessions/.gitkeep
 .phpunit.result.cache
+generate_icons.php
+/public/images/icon-*.png

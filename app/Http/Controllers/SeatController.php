@@ -10,7 +10,7 @@ class SeatController extends Controller
 {
     public function select($id)
     {
-        $trip = Trip::with('tickets', 'bus')->findOrFail($id);
+        $trip = Trip::with('tickets', 'bus', 'stops')->findOrFail($id);
         $bus = $trip->bus;
         $totalSeats = $bus->seat_count;
         $decks = $bus->decks;
@@ -27,24 +27,20 @@ class SeatController extends Controller
         for ($d = 0; $d < $decks; $d++) {
             $offset = $d * $seatsPerDeck;
             $deckSeatCount = min($seatsPerDeck, $totalSeats - $offset);
-            $cols = 4;
-            $rows = (int) ceil($deckSeatCount / $cols);
-            $seatRows = [];
+            $seatsPerRow = 4;
+            $numCols = (int) ceil($deckSeatCount / $seatsPerRow);
 
-            for ($r = 0; $r < $rows; $r++) {
-                $row = [];
-                for ($c = 0; $c < $cols; $c++) {
-                    $seatNum = $offset + ($r * $cols) + $c + 1;
-                    if ($seatNum <= $totalSeats) {
-                        $row[] = $seatNum;
-                    } else {
-                        $row[] = null;
-                    }
+            $columns = [];
+            for ($col = 0; $col < $numCols; $col++) {
+                $colSeats = [];
+                for ($seat = 0; $seat < $seatsPerRow; $seat++) {
+                    $seatNum = $offset + ($col * $seatsPerRow) + $seat + 1;
+                    $colSeats[] = $seatNum <= $totalSeats ? $seatNum : null;
                 }
-                $seatRows[] = $row;
+                $columns[] = $colSeats;
             }
 
-            $seatDecks[$d + 1] = $seatRows;
+            $seatDecks[$d + 1] = $columns;
         }
 
         return view('seats', compact('trip', 'seatDecks', 'occupiedSeats', 'totalSeats', 'decks'));

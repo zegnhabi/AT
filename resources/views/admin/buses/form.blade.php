@@ -1,10 +1,10 @@
 @extends('admin.layouts.app')
 
-@section('title', $bus->exists ? 'Editar Autobús' : 'Nuevo Autobús')
+@section('title', $bus->exists ? __('messages.admin_edit_bus') : __('messages.admin_new_bus'))
 @section('content')
 <div class="page-title">
     <i class="bi bi-truck-front-fill"></i>
-    {{ $bus->exists ? 'Editar autobús' : 'Nuevo autobús' }}
+    {{ $bus->exists ? __('messages.admin_edit_bus') : __('messages.admin_new_bus') }}
 </div>
 
 <div class="card card-admin">
@@ -15,35 +15,35 @@
 
             <div class="row g-4">
                 <div class="col-md-2">
-                    <label class="form-label fw-semibold"><i class="bi bi-grid-3x3 text-primary me-1"></i>Asientos *</label>
+                    <label class="form-label fw-semibold"><i class="bi bi-grid-3x3 text-primary me-1"></i>{{ __('messages.admin_seats') }} *</label>
                     <input type="number" name="seat_count" class="form-control form-admin @error('seat_count') is-invalid @enderror"
                            value="{{ old('seat_count', $bus->seat_count) }}" required min="1" max="100">
                     @error('seat_count') <div class="invalid-feedback">{{ $message }}</div> @enderror
                 </div>
                 <div class="col-md-2">
-                    <label class="form-label fw-semibold"><i class="bi bi-layers-fill text-primary me-1"></i>Pisos *</label>
+                    <label class="form-label fw-semibold"><i class="bi bi-layers-fill text-primary me-1"></i>{{ __('messages.admin_decks') }} *</label>
                     <select name="decks" class="form-select form-admin @error('decks') is-invalid @enderror" required>
-                        <option value="1" @selected(old('decks', $bus->decks ?? 1) == 1)>1 piso</option>
-                        <option value="2" @selected(old('decks', $bus->decks ?? 1) == 2)>2 pisos</option>
+                        <option value="1" @selected(old('decks', $bus->decks ?? 1) == 1)>{{ __('messages.admin_1_deck') }}</option>
+                        <option value="2" @selected(old('decks', $bus->decks ?? 1) == 2)>{{ __('messages.admin_2_decks') }}</option>
                     </select>
                     @error('decks') <div class="invalid-feedback">{{ $message }}</div> @enderror
                 </div>
                 <div class="col-md-3">
-                    <label class="form-label fw-semibold"><i class="bi bi-calendar-range text-primary me-1"></i>Año modelo</label>
+                    <label class="form-label fw-semibold"><i class="bi bi-calendar-range text-primary me-1"></i>{{ __('messages.admin_model_year') }}</label>
                     <input type="number" name="model_year" class="form-control form-admin @error('model_year') is-invalid @enderror"
                            value="{{ old('model_year', $bus->model_year) }}" min="1990" max="{{ now()->year + 1 }}">
                     @error('model_year') <div class="invalid-feedback">{{ $message }}</div> @enderror
                 </div>
                 <div class="col-md-2">
-                    <label class="form-label fw-semibold"><i class="bi bi-upc-scan text-primary me-1"></i>N° Serie</label>
+                    <label class="form-label fw-semibold"><i class="bi bi-upc-scan text-primary me-1"></i>{{ __('messages.admin_serial_number') }}</label>
                     <input type="text" name="serial_number" class="form-control form-admin @error('serial_number') is-invalid @enderror"
                            value="{{ old('serial_number', $bus->serial_number) }}" maxlength="20">
                     @error('serial_number') <div class="invalid-feedback">{{ $message }}</div> @enderror
                 </div>
                 <div class="col-md-3">
-                    <label class="form-label fw-semibold"><i class="bi bi-person-badge text-primary me-1"></i>Chofer</label>
+                    <label class="form-label fw-semibold"><i class="bi bi-person-badge text-primary me-1"></i>{{ __('messages.admin_driver') }}</label>
                     <select name="driver_id" class="form-select form-admin">
-                        <option value="">— Sin asignar —</option>
+                        <option value="">{{ __('messages.admin_unassigned') }}</option>
                         @foreach($drivers as $d)
                             <option value="{{ $d->id }}" @selected(old('driver_id', $bus->driver_id) == $d->id)>{{ $d->name }}</option>
                         @endforeach
@@ -52,8 +52,8 @@
             </div>
 
             <div class="mt-4 pt-3 border-top">
-                <button class="btn btn-admin-primary"><i class="bi bi-check-lg"></i> Guardar</button>
-                <a href="{{ route('admin.buses.index') }}" class="btn btn-admin-outline ms-2">Cancelar</a>
+                <button class="btn btn-admin-primary"><i class="bi bi-check-lg"></i> {{ __('messages.admin_save') }}</button>
+                <a href="{{ route('admin.buses.index') }}" class="btn btn-admin-outline ms-2">{{ __('messages.admin_cancel') }}</a>
             </div>
         </form>
     </div>

@@ -30,8 +30,18 @@ class HomeController extends Controller
         $formattedDate = $request->input('date');
         $today = now()->format('Y-m-d');
 
-        $query = Trip::where('departure_city', $origin)
-            ->where('arrival_city', $destination)
+        $query = Trip::with('stops')
+            ->where(function ($q) use ($origin, $destination) {
+                $q->where(function ($q2) use ($origin, $destination) {
+                    $q2->where('departure_city', $origin)
+                       ->where('arrival_city', $destination);
+                })->orWhereHas('stops', function ($q2) use ($origin) {
+                    $q2->where('city', $origin);
+                }, '>=', 1)
+                ->orWhereHas('stops', function ($q2) use ($destination) {
+                    $q2->where('city', $destination);
+                }, '>=', 1);
+            })
             ->where('departure_date', $formattedDate);
 
         if ($formattedDate === $today) {

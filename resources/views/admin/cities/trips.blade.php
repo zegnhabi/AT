@@ -1,17 +1,17 @@
 @extends('admin.layouts.app')
 
-@section('title', "Viajes - $city")
+@section('title', __('messages.admin_cities_trips_title', ['city' => $city]))
 @section('content')
 <div class="page-title">
     <i class="bi bi-geo-alt-fill text-danger"></i>
-    Viajes relacionados con <strong>{{ $city }}</strong>
+    {{ __('messages.admin_cities_trips_related', ['city' => $city]) }}
 </div>
 
 <div class="card card-admin">
     <div class="table-responsive">
         <table class="table table-admin">
             <thead>
-                <tr><th>ID</th><th>Ruta</th><th>Fecha</th><th>Hora</th><th>Autobús</th><th>Chofer</th><th>Precio</th><th class="text-center">Ocupación</th></tr>
+                <tr><th>{{ __('messages.admin_id') }}</th><th>{{ __('messages.admin_route') }}</th><th>{{ __('messages.admin_date') }}</th><th>{{ __('messages.admin_time') }}</th><th>{{ __('messages.admin_bus') }}</th><th>{{ __('messages.admin_driver') }}</th><th>{{ __('messages.admin_price') }}</th><th class="text-center">{{ __('messages.admin_occupancy') }}</th></tr>
             </thead>
             <tbody>
                 @forelse($trips as $t)
@@ -38,7 +38,7 @@
                     </td>
                 </tr>
                 @empty
-                <tr><td colspan="8" class="text-center text-muted py-4">Sin viajes para esta ciudad</td></tr>
+                <tr><td colspan="8" class="text-center text-muted py-4">{{ __('messages.admin_cities_trips_empty') }}</td></tr>
                 @endforelse
             </tbody>
         </table>
@@ -51,6 +51,6 @@
 </div>
 
 <a href="{{ route('admin.cities.index') }}" class="btn btn-admin-outline mt-3">
-    <i class="bi bi-arrow-left"></i> Volver a ciudades
+    <i class="bi bi-arrow-left"></i> {{ __('messages.admin_cities_back') }}
 </a>
 @endsection

@@ -7,7 +7,6 @@ use App\Models\Trip;
 use App\Models\Ticket;
 use App\Models\Bus;
 use App\Models\Driver;
-use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 
 class DashboardController extends Controller

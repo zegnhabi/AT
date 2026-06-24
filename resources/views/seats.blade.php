@@ -26,6 +26,22 @@
                             <span class="stop-city">{{ $trip->departure_city }}</span>
                         </div>
                     </div>
+                    @if($trip->stops->isNotEmpty())
+                        @foreach($trip->stops as $stop)
+                        <div class="trip-line" style="min-width:20px;">
+                            <div class="trip-line-inner">
+                                <i class="bi bi-chevron-right"></i>
+                            </div>
+                        </div>
+                        <div class="trip-stop">
+                            <div class="stop-dot" style="background:#94a3b8;box-shadow:0 0 0 3px rgba(148,163,184,.2);"></div>
+                            <div class="stop-info">
+                                <span class="stop-label">Parada</span>
+                                <span class="stop-city">{{ $stop->city }}</span>
+                            </div>
+                        </div>
+                        @endforeach
+                    @endif
                     <div class="trip-line">
                         <div class="trip-line-inner">
                             <i class="bi bi-chevron-right"></i>
@@ -49,7 +65,7 @@
                         <label class="controls-label">{{ __('messages.select_ticket_count') }}</label>
                         <select id="num_boletos" class="modern-select">
                             @foreach(range(1, 5) as $i)
-                                <option value="{{ $i }}">{{ $i }} {{ $i === 1 ? 'boleto' : 'boletos' }}</option>
+                                <option value="{{ $i }}">{{ $i }} {{ __($i === 1 ? 'messages.ticket_one' : 'messages.ticket_other') }}</option>
                             @endforeach
                         </select>
                     </div>
@@ -70,10 +86,10 @@
                 </div>
                 @endif
 
-                @foreach($seatDecks as $deckNum => $seatRows)
+                @foreach($seatDecks as $deckNum => $columns)
                 <div class="deck-container {{ $deckNum === 1 ? 'active' : '' }}" id="deck-{{ $deckNum }}">
-                    <div class="bus-h-scroll">
-                        <div class="bus-h">
+                    <div class="bus-scroll">
+                        <div class="bus">
                             <div class="bus-nose">
                                 <div class="nose-inner">
                                     <div class="windshield"></div>
@@ -82,33 +98,45 @@
                             </div>
 
                             <div class="bus-cabin">
-                                @php
-                                    $cols = 4;
-                                    $rowCount = count($seatRows);
-                                @endphp
-
-                                @foreach($seatRows as $rowSeats)
-                                    <div class="bus-seat-row">
-                                        @foreach($rowSeats as $colIdx => $seatNum)
-                                            @if($colIdx === 2 && in_array(2, [0,1,2,3]) && $colIdx === 2)
-                                            @endif
-                                            @if($seatNum !== null)
-                                                @php $isOccupied = in_array((int)$seatNum, $occupiedSeats); @endphp
-                                                <div class="seat {{ $isOccupied ? 'occupied' : 'available' }}"
-                                                     @unless($isOccupied) data-seat="{{ $seatNum }}" id="seat-{{ $seatNum }}" @endunless>
-                                                    <span class="seat-num">{{ str_pad($seatNum, 2, '0', STR_PAD_LEFT) }}</span>
-                                                </div>
-                                            @else
-                                                <div class="seat-placeholder"></div>
+                                <div class="cabin-row">
+                                    @foreach($columns as $colSeats)
+                                    <div class="bus-col">
+                                        @foreach($colSeats as $idx => $seatNum)
+                                            @if($idx < 2)
+                                                @if($seatNum !== null)
+                                                    @php $isOccupied = in_array((int)$seatNum, $occupiedSeats); @endphp
+                                                    <div class="seat {{ $isOccupied ? 'occupied' : 'available' }}"
+                                                         @unless($isOccupied) data-seat="{{ $seatNum }}" id="seat-{{ $seatNum }}" @endunless>
+                                                        <span class="seat-num">{{ str_pad($seatNum, 2, '0', STR_PAD_LEFT) }}</span>
+                                                    </div>
+                                                @else
+                                                    <div class="seat-placeholder"></div>
+                                                @endif
                                             @endif
                                         @endforeach
                                     </div>
-                                    @if($loop->index < $rowCount - 1 && $loop->index == floor($rowCount / 2) - 1)
-                                        <div class="bus-aisle">
-                                            <span class="aisle-label">PASILLO</span>
-                                        </div>
-                                    @endif
-                                @endforeach
+                                    @endforeach
+                                </div>
+                                <div class="bus-aisle-row"><span class="aisle-text">{{ __('messages.aisle') }}</span></div>
+                                <div class="cabin-row">
+                                    @foreach($columns as $colSeats)
+                                    <div class="bus-col">
+                                        @foreach($colSeats as $idx => $seatNum)
+                                            @if($idx >= 2)
+                                                @if($seatNum !== null)
+                                                    @php $isOccupied = in_array((int)$seatNum, $occupiedSeats); @endphp
+                                                    <div class="seat {{ $isOccupied ? 'occupied' : 'available' }}"
+                                                         @unless($isOccupied) data-seat="{{ $seatNum }}" id="seat-{{ $seatNum }}" @endunless>
+                                                        <span class="seat-num">{{ str_pad($seatNum, 2, '0', STR_PAD_LEFT) }}</span>
+                                                    </div>
+                                                @else
+                                                    <div class="seat-placeholder"></div>
+                                                @endif
+                                            @endif
+                                        @endforeach
+                                    </div>
+                                    @endforeach
+                                </div>
                             </div>
 
                             <div class="bus-tail">
@@ -143,43 +171,12 @@
 <style>
 @import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap');
 
-.seat-card {
-    background: #fff;
-    border-radius: 20px;
-    box-shadow: 0 4px 24px rgba(0,0,0,.08), 0 1px 2px rgba(0,0,0,.04);
-    overflow: hidden;
-    border: 1px solid rgba(0,0,0,.04);
-}
-.seat-card-header {
-    background: linear-gradient(135deg, var(--brand-primary, #f59e0b), #d97706);
-    color: #fff;
-    padding: 1.25rem 1.5rem;
-}
-.header-icon {
-    width: 44px;
-    height: 44px;
-    background: rgba(255,255,255,.2);
-    border-radius: 12px;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    font-size: 1.2rem;
-    backdrop-filter: blur(4px);
-}
-.seat-card-body {
-    padding: 1.5rem;
-}
+.seat-card { background: #fff; border-radius: 20px; box-shadow: 0 4px 24px rgba(0,0,0,.08), 0 1px 2px rgba(0,0,0,.04); overflow: hidden; border: 1px solid rgba(0,0,0,.04); }
+.seat-card-header { background: linear-gradient(135deg, var(--brand-primary, #f59e0b), #d97706); color: #fff; padding: 1.25rem 1.5rem; }
+.header-icon { width: 44px; height: 44px; background: rgba(255,255,255,.2); border-radius: 12px; display: flex; align-items: center; justify-content: center; font-size: 1.2rem; backdrop-filter: blur(4px); }
+.seat-card-body { padding: 1.5rem; }
 
-.trip-bar {
-    display: flex;
-    align-items: center;
-    gap: 1rem;
-    background: #f8fafc;
-    border-radius: 14px;
-    padding: .85rem 1.25rem;
-    margin-bottom: 1.25rem;
-    border: 1px solid #e2e8f0;
-}
+.trip-bar { display: flex; align-items: center; gap: 1rem; background: #f8fafc; border-radius: 14px; padding: .85rem 1.25rem; margin-bottom: 1.25rem; border: 1px solid #e2e8f0; }
 .trip-stop { display: flex; align-items: center; gap: .6rem; }
 .stop-dot { width: 12px; height: 12px; border-radius: 50%; flex-shrink: 0; }
 .stop-dot.origin { background: var(--brand-accent, #3b82f6); box-shadow: 0 0 0 3px rgba(59,130,246,.2); }
@@ -203,45 +200,33 @@
 .lg-selected  { background: var(--brand-primary, #fbbf24); border: 1.5px solid #f59e0b; }
 .lg-occupied  { background: #e2e8f0; border: 1.5px solid #cbd5e1; }
 
-.deck-tabs {
-    display: flex;
-    gap: .5rem;
-    justify-content: center;
-}
-.deck-tab {
-    padding: .5rem 1.5rem;
-    border: 2px solid #e2e8f0;
-    border-radius: 10px;
-    background: #fff;
-    font-size: .85rem;
-    font-weight: 600;
-    color: #64748b;
-    cursor: pointer;
-    transition: all .15s;
-}
+.deck-tabs { display: flex; gap: .5rem; justify-content: center; }
+.deck-tab { padding: .5rem 1.5rem; border: 2px solid #e2e8f0; border-radius: 10px; background: #fff; font-size: .85rem; font-weight: 600; color: #64748b; cursor: pointer; transition: all .15s; }
 .deck-tab:hover { border-color: #cbd5e1; color: #334155; }
 .deck-tab.active { background: var(--brand-accent, #3b82f6); color: #fff; border-color: var(--brand-accent, #3b82f6); }
 
 .deck-container { display: none; }
 .deck-container.active { display: block; }
 
-.bus-h-scroll { overflow-x: auto; padding: .5rem 0 1rem; display: flex; justify-content: center; }
-.bus-h { display: flex; align-items: stretch; min-width: fit-content; }
+.bus-scroll { overflow-x: auto; padding: .5rem 0 1rem; display: flex; justify-content: center; }
+.bus { display: flex; align-items: stretch; flex-shrink: 0; }
 
-.bus-nose { width: 40px; background: linear-gradient(180deg, #475569, #334155); border-radius: 16px 0 0 16px; display: flex; align-items: center; justify-content: center; flex-shrink: 0; position: relative; }
+.bus-nose { width: 40px; background: linear-gradient(180deg, #475569, #334155); border-radius: 16px 0 0 16px; display: flex; align-items: center; justify-content: center; flex-shrink: 0; }
 .nose-inner { display: flex; flex-direction: column; align-items: center; gap: 6px; }
 .windshield { width: 20px; height: 28px; background: linear-gradient(180deg, rgba(148,163,184,.3), rgba(148,163,184,.1)); border-radius: 6px 6px 3px 3px; border: 1px solid rgba(255,255,255,.08); }
 .headlight { width: 8px; height: 8px; background: #fbbf24; border-radius: 50%; box-shadow: 0 0 6px rgba(251,191,36,.6); }
 
 .bus-cabin { background: linear-gradient(180deg, #f1f5f9, #e2e8f0); border-top: 3px solid #334155; border-bottom: 3px solid #334155; display: flex; flex-direction: column; }
 
-.bus-seat-row { display: flex; gap: 3px; padding: 3px 6px; align-items: center; }
+.cabin-row { display: flex; }
 
-.bus-aisle { height: 20px; margin: 0 6px; display: flex; align-items: center; justify-content: center; position: relative; background: linear-gradient(90deg, transparent 0%, rgba(148,163,184,.15) 10%, rgba(148,163,184,.15) 90%, transparent 100%); }
-.bus-aisle::before, .bus-aisle::after { content: ''; position: absolute; left: 0; right: 0; height: 1px; }
-.bus-aisle::before { top: 0; background: repeating-linear-gradient(90deg, #cbd5e1 0, #cbd5e1 4px, transparent 4px, transparent 8px); }
-.bus-aisle::after { bottom: 0; background: repeating-linear-gradient(90deg, #cbd5e1 0, #cbd5e1 4px, transparent 4px, transparent 8px); }
-.aisle-label { font-size: .5rem; font-weight: 700; color: #94a3b8; letter-spacing: 2px; text-transform: uppercase; background: #f1f5f9; padding: 0 6px; }
+.bus-col { display: flex; flex-direction: column; align-items: center; gap: 3px; padding: 4px 3px; }
+
+.bus-aisle-row { width: 100%; height: 20px; display: flex; align-items: center; justify-content: center; border-top: 1px dashed #cbd5e1; border-bottom: 1px dashed #cbd5e1; background: linear-gradient(180deg, #f1f5f9, #e2e8f0); }
+.aisle-text { font-size: .5rem; font-weight: 700; letter-spacing: 1px; color: #94a3b8; text-transform: uppercase; }
+
+.bus-tail { width: 22px; background: linear-gradient(180deg, #475569, #334155); border-radius: 0 12px 12px 0; display: flex; align-items: center; justify-content: center; flex-shrink: 0; }
+.taillight { width: 6px; height: 18px; background: linear-gradient(180deg, #f87171, #ef4444); border-radius: 3px; box-shadow: 0 0 8px rgba(239,68,68,.5); }
 
 .seat { width: 30px; height: 22px; border-radius: 5px 5px 3px 3px; display: flex; align-items: center; justify-content: center; user-select: none; transition: all .18s cubic-bezier(.4,0,.2,1); cursor: default; flex-shrink: 0; position: relative; }
 .seat-num { font-size: .55rem; font-weight: 700; line-height: 1; }
@@ -255,9 +240,6 @@
 .seat.occupied { background: linear-gradient(180deg, #f1f5f9, #e2e8f0); border: 1.5px solid #cbd5e1; color: #94a3b8; cursor: not-allowed; }
 
 .seat-placeholder { width: 30px; height: 22px; }
-
-.bus-tail { width: 22px; background: linear-gradient(180deg, #475569, #334155); border-radius: 0 12px 12px 0; display: flex; align-items: center; justify-content: center; flex-shrink: 0; }
-.taillight { width: 6px; height: 18px; background: linear-gradient(180deg, #f87171, #ef4444); border-radius: 3px; box-shadow: 0 0 8px rgba(239,68,68,.5); }
 
 .selection-summary { text-align: center; font-size: .8rem; color: #64748b; min-height: 24px; margin-bottom: .5rem; font-weight: 500; }
 

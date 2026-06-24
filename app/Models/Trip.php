@@ -30,4 +30,9 @@ class Trip extends Model
     {
         return $this->hasMany(Ticket::class, 'trip_id', 'id');
     }
+
+    public function stops()
+    {
+        return $this->hasMany(TripStop::class)->orderBy('stop_order');
+    }
 }

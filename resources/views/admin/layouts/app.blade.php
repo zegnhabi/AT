@@ -326,24 +326,35 @@
             <div class="collapse navbar-collapse" id="adminNav">
                 <ul class="navbar-nav me-auto">
                     <li class="nav-item"><a class="nav-link @if(request()->routeIs('admin.dashboard')) active @endif" href="{{ route('admin.dashboard') }}"><i class="bi bi-grid-1x2-fill"></i> Dashboard</a></li>
-                    <li class="nav-item"><a class="nav-link @if(request()->routeIs('admin.drivers.*')) active @endif" href="{{ route('admin.drivers.index') }}"><i class="bi bi-people-fill"></i> Choferes</a></li>
-                    <li class="nav-item"><a class="nav-link @if(request()->routeIs('admin.buses.*')) active @endif" href="{{ route('admin.buses.index') }}"><i class="bi bi-truck-front-fill"></i> Autobuses</a></li>
-                    <li class="nav-item"><a class="nav-link @if(request()->routeIs('admin.cities.*')) active @endif" href="{{ route('admin.cities.index') }}"><i class="bi bi-geo-alt-fill"></i> Ciudades</a></li>
-                    <li class="nav-item"><a class="nav-link @if(request()->routeIs('admin.trips.*')) active @endif" href="{{ route('admin.trips.index') }}"><i class="bi bi-ticket-perforated-fill"></i> Viajes</a></li>
                     <li class="nav-item dropdown">
                         <a class="nav-link dropdown-toggle @if(request()->routeIs('admin.cashier.*')) active @endif" data-bs-toggle="dropdown" href="#">
-                            <i class="bi bi-cash-stack"></i> Caja
+                            <i class="bi bi-cash-stack"></i> {{ __('messages.admin_cashier') }}
                         </a>
                         <ul class="dropdown-menu dropdown-menu-dark shadow">
-                            <li><a class="dropdown-item" href="{{ route('admin.cashier.corte') }}"><i class="bi bi-receipt"></i> Corte de caja</a></li>
-                            <li><a class="dropdown-item" href="{{ route('admin.cashier.arqueo') }}"><i class="bi bi-calculator-fill"></i> Arqueo</a></li>
+                            <li><a class="dropdown-item" href="{{ route('admin.cashier.corte') }}"><i class="bi bi-receipt"></i> {{ __('messages.admin_cashier_corte') }}</a></li>
+                            <li><a class="dropdown-item" href="{{ route('admin.cashier.arqueo') }}"><i class="bi bi-calculator-fill"></i> {{ __('messages.admin_cashier_arqueo') }}</a></li>
                         </ul>
                     </li>
-                    <li class="nav-item"><a class="nav-link @if(request()->routeIs('admin.branding')) active @endif" href="{{ route('admin.branding') }}"><i class="bi bi-palette-fill"></i> Marca</a></li>
+                    <li class="nav-item"><a class="nav-link @if(request()->routeIs('admin.drivers.*')) active @endif" href="{{ route('admin.drivers.index') }}"><i class="bi bi-people-fill"></i> {{ __('messages.admin_drivers') }}</a></li>
+                    <li class="nav-item"><a class="nav-link @if(request()->routeIs('admin.buses.*')) active @endif" href="{{ route('admin.buses.index') }}"><i class="bi bi-truck-front-fill"></i> {{ __('messages.admin_buses') }}</a></li>
+                    <li class="nav-item"><a class="nav-link @if(request()->routeIs('admin.cities.*')) active @endif" href="{{ route('admin.cities.index') }}"><i class="bi bi-geo-alt-fill"></i> {{ __('messages.admin_cities') }}</a></li>
+                    <li class="nav-item"><a class="nav-link @if(request()->routeIs('admin.trips.*')) active @endif" href="{{ route('admin.trips.index') }}"><i class="bi bi-ticket-perforated-fill"></i> {{ __('messages.admin_trips') }}</a></li>
+                    <li class="nav-item"><a class="nav-link @if(request()->routeIs('admin.branding')) active @endif" href="{{ route('admin.branding') }}"><i class="bi bi-gear-wide-connected"></i> {{ __('messages.admin_branding') }}</a></li>
                 </ul>
-                <div class="d-flex gap-2">
+                <div class="d-flex gap-2 align-items-center">
+                    <div class="dropdown">
+                        <button class="btn btn-outline-light btn-sm dropdown-toggle" data-bs-toggle="dropdown">
+                            <i class="bi bi-globe2"></i>
+                        </button>
+                        <ul class="dropdown-menu dropdown-menu-end dropdown-menu-dark shadow">
+                            <li><a class="dropdown-item" href="{{ route('locale.switch', 'es') }}"><img src="/images/es.png" height="14" width="20" class="me-2"> Español</a></li>
+                            <li><a class="dropdown-item" href="{{ route('locale.switch', 'en') }}"><img src="/images/en.jpg" height="14" width="20" class="me-2"> English</a></li>
+                            <li><a class="dropdown-item" href="{{ route('locale.switch', 'de') }}"><img src="/images/de.jpg" height="14" width="20" class="me-2"> Deutsch</a></li>
+                            <li><a class="dropdown-item" href="{{ route('locale.switch', 'fr') }}"><img src="/images/fr.png" height="14" width="20" class="me-2"> Français</a></li>
+                        </ul>
+                    </div>
                     <a href="{{ route('home') }}" class="btn btn-outline-light btn-sm">
-                        <i class="bi bi-arrow-left"></i> Ir al sitio
+                        <i class="bi bi-arrow-left"></i> {{ __('messages.admin_go_to_site') }}
                     </a>
                 </div>
             </div>

@@ -4,9 +4,8 @@ namespace App\Http\Controllers\Admin;
 
 use App\Http\Controllers\Controller;
 use App\Models\Trip;
-use App\Models\Ticket;
 use App\Models\Bus;
-use App\Models\Driver;
+use App\Models\TripStop;
 use Illuminate\Http\Request;
 
 class TripController extends Controller
@@ -16,12 +15,13 @@ class TripController extends Controller
         $perPage = $request->input('per_page', 5);
         $perPage = in_array($perPage, [5, 10, 25, 50, 'all']) ? $perPage : 5;
 
-        $query = Trip::with('bus.driver', 'tickets');
+        $query = Trip::with('bus.driver', 'tickets', 'stops');
 
         if ($request->filled('city')) {
             $query->where(function ($q) use ($request) {
                 $q->where('departure_city', $request->city)
-                  ->orWhere('arrival_city', $request->city);
+                  ->orWhere('arrival_city', $request->city)
+                  ->orWhereHas('stops', fn ($sq) => $sq->where('city', $request->city));
             });
         }
 
@@ -50,15 +50,107 @@ class TripController extends Controller
         return view('admin.trips.index', compact('trips', 'cities', 'perPage'));
     }
 
+    public function create(Request $request)
+    {
+        $buses = Bus::with('driver')->orderBy('id')->get();
+        $departureCity = $request->query('departure_city', '');
+        return view('admin.trips.form', ['trip' => null, 'buses' => $buses, 'departureCity' => $departureCity]);
+    }
+
+    public function store(Request $request)
+    {
+        $validated = $request->validate([
+            'bus_id'             => 'required|exists:buses,id',
+            'departure_terminal' => 'required|string|max:50',
+            'departure_city'     => 'required|string|max:45',
+            'departure_date'     => 'required|date|after_or_equal:today',
+            'departure_time'     => 'required',
+            'arrival_terminal'   => 'required|string|max:50',
+            'arrival_city'       => 'required|string|max:45',
+            'arrival_date'       => 'required|date|after_or_equal:departure_date',
+            'arrival_time'       => 'required',
+            'price'              => 'required|numeric|min:0',
+            'stops'              => 'nullable|array',
+            'stops.*.city'       => 'required_with:stops|string|max:45',
+            'stops.*.terminal'   => 'required_with:stops|string|max:50',
+            'stops.*.arrival_time'   => 'nullable',
+            'stops.*.departure_time' => 'nullable',
+        ]);
+
+        $trip = Trip::create($validated);
+
+        if (!empty($validated['stops'])) {
+            foreach ($validated['stops'] as $i => $stop) {
+                $trip->stops()->create([
+                    'city'           => $stop['city'],
+                    'terminal'       => $stop['terminal'],
+                    'stop_order'     => $i + 1,
+                    'arrival_time'   => $stop['arrival_time'] ?? null,
+                    'departure_time' => $stop['departure_time'] ?? null,
+                ]);
+            }
+        }
+
+        return redirect()->route('admin.trips.show', $trip)
+            ->with('success', 'Viaje creado correctamente.');
+    }
+
     public function show(Trip $trip)
     {
-        $trip->load('bus.driver', 'tickets');
+        $trip->load('bus.driver', 'tickets', 'stops');
         return view('admin.trips.show', compact('trip'));
+    }
+
+    public function edit(Trip $trip)
+    {
+        $trip->load('stops');
+        $buses = Bus::with('driver')->orderBy('id')->get();
+        return view('admin.trips.form', compact('trip', 'buses'));
+    }
+
+    public function update(Request $request, Trip $trip)
+    {
+        $validated = $request->validate([
+            'bus_id'             => 'required|exists:buses,id',
+            'departure_terminal' => 'required|string|max:50',
+            'departure_city'     => 'required|string|max:45',
+            'departure_date'     => 'required|date',
+            'departure_time'     => 'required',
+            'arrival_terminal'   => 'required|string|max:50',
+            'arrival_city'       => 'required|string|max:45',
+            'arrival_date'       => 'required|date|after_or_equal:departure_date',
+            'arrival_time'       => 'required',
+            'price'              => 'required|numeric|min:0',
+            'stops'              => 'nullable|array',
+            'stops.*.city'       => 'required_with:stops|string|max:45',
+            'stops.*.terminal'   => 'required_with:stops|string|max:50',
+            'stops.*.arrival_time'   => 'nullable',
+            'stops.*.departure_time' => 'nullable',
+        ]);
+
+        $trip->update($validated);
+
+        $trip->stops()->delete();
+        if (!empty($validated['stops'])) {
+            foreach ($validated['stops'] as $i => $stop) {
+                $trip->stops()->create([
+                    'city'           => $stop['city'],
+                    'terminal'       => $stop['terminal'],
+                    'stop_order'     => $i + 1,
+                    'arrival_time'   => $stop['arrival_time'] ?? null,
+                    'departure_time' => $stop['departure_time'] ?? null,
+                ]);
+            }
+        }
+
+        return redirect()->route('admin.trips.show', $trip)
+            ->with('success', 'Viaje actualizado correctamente.');
     }
 
     public function destroy(Trip $trip)
     {
         $trip->tickets()->delete();
+        $trip->stops()->delete();
         $trip->delete();
 
         return redirect()->route('admin.trips.index')
