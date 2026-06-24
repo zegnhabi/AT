@@ -16,11 +16,11 @@ RUN chmod +x /usr/local/bin/entrypoint-prod.sh
 
 RUN mkdir -p /run/nginx \
     && rm -f /etc/nginx/sites-enabled/default \
-    storage/framework/views \
-    storage/framework/cache \
-    storage/framework/sessions \
-    storage/logs \
-    bootstrap/cache
+    && mkdir -p storage/framework/views \
+    && mkdir -p storage/framework/cache \
+    && mkdir -p storage/framework/sessions \
+    && mkdir -p storage/logs \
+    && mkdir -p bootstrap/cache
 
 EXPOSE 80
 
