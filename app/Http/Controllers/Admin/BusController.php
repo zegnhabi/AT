@@ -39,6 +39,7 @@ class BusController extends Controller
     {
         $validated = $request->validate([
             'seat_count'    => 'required|integer|min:1|max:100',
+            'decks'         => 'required|integer|min:1|max:2',
             'model_year'    => 'nullable|integer|min:1990|max:' . (now()->year + 1),
             'serial_number' => 'nullable|string|max:20',
             'driver_id'     => 'nullable|exists:drivers,id',
@@ -60,6 +61,7 @@ class BusController extends Controller
     {
         $validated = $request->validate([
             'seat_count'    => 'required|integer|min:1|max:100',
+            'decks'         => 'required|integer|min:1|max:2',
             'model_year'    => 'nullable|integer|min:1990|max:' . (now()->year + 1),
             'serial_number' => 'nullable|string|max:20',
             'driver_id'     => 'nullable|exists:drivers,id',

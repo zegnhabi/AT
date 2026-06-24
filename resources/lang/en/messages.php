@@ -19,6 +19,7 @@ return [
     'schedule' => 'Schedule',
     'price' => 'Price',
     'travel_time' => 'Travel Time',
+    'arrival_time' => 'Arrival',
     'select_seats' => 'Choose Seats',
     'date_label' => 'Date',
     'time' => 'Time',

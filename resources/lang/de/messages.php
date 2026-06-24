@@ -19,6 +19,7 @@ return [
     'schedule' => 'Fahrplan',
     'price' => 'Preis',
     'travel_time' => 'Reisezeit',
+    'arrival_time' => 'Ankunft',
     'select_seats' => 'Sitzplätze wählen',
     'date_label' => 'Datum',
     'time' => 'Uhrzeit',

@@ -19,6 +19,7 @@ return [
     'schedule' => 'Horario',
     'price' => 'Tarifa',
     'travel_time' => 'Tiempo de recorrido',
+    'arrival_time' => 'Hora llegada',
     'select_seats' => 'Elegir Asientos',
     'date_label' => 'Fecha',
     'time' => 'Hora',

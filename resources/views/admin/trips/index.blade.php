@@ -52,7 +52,7 @@
                         @php $pct = $t->bus->seat_count ? round($t->tickets->count() / $t->bus->seat_count * 100) : 0; @endphp
                         <span class="badge @if($pct > 80) bg-danger @elseif($pct > 50) bg-warning text-dark @else bg-success @endif bg-opacity-10 badge-status"
                               style="color:{{ $pct > 80 ? 'var(--admin-danger)' : ($pct > 50 ? 'var(--admin-warning)' : 'var(--admin-success)') }};">
-                            {{ $t->tickets->count() }}/36
+                            {{ $t->tickets->count() }}/{{ $t->bus->seat_count ?? 36 }}
                         </span>
                     </td>
                     <td class="text-end">

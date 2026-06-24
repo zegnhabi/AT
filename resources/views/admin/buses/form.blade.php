@@ -14,11 +14,19 @@
             @if($bus->exists) @method('PUT') @endif
 
             <div class="row g-4">
-                <div class="col-md-3">
+                <div class="col-md-2">
                     <label class="form-label fw-semibold"><i class="bi bi-grid-3x3 text-primary me-1"></i>Asientos *</label>
                     <input type="number" name="seat_count" class="form-control form-admin @error('seat_count') is-invalid @enderror"
                            value="{{ old('seat_count', $bus->seat_count) }}" required min="1" max="100">
                     @error('seat_count') <div class="invalid-feedback">{{ $message }}</div> @enderror
+                </div>
+                <div class="col-md-2">
+                    <label class="form-label fw-semibold"><i class="bi bi-layers-fill text-primary me-1"></i>Pisos *</label>
+                    <select name="decks" class="form-select form-admin @error('decks') is-invalid @enderror" required>
+                        <option value="1" @selected(old('decks', $bus->decks ?? 1) == 1)>1 piso</option>
+                        <option value="2" @selected(old('decks', $bus->decks ?? 1) == 2)>2 pisos</option>
+                    </select>
+                    @error('decks') <div class="invalid-feedback">{{ $message }}</div> @enderror
                 </div>
                 <div class="col-md-3">
                     <label class="form-label fw-semibold"><i class="bi bi-calendar-range text-primary me-1"></i>Año modelo</label>
@@ -26,7 +34,7 @@
                            value="{{ old('model_year', $bus->model_year) }}" min="1990" max="{{ now()->year + 1 }}">
                     @error('model_year') <div class="invalid-feedback">{{ $message }}</div> @enderror
                 </div>
-                <div class="col-md-3">
+                <div class="col-md-2">
                     <label class="form-label fw-semibold"><i class="bi bi-upc-scan text-primary me-1"></i>N° Serie</label>
                     <input type="text" name="serial_number" class="form-control form-admin @error('serial_number') is-invalid @enderror"
                            value="{{ old('serial_number', $bus->serial_number) }}" maxlength="20">

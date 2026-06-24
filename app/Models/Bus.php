@@ -6,8 +6,7 @@ use Illuminate\Database\Eloquent\Model;
 
 class Bus extends Model
 {
-    protected $fillable = ['seat_count', 'model_year', 'serial_number', 'driver_id'];
-    protected $table = 'buses';
+    protected $fillable = ['seat_count', 'decks', 'model_year', 'serial_number', 'driver_id'];
 
     public function driver()
     {
@@ -17,5 +16,10 @@ class Bus extends Model
     public function trips()
     {
         return $this->hasMany(Trip::class);
+    }
+
+    public function seatsPerDeck(): int
+    {
+        return (int) ceil($this->seat_count / $this->decks);
     }
 }

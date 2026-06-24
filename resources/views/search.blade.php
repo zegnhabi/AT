@@ -23,24 +23,37 @@
                 <hr>
 
                 <div class="row text-center fw-bold small text-uppercase text-muted mb-2">
-                    <div class="col-4">{{ __('messages.schedule') }}</div>
-                    <div class="col-4">{{ __('messages.price') }}</div>
-                    <div class="col-4">{{ __('messages.travel_time') }}</div>
+                    <div class="col-3">{{ __('messages.schedule') }}</div>
+                    <div class="col-3">{{ __('messages.arrival_time') }}</div>
+                    <div class="col-3">{{ __('messages.travel_time') }}</div>
+                    <div class="col-3">{{ __('messages.price') }}</div>
                 </div>
 
                 @forelse($trips as $trip)
+                @php
+                    $dep = \Carbon\Carbon::parse($trip->departure_time);
+                    $arr = \Carbon\Carbon::parse($trip->arrival_time);
+                    $diff = $dep->diff($arr);
+                    $hours = $diff->h + ($diff->d * 24);
+                    $minutes = $diff->i;
+                @endphp
                 <div class="row align-items-center py-2 {{ $loop->even ? 'bg-light rounded' : '' }}">
-                    <div class="col-4 text-center">
+                    <div class="col-3 text-center">
                         <input type="radio" name="trip_id" value="{{ $trip->id }}"
                                class="form-check-input trip-select me-2"
                                data-id="{{ $trip->id }}">
-                        {{ \Carbon\Carbon::parse($trip->departure_time)->format('H:i') }}
+                        {{ $dep->format('H:i') }}
                     </div>
-                    <div class="col-4 text-center fw-bold text-success">
+                    <div class="col-3 text-center">
+                        {{ $arr->format('H:i') }}
+                    </div>
+                    <div class="col-3 text-center">
+                        <span class="badge bg-secondary bg-opacity-10 text-secondary" style="font-size:.75rem;">
+                            {{ $hours > 0 ? $hours.'h ' : '' }}{{ $minutes }}min
+                        </span>
+                    </div>
+                    <div class="col-3 text-center fw-bold text-success">
                         ${{ number_format($trip->price, 2) }}
-                    </div>
-                    <div class="col-4 text-center">
-                        {{ \Carbon\Carbon::parse($trip->arrival_time)->format('H:i') }}
                     </div>
                 </div>
                 @empty

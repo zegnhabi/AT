@@ -10,28 +10,44 @@ class SeatController extends Controller
 {
     public function select($id)
     {
-        $trip = Trip::with('tickets')->findOrFail($id);
+        $trip = Trip::with('tickets', 'bus')->findOrFail($id);
+        $bus = $trip->bus;
+        $totalSeats = $bus->seat_count;
+        $decks = $bus->decks;
+        $seatsPerDeck = $bus->seatsPerDeck();
 
         $occupiedSeats = $trip->tickets->pluck('seat_number')->toArray();
 
-        if ($trip->tickets->count() >= 36) {
+        if (count($occupiedSeats) >= $totalSeats) {
             return redirect()->route('home')
                 ->withErrors(['error' => __('messages.run_full')]);
         }
 
-        $seatRows = [
-            ['as01', 'as02', 'as03', 'as04'],
-            ['as05', 'as06', 'as07', 'as08'],
-            ['as09', 'as10', 'as11', 'as12'],
-            ['as13', 'as14', 'as15', 'as16'],
-            ['as17', 'as18', 'as19', 'as20'],
-            ['as21', 'as22', 'as23', 'as24'],
-            ['as25', 'as26', 'as27', 'as28'],
-            ['as29', 'as30', 'as31', 'as32'],
-            ['as33', 'as34', 'as35', 'as36'],
-        ];
+        $seatDecks = [];
+        for ($d = 0; $d < $decks; $d++) {
+            $offset = $d * $seatsPerDeck;
+            $deckSeatCount = min($seatsPerDeck, $totalSeats - $offset);
+            $cols = 4;
+            $rows = (int) ceil($deckSeatCount / $cols);
+            $seatRows = [];
 
-        return view('seats', compact('trip', 'seatRows', 'occupiedSeats'));
+            for ($r = 0; $r < $rows; $r++) {
+                $row = [];
+                for ($c = 0; $c < $cols; $c++) {
+                    $seatNum = $offset + ($r * $cols) + $c + 1;
+                    if ($seatNum <= $totalSeats) {
+                        $row[] = str_pad($seatNum, 2, '0', STR_PAD_LEFT);
+                    } else {
+                        $row[] = null;
+                    }
+                }
+                $seatRows[] = $row;
+            }
+
+            $seatDecks[$d + 1] = $seatRows;
+        }
+
+        return view('seats', compact('trip', 'seatDecks', 'occupiedSeats', 'totalSeats', 'decks'));
     }
 
     public function purchase(Request $request)
@@ -39,12 +55,18 @@ class SeatController extends Controller
         $request->validate([
             'trip_id' => 'required|exists:trips,id',
             'seats'   => 'required|array',
-            'seats.*' => 'integer|min:1|max:36',
+            'seats.*' => 'required|integer|min:1',
             'names'   => 'required|array',
             'names.*' => 'required|string|max:65',
         ]);
 
-        $trip = Trip::with('tickets')->findOrFail($request->trip_id);
+        $trip = Trip::with('tickets', 'bus')->findOrFail($request->trip_id);
+        $maxSeats = $trip->bus->seat_count;
+
+        $request->validate([
+            'seats.*' => "max:{$maxSeats}",
+        ]);
+
         $alreadyOccupied = $trip->tickets->pluck('seat_number')->toArray();
 
         foreach ($request->seats as $seat) {

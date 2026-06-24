@@ -1,5 +1,20 @@
 # Changelog
 
+### [2.0.8] — 2026-06-23 — Asientos dinámicos y buses de 2 pisos
+
+#### Nuevo: Sistema de asientos dinámico
+- **Asientos según seat_count**: El mapa de asientos ahora se genera dinámicamente según el campo `seat_count` del autobús (ya no está hardcodeado a 36)
+- **Soporte de 2 pisos**: Nuevo campo `decks` (1 o 2) en la tabla `buses`. Buses de 2 pisos muestran tabs "Piso 1" / "Piso 2" en la selección de asientos
+- **Layout 2+2 adaptable**: Cada piso muestra filas de 4 asientos (2+2 con pasillo) que se adaptan al número de asientos por piso
+- **Validación dinámica**: La validación de asientos ahora usa el `seat_count` real del autobús
+
+#### Corregido
+- **Full-bus check**: Ahora compara con `bus->seat_count` en vez de 36 fijo
+- **/36 hardcodeado en admin viajes**: Reemplazado por `$t->bus->seat_count`
+
+#### Migración
+- `0008_add_decks_to_buses_table.php`: Campo `decks` (tinyInteger, default 1)
+
 ### [2.0.7] — 2026-06-23 — Export CSV, impresión corte/arqueo, changelog separado
 
 #### Nuevo: Exportar a CSV
