@@ -127,6 +127,7 @@
 </div>
 
 <style>
+#print-area { display: none; }
 @media print {
     body * { visibility: hidden !important; }
     body::before { content: none !important; }
