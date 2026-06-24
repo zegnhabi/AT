@@ -91,20 +91,19 @@
                                     <div class="bus-seat-row">
                                         @foreach($rowSeats as $colIdx => $seatNum)
                                             @if($colIdx === 2 && in_array(2, [0,1,2,3]) && $colIdx === 2)
-                                                {{-- aisle injected between col 1 and 2 --}}
                                             @endif
                                             @if($seatNum !== null)
                                                 @php $isOccupied = in_array((int)$seatNum, $occupiedSeats); @endphp
                                                 <div class="seat {{ $isOccupied ? 'occupied' : 'available' }}"
                                                      @unless($isOccupied) data-seat="{{ $seatNum }}" id="seat-{{ $seatNum }}" @endunless>
-                                                    <span class="seat-num">{{ $seatNum }}</span>
+                                                    <span class="seat-num">{{ str_pad($seatNum, 2, '0', STR_PAD_LEFT) }}</span>
                                                 </div>
                                             @else
                                                 <div class="seat-placeholder"></div>
                                             @endif
                                         @endforeach
                                     </div>
-                                    @if($loop->index < $rowCount - 1 && $loop->index % 2 === 1)
+                                    @if($loop->index < $rowCount - 1 && $loop->index == floor($rowCount / 2) - 1)
                                         <div class="bus-aisle">
                                             <span class="aisle-label">PASILLO</span>
                                         </div>

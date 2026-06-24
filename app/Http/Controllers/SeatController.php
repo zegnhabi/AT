@@ -36,7 +36,7 @@ class SeatController extends Controller
                 for ($c = 0; $c < $cols; $c++) {
                     $seatNum = $offset + ($r * $cols) + $c + 1;
                     if ($seatNum <= $totalSeats) {
-                        $row[] = str_pad($seatNum, 2, '0', STR_PAD_LEFT);
+                        $row[] = $seatNum;
                     } else {
                         $row[] = null;
                     }
@@ -55,7 +55,7 @@ class SeatController extends Controller
         $request->validate([
             'trip_id' => 'required|exists:trips,id',
             'seats'   => 'required|array',
-            'seats.*' => 'required|integer|min:1',
+            'seats.*' => 'required|numeric|min:1',
             'names'   => 'required|array',
             'names.*' => 'required|string|max:65',
         ]);
