@@ -16,6 +16,15 @@ services:
       - DB_DATABASE=bus_ticketing
       - DB_USERNAME=busapp
       - DB_PASSWORD=busapp_secret
+      # Email (optional - defaults to log driver)
+      # - MAIL_MAILER=smtp
+      # - MAIL_HOST=smtp.gmail.com
+      # - MAIL_PORT=587
+      # - MAIL_USERNAME=
+      # - MAIL_PASSWORD=
+      # - MAIL_ENCRYPTION=tls
+      # - MAIL_FROM_ADDRESS=noreply@autobuses.com
+      # - MAIL_FROM_NAME=Autobuses S.A. de C.V
     depends_on:
       db:
         condition: service_healthy

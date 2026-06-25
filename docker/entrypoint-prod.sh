@@ -11,7 +11,7 @@ if [ ! -f .env ]; then
     fi
 fi
 
-for var in APP_KEY APP_NAME APP_ENV APP_DEBUG APP_URL DB_HOST DB_PORT DB_DATABASE DB_USERNAME DB_PASSWORD; do
+for var in APP_KEY APP_NAME APP_ENV APP_DEBUG APP_URL DB_HOST DB_PORT DB_DATABASE DB_USERNAME DB_PASSWORD MAIL_MAILER MAIL_HOST MAIL_PORT MAIL_USERNAME MAIL_PASSWORD MAIL_ENCRYPTION MAIL_FROM_ADDRESS MAIL_FROM_NAME; do
     val=$(printenv $var 2>/dev/null)
     if [ -n "$val" ]; then
         if grep -q "^${var}=" .env 2>/dev/null; then
