@@ -4,7 +4,9 @@ namespace App\Http\Controllers;
 
 use App\Models\Trip;
 use App\Models\Ticket;
+use App\Mail\TicketMail;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Mail;
 
 class SeatController extends Controller
 {
@@ -54,6 +56,7 @@ class SeatController extends Controller
             'seats.*' => 'required|numeric|min:1',
             'names'   => 'required|array',
             'names.*' => 'required|string|max:65',
+            'email'   => 'required|email|max:120',
         ]);
 
         $trip = Trip::with('tickets', 'bus')->findOrFail($request->trip_id);
@@ -79,17 +82,26 @@ class SeatController extends Controller
 
         $today = now()->format('Y-m-d');
 
+        $email = $request->input('email');
+
         $tickets = [];
         foreach ($request->seats as $i => $seat) {
             $tickets[] = Ticket::create([
                 'trip_id'        => $trip->id,
                 'seat_number'    => (int)$seat,
                 'passenger_name' => $request->names[$i],
+                'email'          => $email,
                 'sale_date'      => $today,
             ]);
         }
 
         $totalAmount = count($request->seats) * $trip->price;
+
+        try {
+            Mail::to($email)->send(new TicketMail($trip, $tickets, $request->names));
+        } catch (\Exception $e) {
+            logger()->error('Failed to send ticket email: ' . $e->getMessage());
+        }
 
         return redirect()->route('tickets.print', [
             'trip_id' => $trip->id,
@@ -102,6 +114,7 @@ class SeatController extends Controller
             'ticket_count' => count($request->seats),
             'total_amount' => $totalAmount,
             'folio'        => $tickets[0]->folio ?? null,
+            'email_sent'   => true,
         ]);
     }
 }

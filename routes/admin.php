@@ -8,6 +8,7 @@ use App\Http\Controllers\Admin\CityController;
 use App\Http\Controllers\Admin\TripController;
 use App\Http\Controllers\Admin\CashierController;
 use App\Http\Controllers\Admin\BrandingController;
+use App\Http\Controllers\Admin\CancellationController;
 
 Route::prefix('admin')->name('admin.')->group(function () {
 
@@ -33,6 +34,11 @@ Route::prefix('admin')->name('admin.')->group(function () {
     Route::get('corte/exportar', [CashierController::class, 'exportCorte'])->name('cashier.corte.export');
     Route::get('arqueo', [CashierController::class, 'arqueo'])->name('cashier.arqueo');
     Route::get('arqueo/exportar', [CashierController::class, 'exportArqueo'])->name('cashier.arqueo.export');
+
+    Route::get('viajes/{trip}/pasajeros', [TripController::class, 'pasajeros'])->name('trips.pasajeros');
+
+    Route::get('cancelaciones/{ticket}', [CancellationController::class, 'index'])->name('cancellations.index');
+    Route::post('cancelaciones/{ticket}', [CancellationController::class, 'destroy'])->name('cancellations.destroy');
 
     Route::get('personalizacion', [BrandingController::class, 'index'])->name('branding');
     Route::post('personalizacion', [BrandingController::class, 'update']);

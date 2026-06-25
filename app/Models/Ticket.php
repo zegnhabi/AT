@@ -9,7 +9,7 @@ class Ticket extends Model
     protected $primaryKey = 'folio';
     protected $table = 'tickets';
 
-    protected $fillable = ['trip_id', 'seat_number', 'passenger_name', 'sale_date'];
+    protected $fillable = ['trip_id', 'seat_number', 'passenger_name', 'email', 'sale_date'];
 
     protected $casts = [
         'sale_date' => 'date:Y-m-d',

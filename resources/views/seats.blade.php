@@ -152,6 +152,11 @@
                 <form id="purchaseForm" action="{{ route('purchase') }}" method="POST">
                     @csrf
                     <input type="hidden" name="trip_id" value="{{ $trip->id }}">
+                    <div class="mb-3">
+                        <label class="form-label fw-semibold small">{{ __('messages.email') }}</label>
+                        <input type="email" name="email" class="form-control form-control-sm"
+                               placeholder="{{ __('messages.email_placeholder') }}" required maxlength="120">
+                    </div>
                     <div id="passengerFields"></div>
 
                     <div class="action-bar">

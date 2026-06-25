@@ -1,5 +1,20 @@
 # Changelog
 
+## v2.3.0 (2026-06-25)
+
+### Features
+- **Email del pasajero**: Nuevo campo `email` en tickets. Se solicita al comprar y se almacena en BD.
+- **Envío de boletos por correo**: Mailable `TicketMail` con template HTML que incluye los QR de cada boleto. Se envía automáticamente tras la compra (falla silenciosamente si no hay SMTP configurado).
+- **Compartir**: Botones de WhatsApp y correo electrónico en la vista de impresión, con texto predefinido con origen/destino/fecha/hora.
+- **Validación de boletos (puerta)**: Nueva ruta `/validar` — el chofer ingresa un folio y ve el detalle del boleto, incluyendo si ya venció.
+- **Cancelación/reembolso**: Admin: en la vista del viaje, cada boleto tiene un botón de cancelación. Confirma y libera el asiento.
+- **Páginas de error personalizadas**: Templates Blade para 403, 404, 429 y 503 con diseño acorde al sitio.
+- **Exportar lista de pasajeros**: Botón CSV en la vista del viaje que descarga folio, nombre, asiento, fecha y correo de cada pasajero.
+
+### Infrastructure
+- Nueva migración `0011_add_email_to_tickets_table`.
+- Configuración de correo (`config/mail.php`, variables en `.env.example`).
+
 ## v2.2.0 (2026-06-25)
 
 ### Features

@@ -7,6 +7,7 @@ use App\Models\Trip;
 use App\Models\Bus;
 use App\Models\TripStop;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Response;
 
 class TripController extends Controller
 {
@@ -145,6 +146,31 @@ class TripController extends Controller
 
         return redirect()->route('admin.trips.show', $trip)
             ->with('success', 'Viaje actualizado correctamente.');
+    }
+
+    public function pasajeros(Trip $trip)
+    {
+        $trip->load('tickets');
+
+        $csv = "\xEF\xBB\xBF";
+        $csv .= __('messages.admin_folio') . ',' . __('messages.admin_passenger') . ',' . __('messages.admin_seat') . ',' . __('messages.admin_sale_date') . ',' . __('messages.admin_email') . "\n";
+
+        foreach ($trip->tickets as $ticket) {
+            $csv .= implode(',', [
+                $ticket->folio,
+                '"' . str_replace('"', '""', $ticket->passenger_name) . '"',
+                $ticket->seat_number,
+                $ticket->sale_date->format('Y-m-d'),
+                $ticket->email ?? '',
+            ]) . "\n";
+        }
+
+        $filename = 'pasajeros_viaje_' . $trip->id . '_' . now()->format('Ymd') . '.csv';
+
+        return Response::make($csv, 200, [
+            'Content-Type'        => 'text/csv; charset=utf-8',
+            'Content-Disposition' => 'attachment; filename="' . $filename . '"',
+        ]);
     }
 
     public function destroy(Trip $trip)

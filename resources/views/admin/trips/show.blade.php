@@ -94,17 +94,20 @@
 
     <div class="col-md-6">
         <div class="card card-admin h-100">
-            <div class="card-header bg-white d-flex justify-content-between align-items-center">
-                <span><i class="bi bi-people text-primary me-1"></i> {{ __('messages.admin_passengers') }}</span>
-                <div class="d-flex align-items-center gap-2">
-                    <span class="badge bg-primary badge-status">{{ $trip->tickets->count() }} {{ __('messages.admin_tickets_count') }}</span>
-                    @if(!$trip->tickets->isEmpty())
-                    <button onclick="window.print()" class="btn btn-sm btn-admin-outline" title="{{ __('messages.admin_trip_show_print_title_attr') }}">
-                        <i class="bi bi-printer"></i> {{ __('messages.admin_print') }}
-                    </button>
-                    @endif
+                <div class="card-header bg-white d-flex justify-content-between align-items-center">
+                    <span><i class="bi bi-people text-primary me-1"></i> {{ __('messages.admin_passengers') }}</span>
+                    <div class="d-flex align-items-center gap-2">
+                        <span class="badge bg-primary badge-status">{{ $trip->tickets->count() }} {{ __('messages.admin_tickets_count') }}</span>
+                        @if(!$trip->tickets->isEmpty())
+                        <a href="{{ route('admin.trips.pasajeros', $trip) }}" class="btn btn-sm btn-admin-outline" title="{{ __('messages.admin_export_csv') }}">
+                            <i class="bi bi-download"></i> CSV
+                        </a>
+                        <button onclick="window.print()" class="btn btn-sm btn-admin-outline" title="{{ __('messages.admin_trip_show_print_title_attr') }}">
+                            <i class="bi bi-printer"></i> {{ __('messages.admin_print') }}
+                        </button>
+                        @endif
+                    </div>
                 </div>
-            </div>
             <div class="card-body p-0">
                 @if($trip->tickets->isEmpty())
                     <div class="text-center text-muted py-5">
@@ -115,7 +118,7 @@
                     <div class="table-responsive" style="max-height:400px;">
                         <table class="table table-admin">
                             <thead>
-                                <tr><th>{{ __('messages.admin_folio') }}</th><th>{{ __('messages.admin_seat') }}</th><th>{{ __('messages.admin_passenger') }}</th><th>{{ __('messages.admin_sale_date') }}</th></tr>
+                                <tr><th>{{ __('messages.admin_folio') }}</th><th>{{ __('messages.admin_seat') }}</th><th>{{ __('messages.admin_passenger') }}</th><th>{{ __('messages.admin_sale_date') }}</th><th style="width:40px;"></th></tr>
                             </thead>
                             <tbody>
                                 @foreach($trip->tickets as $tk)
@@ -124,6 +127,13 @@
                                     <td><span class="badge bg-info bg-opacity-10 text-info badge-status">{{ $tk->seat_number }}</span></td>
                                     <td><i class="bi bi-person me-1 text-muted"></i>{{ $tk->passenger_name }}</td>
                                     <td>{{ $tk->sale_date->format('d-m-Y') }}</td>
+                                    <td>
+                                        <a href="{{ route('admin.cancellations.index', $tk) }}"
+                                           class="btn btn-sm btn-admin-outline text-danger"
+                                           title="{{ __('messages.admin_cancel_ticket') }}">
+                                            <i class="bi bi-x-circle"></i>
+                                        </a>
+                                    </td>
                                 </tr>
                                 @endforeach
                             </tbody>

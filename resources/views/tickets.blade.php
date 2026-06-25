@@ -21,12 +21,26 @@ pushGA4Event('view_tickets', {
 @section('content')
 <div class="row justify-content-center">
     <div class="col-md-8">
+        @if(session('purchase_completed.email_sent'))
+        <div class="alert alert-info text-center small py-2 mb-3">
+            <i class="bi bi-envelope-check"></i> {{ __('messages.email_sent') }}
+        </div>
+        @endif
+
         <div class="alert alert-success text-center">
             <strong>{{ __('messages.purchased') }} {{ count($tickets) }} {{ __('messages.tickets') }}</strong>
-            <div class="mt-2">
-                <button onclick="window.print()" class="btn btn-primary btn-sm me-1">
+            <div class="mt-2 d-flex justify-content-center gap-2 flex-wrap">
+                <button onclick="window.print()" class="btn btn-primary btn-sm">
                     &#x1F5A8; {{ __('messages.print') }}
                 </button>
+                <a href="https://wa.me/?text={{ urlencode(__('messages.share_text', ['origin' => $tickets[0]['trip']->departure_city, 'destination' => $tickets[0]['trip']->arrival_city, 'date' => $tickets[0]['trip']->departure_date->format('d-m-Y'), 'time' => substr($tickets[0]['trip']->departure_time, 0, 5)])) }}"
+                   target="_blank" class="btn btn-success btn-sm">
+                    <i class="bi bi-whatsapp"></i> {{ __('messages.share_whatsapp') }}
+                </a>
+                <a href="mailto:?subject={{ urlencode(__('messages.share_email_subject')) }}&body={{ urlencode(__('messages.share_text', ['origin' => $tickets[0]['trip']->departure_city, 'destination' => $tickets[0]['trip']->arrival_city, 'date' => $tickets[0]['trip']->departure_date->format('d-m-Y'), 'time' => substr($tickets[0]['trip']->departure_time, 0, 5)])) }}"
+                   class="btn btn-secondary btn-sm">
+                    <i class="bi bi-envelope"></i> {{ __('messages.share_email') }}
+                </a>
                 <a href="{{ route('home') }}" class="btn btn-outline-secondary btn-sm">
                     &#x1F3E0; {{ __('messages.home') }}
                 </a>
