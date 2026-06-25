@@ -323,4 +323,13 @@ return [
     'error_429_message' => 'Has hecho demasiadas solicitudes. Intenta de nuevo más tarde.',
     'error_503_title' => '503 - Servicio no disponible',
     'error_503_message' => 'El sistema está en mantenimiento. Vuelve más tarde.',
+
+    'admin_auth_username' => 'Usuario',
+    'admin_auth_password' => 'Contraseña',
+    'admin_auth_remember' => 'Recordar sesión',
+    'admin_auth_enter' => 'Entrar',
+    'admin_auth_exit' => 'Salir',
+    'admin_auth_failed' => 'Usuario o contraseña incorrectos.',
+    'admin_login_title' => 'Iniciar Sesión',
+    'admin_login_subtitle' => 'Panel de administración',
 ];

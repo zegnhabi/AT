@@ -1,5 +1,17 @@
 # Changelog
 
+## v2.4.0 (2026-06-25)
+
+### Security
+- **Autenticación en admin**: Login con usuario/contraseña en `/admin/login`. Todas las rutas de admin protegidas con middleware `auth`.
+- Usuario por defecto: `admin` / `admin123` (generado por seeder).
+- Sesión con `remember_token`, logout con invalidación de sesión.
+
+### Infrastructure
+- Migración `0012_create_users_table`.
+- `User` model (Authenticatable + HasFactory), `UserFactory`, `UserSeeder`.
+- `config/auth.php` y `config/mail.php` publicados.
+
 ## v2.3.0 (2026-06-25)
 
 ### Features

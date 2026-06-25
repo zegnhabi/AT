@@ -356,6 +356,12 @@
                     <a href="{{ route('home') }}" class="btn btn-outline-light btn-sm">
                         <i class="bi bi-arrow-left"></i> {{ __('messages.admin_go_to_site') }}
                     </a>
+                    <form action="{{ route('admin.logout') }}" method="POST" class="m-0">
+                        @csrf
+                        <button type="submit" class="btn btn-outline-light btn-sm">
+                            <i class="bi bi-box-arrow-right"></i> {{ __('messages.admin_auth_exit') }}
+                        </button>
+                    </form>
                 </div>
             </div>
         </div>

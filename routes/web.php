@@ -7,6 +7,8 @@ use App\Http\Controllers\LocaleController;
 use App\Http\Controllers\ValidationController;
 use Illuminate\Support\Facades\Route;
 
+Route::redirect('/login', '/admin/login')->name('login');
+
 Route::get('/', [HomeController::class, 'index'])->name('home');
 
 Route::get('/buscar', [HomeController::class, 'search'])->name('search');
