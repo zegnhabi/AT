@@ -259,6 +259,16 @@
 
 @push('scripts')
 <script>
+pushGA4Event('view_seat_selection', {
+    trip_id: {{ $trip->id }},
+    origin: '{{ $trip->departure_city }}',
+    destination: '{{ $trip->arrival_city }}',
+    date: '{{ $trip->departure_date->format('Y-m-d') }}',
+    time: '{{ substr($trip->departure_time, 0, 5) }}',
+    price: {{ $trip->price }},
+    available_seats: {{ $totalSeats - count($occupiedSeats) }}
+});
+
 $(function() {
     let selectedSeats = [];
     let maxSeats = parseInt($('#num_boletos').val());

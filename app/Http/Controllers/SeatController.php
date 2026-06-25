@@ -69,14 +69,19 @@ class SeatController extends Controller
             if (in_array((int)$seat, $alreadyOccupied)) {
                 return back()->withErrors([
                     'error' => __('messages.seat_taken', ['seat' => $seat]),
+                ])->with('purchase_failed', [
+                    'reason'  => 'seat_taken',
+                    'seat'    => (int)$seat,
+                    'trip_id' => $trip->id,
                 ]);
             }
         }
 
         $today = now()->format('Y-m-d');
 
+        $tickets = [];
         foreach ($request->seats as $i => $seat) {
-            Ticket::create([
+            $tickets[] = Ticket::create([
                 'trip_id'        => $trip->id,
                 'seat_number'    => (int)$seat,
                 'passenger_name' => $request->names[$i],
@@ -84,10 +89,19 @@ class SeatController extends Controller
             ]);
         }
 
+        $totalAmount = count($request->seats) * $trip->price;
+
         return redirect()->route('tickets.print', [
             'trip_id' => $trip->id,
             'seats'   => implode(',', $request->seats),
             'names'   => implode(',', $request->names),
+        ])->with('purchase_completed', [
+            'trip_id'      => $trip->id,
+            'origin'       => $trip->departure_city,
+            'destination'  => $trip->arrival_city,
+            'ticket_count' => count($request->seats),
+            'total_amount' => $totalAmount,
+            'folio'        => $tickets[0]->folio ?? null,
         ]);
     }
 }

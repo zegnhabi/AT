@@ -59,6 +59,8 @@
 
 @push('scripts')
 <script>
+pushGA4Event('view_home', {});
+
 $(function() {
     $('#datepicker').val(new Date().toISOString().split('T')[0]);
 });

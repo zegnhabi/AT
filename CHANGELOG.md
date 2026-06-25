@@ -1,5 +1,14 @@
 # Changelog
 
+## v2.2.0 (2026-06-25)
+
+### Features
+- **GA4 custom events**: Full funnel tracking across the user journey — `view_home`, `view_search_results`, `select_trip`, `view_seat_selection`, `purchase_completed`, `purchase_failed`, `view_tickets`. Each event carries contextual params (origin, destination, price, ticket count, amount, etc.).
+- **Tracking helper**: Global `pushGA4Event()` JS function in layout.
+
+### Infrastructure
+- All tracking fires via existing GA4 tag (`G-VXV091C1HJ`). No new dependencies.
+
 ## v2.1.0 (2026-06-24)
 
 ### Features

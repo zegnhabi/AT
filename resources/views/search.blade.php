@@ -88,6 +88,13 @@
 
 @push('scripts')
 <script>
+pushGA4Event('view_search_results', {
+    origin: '{{ $origin }}',
+    destination: '{{ $destination }}',
+    date: '{{ $formattedDate }}',
+    result_count: {{ $trips->count() }}
+});
+
 $(function() {
     let selectedId = null;
 
@@ -98,6 +105,11 @@ $(function() {
 
     $('#continueBtn').on('click', function() {
         if (selectedId) {
+            pushGA4Event('select_trip', {
+                trip_id: selectedId,
+                origin: '{{ $origin }}',
+                destination: '{{ $destination }}'
+            });
             window.location.href = '{{ url("elegir") }}/' + selectedId;
         }
     });

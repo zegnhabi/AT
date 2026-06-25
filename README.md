@@ -113,6 +113,7 @@ podman exec -it bus_ticketing_app bash
 - Impresión de boletos con código QR
 - PWA: instalable como app, funciona offline parcial
 - 4 idiomas: español, inglés, alemán, francés
+- **Analytics**: GA4 con eventos personalizados de funnel completo — búsqueda, selección de asientos, compras exitosas/fallidas
 
 ### Admin (`/admin/*`)
 - Dashboard con KPIs (viajes/boletos/ingresos hoy, ocupación)

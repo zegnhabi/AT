@@ -12,6 +12,11 @@
         function gtag(){dataLayer.push(arguments);}
         gtag('js', new Date());
         gtag('config', 'G-VXV091C1HJ');
+        function pushGA4Event(eventName, eventParams) {
+            if (typeof gtag === 'function') {
+                gtag('event', eventName, eventParams || {});
+            }
+        }
     </script>
     <title>@yield('title', $brand['company_name'] ?? __('messages.title'))</title>
     <link rel="shortcut icon" href="/images/{{ $brand['favicon'] ?? 'favicon.ico' }}">
@@ -87,6 +92,9 @@
     if ('serviceWorker' in navigator) {
         navigator.serviceWorker.register('/sw.js');
     }
+    @if(session('purchase_failed'))
+    pushGA4Event('purchase_failed', @json(session('purchase_failed')));
+    @endif
     </script>
     @stack('scripts')
 </body>

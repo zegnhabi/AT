@@ -1,6 +1,23 @@
 @extends('layouts.app')
 
 @section('title', __('messages.title5'))
+@push('scripts')
+<script>
+@if(session('purchase_completed'))
+pushGA4Event('purchase_completed', {
+    trip_id: {{ session('purchase_completed.trip_id') }},
+    origin: '{{ session('purchase_completed.origin') }}',
+    destination: '{{ session('purchase_completed.destination') }}',
+    ticket_count: {{ session('purchase_completed.ticket_count') }},
+    total_amount: {{ session('purchase_completed.total_amount') }},
+    folio: '{{ session('purchase_completed.folio') ?? '' }}'
+});
+@endif
+pushGA4Event('view_tickets', {
+    ticket_count: {{ count($tickets) }}
+});
+</script>
+@endpush
 @section('content')
 <div class="row justify-content-center">
     <div class="col-md-8">
