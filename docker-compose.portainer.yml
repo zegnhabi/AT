@@ -36,6 +36,17 @@ services:
       - SESSION_DRIVER=file
       - SESSION_LIFETIME=120
       - FILESYSTEM_DISK=local
+      - MAIL_MAILER=${MAIL_MAILER:-log}
+      - MAIL_HOST=${MAIL_HOST}
+      - MAIL_PORT=${MAIL_PORT}
+      - MAIL_USERNAME=${MAIL_USERNAME}
+      - MAIL_PASSWORD=${MAIL_PASSWORD}
+      - MAIL_ENCRYPTION=${MAIL_ENCRYPTION}
+      - MAIL_FROM_ADDRESS=${MAIL_FROM_ADDRESS:-noreply@autobuses.com}
+      - MAIL_FROM_NAME=${MAIL_FROM_NAME:-Autobuses S.A. de C.V}
+      - ADMIN_USERNAME=${ADMIN_USERNAME:-admin}
+      - ADMIN_PASSWORD=${ADMIN_PASSWORD:-admin123}
+      - ADMIN_NAME=${ADMIN_NAME:-Administrador}
     volumes:
       - app_storage:/var/www/html/storage
       - app_bootstrap:/var/www/html/bootstrap/cache
