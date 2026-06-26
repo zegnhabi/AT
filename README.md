@@ -109,18 +109,21 @@ podman exec -it bus_ticketing_app bash
 ### Público
 - Búsqueda de corridas por origen, destino y fecha (incluye paradas intermedias)
 - Selección de asientos en mapa visual (horizontal bus, 4 asientos por columna, 1-2 pisos)
-- Compra de 1 a 5 boletos con nombre de pasajero
+- Compra de 1 a 5 boletos con nombre de pasajero y correo electrónico
+- Envío de boletos por correo con QR incluido
 - Impresión de boletos con código QR
+- Compartir por WhatsApp y correo electrónico
 - PWA: instalable como app, funciona offline parcial
 - 4 idiomas: español, inglés, alemán, francés
 - **Analytics**: GA4 con eventos personalizados de funnel completo — búsqueda, selección de asientos, compras exitosas/fallidas
 
-### Admin (`/admin/*`)
+### Admin (`/admin/*`) — requiere autenticación
 - Dashboard con KPIs (viajes/boletos/ingresos hoy, ocupación)
 - CRUD completo: choferes, autobuses, ciudades, viajes
 - Paradas intermedias por viaje
 - Corte de caja diario y arqueo por fechas (exportar CSV, imprimir)
-- Impresión de lista de pasajeros por viaje
+- Impresión y exportación CSV de lista de pasajeros por viaje
+- Cancelación de boletos con liberación de asientos
 - Personalización de marca: colores, logo, favicon, idiomas disponibles
 - Traducciones gestionadas desde BD con import de archivos PHP
 - Panel completamente localizado en 4 idiomas
@@ -137,6 +140,8 @@ podman exec -it bus_ticketing_app bash
 | POST   | `/comprar`             | `SeatController@purchase`  | Procesar compra                 |
 | GET    | `/imprimir`            | `TicketController@print`   | Boletos + QR                    |
 | GET    | `/lang/{es\|en\|de\|fr}` | `LocaleController@switch` | Cambiar idioma                  |
+| GET    | `/validar`            | `ValidationController@index`   | Validar boleto (folio)    |
+| POST   | `/validar`            | `ValidationController@validate`| Resultado de validación   |
 
 ---
 

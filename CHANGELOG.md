@@ -1,10 +1,20 @@
 # Changelog
 
+## v2.5.0 (2026-06-25)
+
+### Bug Fixes
+- **Búsqueda incorrecta**: La query de búsqueda ahora requiere que origen y destino estén ambos en la misma ruta (directo o paradas intermedias). Antes matcheaba viajes no relacionados.
+- **Sin autobús → 500**: `SeatController@select` ahora verifica `$trip->bus` antes de acceder a sus propiedades.
+- **DivisionByZero `per_page=all`**: Driver, Bus y Cashier controllers protegidos con `max($count, 1)`.
+- **$tickets[0] indefinido**: Guard con null coalescing en tickets.blade.php.
+- **Cancelación frágil**: Guarda folio en variable antes de eliminar el modelo.
+- **Traducciones faltantes**: Keys `admin_price`, `admin_branding_actions` y ~50 keys nuevas de features recientes agregadas a los 4 idiomas.
+
 ## v2.4.0 (2026-06-25)
 
 ### Security
 - **Autenticación en admin**: Login con usuario/contraseña en `/admin/login`. Todas las rutas de admin protegidas con middleware `auth`.
-- Usuario por defecto: `admin` / `admin123` (generado por seeder).
+- Usuario por defecto: `admin` / `admin123` (generado por seeder, configurable via `ADMIN_USERNAME`/`ADMIN_PASSWORD`).
 - Sesión con `remember_token`, logout con invalidación de sesión.
 
 ### Infrastructure
