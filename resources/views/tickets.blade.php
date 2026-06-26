@@ -27,20 +27,24 @@ pushGA4Event('view_tickets', {
         </div>
         @endif
 
+        @php $firstTicket = $tickets[0] ?? null; @endphp
+
         <div class="alert alert-success text-center">
             <strong>{{ __('messages.purchased') }} {{ count($tickets) }} {{ __('messages.tickets') }}</strong>
             <div class="mt-2 d-flex justify-content-center gap-2 flex-wrap">
                 <button onclick="window.print()" class="btn btn-primary btn-sm">
                     &#x1F5A8; {{ __('messages.print') }}
                 </button>
-                <a href="https://wa.me/?text={{ urlencode(__('messages.share_text', ['origin' => $tickets[0]['trip']->departure_city, 'destination' => $tickets[0]['trip']->arrival_city, 'date' => $tickets[0]['trip']->departure_date->format('d-m-Y'), 'time' => substr($tickets[0]['trip']->departure_time, 0, 5)])) }}"
+                @if($firstTicket)
+                <a href="https://wa.me/?text={{ urlencode(__('messages.share_text', ['origin' => $firstTicket['trip']->departure_city, 'destination' => $firstTicket['trip']->arrival_city, 'date' => $firstTicket['trip']->departure_date->format('d-m-Y'), 'time' => substr($firstTicket['trip']->departure_time, 0, 5)])) }}"
                    target="_blank" class="btn btn-success btn-sm">
                     <i class="bi bi-whatsapp"></i> {{ __('messages.share_whatsapp') }}
                 </a>
-                <a href="mailto:?subject={{ urlencode(__('messages.share_email_subject')) }}&body={{ urlencode(__('messages.share_text', ['origin' => $tickets[0]['trip']->departure_city, 'destination' => $tickets[0]['trip']->arrival_city, 'date' => $tickets[0]['trip']->departure_date->format('d-m-Y'), 'time' => substr($tickets[0]['trip']->departure_time, 0, 5)])) }}"
+                <a href="mailto:?subject={{ urlencode(__('messages.share_email_subject')) }}&body={{ urlencode(__('messages.share_text', ['origin' => $firstTicket['trip']->departure_city, 'destination' => $firstTicket['trip']->arrival_city, 'date' => $firstTicket['trip']->departure_date->format('d-m-Y'), 'time' => substr($firstTicket['trip']->departure_time, 0, 5)])) }}"
                    class="btn btn-secondary btn-sm">
                     <i class="bi bi-envelope"></i> {{ __('messages.share_email') }}
                 </a>
+                @endif
                 <a href="{{ route('home') }}" class="btn btn-outline-secondary btn-sm">
                     &#x1F3E0; {{ __('messages.home') }}
                 </a>

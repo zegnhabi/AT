@@ -18,8 +18,9 @@ class BusController extends Controller
 
         if ($perPage === 'all') {
             $buses = $query->get();
+            $total = max($buses->count(), 1);
             $buses = new \Illuminate\Pagination\LengthAwarePaginator(
-                $buses, $buses->count(), $buses->count(), 1,
+                $buses, $buses->count(), $total, 1,
                 ['path' => $request->url(), 'query' => array_merge($request->query(), ['per_page' => 'all'])]
             );
         } else {

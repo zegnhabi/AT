@@ -35,12 +35,16 @@ class HomeController extends Controller
                 $q->where(function ($q2) use ($origin, $destination) {
                     $q2->where('departure_city', $origin)
                        ->where('arrival_city', $destination);
-                })->orWhereHas('stops', function ($q2) use ($origin) {
-                    $q2->where('city', $origin);
-                }, '>=', 1)
-                ->orWhereHas('stops', function ($q2) use ($destination) {
-                    $q2->where('city', $destination);
-                }, '>=', 1);
+                })->orWhere(function ($q2) use ($origin, $destination) {
+                    $q2->where('departure_city', $origin)
+                       ->whereHas('stops', fn ($sq) => $sq->where('city', $destination));
+                })->orWhere(function ($q2) use ($origin, $destination) {
+                    $q2->where('arrival_city', $destination)
+                       ->whereHas('stops', fn ($sq) => $sq->where('city', $origin));
+                })->orWhere(function ($q2) use ($origin, $destination) {
+                    $q2->whereHas('stops', fn ($sq) => $sq->where('city', $origin))
+                       ->whereHas('stops', fn ($sq) => $sq->where('city', $destination));
+                });
             })
             ->where('departure_date', $formattedDate);
 

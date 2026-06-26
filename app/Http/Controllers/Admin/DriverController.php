@@ -17,8 +17,9 @@ class DriverController extends Controller
 
         if ($perPage === 'all') {
             $drivers = $query->get();
+            $total = max($drivers->count(), 1);
             $drivers = new \Illuminate\Pagination\LengthAwarePaginator(
-                $drivers, $drivers->count(), $drivers->count(), 1,
+                $drivers, $drivers->count(), $total, 1,
                 ['path' => $request->url(), 'query' => array_merge($request->query(), ['per_page' => 'all'])]
             );
         } else {

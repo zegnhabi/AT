@@ -19,10 +19,11 @@ class CancellationController extends Controller
         $ticket->load('trip');
 
         $trip = $ticket->trip;
+        $folio = $ticket->folio;
 
         $ticket->delete();
 
         return redirect()->route('admin.trips.show', $trip)
-            ->with('success', __('messages.admin_cancel_success', ['folio' => $ticket->folio]));
+            ->with('success', __('messages.admin_cancel_success', ['folio' => $folio]));
     }
 }

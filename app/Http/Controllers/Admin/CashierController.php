@@ -60,8 +60,9 @@ class CashierController extends Controller
 
         if ($perPage === 'all') {
             $tickets = $query->get();
+            $total = max($tickets->count(), 1);
             $tickets = new \Illuminate\Pagination\LengthAwarePaginator(
-                $tickets, $tickets->count(), $tickets->count(), 1,
+                $tickets, $tickets->count(), $total, 1,
                 ['path' => $request->url(), 'query' => array_merge($request->query(), ['per_page' => 'all'])]
             );
         } else {

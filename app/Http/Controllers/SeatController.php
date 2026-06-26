@@ -13,6 +13,12 @@ class SeatController extends Controller
     public function select($id)
     {
         $trip = Trip::with('tickets', 'bus', 'stops')->findOrFail($id);
+
+        if (!$trip->bus) {
+            return redirect()->route('home')
+                ->withErrors(['error' => __('messages.no_bus_assigned')]);
+        }
+
         $bus = $trip->bus;
         $totalSeats = $bus->seat_count;
         $decks = $bus->decks;
