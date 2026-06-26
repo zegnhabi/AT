@@ -15,7 +15,7 @@ Route::get('/buscar', [HomeController::class, 'search'])->name('search');
 
 Route::get('/elegir/{id}', [SeatController::class, 'select'])->name('seats');
 
-Route::post('/comprar', [SeatController::class, 'purchase'])->name('purchase');
+Route::post('/comprar', [SeatController::class, 'purchase'])->name('purchase')->middleware('throttle:10,1');
 
 Route::get('/imprimir', [TicketController::class, 'print'])->name('tickets.print');
 

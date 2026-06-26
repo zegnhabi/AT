@@ -9,8 +9,8 @@ class TripStop extends Model
     protected $fillable = ['trip_id', 'city', 'terminal', 'stop_order', 'arrival_time', 'departure_time'];
 
     protected $casts = [
-        'arrival_time' => 'datetime:H:i',
-        'departure_time' => 'datetime:H:i',
+        'arrival_time' => 'string',
+        'departure_time' => 'string',
     ];
 
     public function trip()

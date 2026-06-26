@@ -1,5 +1,15 @@
 # Changelog
 
+## v2.6.0 (2026-06-25)
+
+### Features
+- **Rate limiting**: Ruta `/comprar` limitada a 10 requests por minuto por IP.
+- **Índices en BD**: Migración `0013` con índices en `trips.departure_date`, `departure_city`, `arrival_city`, `bus_id`.
+
+### Bug Fixes
+- **Admin error display**: El layout admin ahora muestra errores de validación ($errors), no solo success.
+- **TripStop casts incorrectos**: `arrival_time` y `departure_time` cambiados de `datetime:H:i` a `string` (evita que Carbon agregue fecha actual al castear).
+
 ## v2.5.0 (2026-06-25)
 
 ### Bug Fixes
