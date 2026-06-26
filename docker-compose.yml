@@ -25,6 +25,10 @@ services:
       # - MAIL_ENCRYPTION=tls
       # - MAIL_FROM_ADDRESS=noreply@autobuses.com
       # - MAIL_FROM_NAME=Autobuses S.A. de C.V
+      # Admin user (created on first deploy / migrate)
+      # - ADMIN_USERNAME=admin
+      # - ADMIN_PASSWORD=admin123
+      # - ADMIN_NAME=Administrador
     depends_on:
       db:
         condition: service_healthy
