@@ -9,6 +9,9 @@
 ### Dependencies
 - **guzzlehttp/guzzle 7.12.3 → 7.15.1**: Actualización de seguridad que cierra 4 alertas GHSA (scoping de cookies, `Referer` en redirects, credenciales en URLs).
 
+### Infrastructure
+- **Seed automático en deploy**: El entrypoint ahora ejecuta `php artisan db:seed --force` tras migrar. Los seeders de choferes (12), autobuses (5), viajes (180, 30 días × 6 corridas) y traducciones (~1308) son idempotentes (no se duplican al reiniciar). Las ciudades se derivan de los viajes.
+
 ## v2.6.0 (2026-06-25)
 
 ### Features

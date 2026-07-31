@@ -9,6 +9,10 @@ class DriverSeeder extends Seeder
 {
     public function run(): void
     {
+        if (DB::table('drivers')->exists()) {
+            return;
+        }
+
         $drivers = [
             ['name' => 'PONCE GONZALEZ ERIKA JAZMIN', 'gender' => 'F', 'age' => 19, 'phone' => '2271000000'],
             ['name' => 'DIAZ MELENDEZ YULIANA', 'gender' => 'F', 'age' => 25, 'phone' => '2221056489'],

@@ -9,6 +9,10 @@ class BusSeeder extends Seeder
 {
     public function run(): void
     {
+        if (DB::table('buses')->exists()) {
+            return;
+        }
+
         $buses = [
             ['seat_count' => 36, 'model_year' => 2009, 'serial_number' => 'WE435TF6', 'driver_id' => 1],
             ['seat_count' => 36, 'model_year' => 2009, 'serial_number' => 'WE435TF6', 'driver_id' => 2],

@@ -70,6 +70,8 @@ docker exec -it bus_ticketing_app php artisan db:seed --force
 
 El usuario admin se crea automáticamente al arrancar (`php artisan admin:ensure`). Si el valor de una variable contiene espacios (ej. `ADMIN_NAME`), el entrypoint lo escribe citado en `.env` automáticamente, no es necesario agregar comillas en el stack.
 
+El arranque también ejecuta `php artisan db:seed --force` con datos demo (choferes, autobuses, viajes y traducciones). Los seeders son idempotentes: solo insertan si la tabla está vacía, por lo que reiniciar el stack no duplica datos.
+
 ## Estructura
 
 ```

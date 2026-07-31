@@ -43,6 +43,8 @@ done
 
 php artisan migrate --force 2>/dev/null || true
 
+php artisan db:seed --force 2>/dev/null || true
+
 php artisan admin:ensure 2>/dev/null || true
 php artisan config:cache 2>/dev/null || true
 php artisan route:cache 2>/dev/null || true

@@ -9,6 +9,10 @@ class TripSeeder extends Seeder
 {
     public function run(): void
     {
+        if (DB::table('trips')->exists()) {
+            return;
+        }
+
         $trips = [];
         $id = 1;
 
