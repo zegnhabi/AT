@@ -45,6 +45,7 @@ Sistema web para la venta de boletos de autobuses. Buscar corridas, seleccionar 
 - 4 idiomas: español, inglés, alemán, francés
 
 ### Admin (`/admin/*`)
+- Login con usuario/contraseña (`/admin/login`). El usuario admin se crea automáticamente al arrancar con `php artisan admin:ensure`, usando `ADMIN_USERNAME`/`ADMIN_PASSWORD`/`ADMIN_NAME` (defaults: `admin` / `admin123` / `Administrador`)
 - Dashboard con KPIs (viajes/boletos/ingresos hoy, ocupación)
 - CRUD completo: choferes, autobuses, ciudades, viajes
 - Paradas intermedias por viaje

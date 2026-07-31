@@ -64,6 +64,11 @@ docker exec -it bus_ticketing_app php artisan db:seed --force
 | `DB_USERNAME` | `busapp` | Usuario de la BD |
 | `DB_PASSWORD` | *(requerido)* | Contraseña de la BD |
 | `TZ` | `America/Monterrey` | Zona horaria |
+| `ADMIN_USERNAME` | `admin` | Usuario del admin |
+| `ADMIN_PASSWORD` | `admin123` | Contraseña del admin |
+| `ADMIN_NAME` | `Administrador` | Nombre mostrado del admin |
+
+El usuario admin se crea automáticamente al arrancar (`php artisan admin:ensure`). Si el valor de una variable contiene espacios (ej. `ADMIN_NAME`), el entrypoint lo escribe citado en `.env` automáticamente, no es necesario agregar comillas en el stack.
 
 ## Estructura
 

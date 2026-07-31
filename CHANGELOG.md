@@ -1,5 +1,14 @@
 # Changelog
 
+## v2.7.0 (2026-07-31)
+
+### Bug Fixes
+- **Admin en producción**: El entrypoint usaba `php artisan tinker`, pero `laravel/tinker` no se instala en producción (`--no-dev`), así que el usuario admin nunca se creaba. Nuevo comando `php artisan admin:ensure` que crea/actualiza el admin desde `ADMIN_USERNAME`/`ADMIN_PASSWORD`/`ADMIN_NAME` al arrancar.
+- **Error 500 en producción (dotenv)**: El entrypoint escribía valores sin comillas en `.env`, rompiendo el parser cuando el valor contenía espacios (ej. `Autobuses S.A. de C.V`). Ahora los valores se citan automáticamente y se respeta si ya vienen con comillas desde el stack. También se corrige la salida temprana del script por `set -e` + `printenv` con variables no definidas.
+
+### Dependencies
+- **guzzlehttp/guzzle 7.12.3 → 7.15.1**: Actualización de seguridad que cierra 4 alertas GHSA (scoping de cookies, `Referer` en redirects, credenciales en URLs).
+
 ## v2.6.0 (2026-06-25)
 
 ### Features
