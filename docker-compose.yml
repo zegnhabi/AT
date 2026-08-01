@@ -17,6 +17,7 @@ services:
       - DB_USERNAME=busapp
       - DB_PASSWORD=busapp_secret
       - CACHE_STORE=redis
+      - SESSION_DRIVER=redis
       - REDIS_HOST=redis
       - REDIS_PORT=6379
       # Email (optional - defaults to log driver)
