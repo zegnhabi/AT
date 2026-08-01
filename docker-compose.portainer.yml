@@ -35,6 +35,12 @@ services:
       - DB_PASSWORD=${DB_PASSWORD:-busapp_secret}
       - SESSION_DRIVER=file
       - SESSION_LIFETIME=120
+      - CACHE_STORE=redis
+      - CACHE_PREFIX=busticketing_cache
+      - REDIS_CLIENT=phpredis
+      - REDIS_HOST=at-redis
+      - REDIS_PORT=6379
+      - REDIS_PASSWORD=null
       - FILESYSTEM_DISK=local
       - MAIL_MAILER=${MAIL_MAILER:-log}
       - MAIL_HOST=${MAIL_HOST}
@@ -52,10 +58,25 @@ services:
       - app_bootstrap:/var/www/html/bootstrap/cache
     depends_on:
       - at-db
+      - at-redis
     restart: unless-stopped
     networks:
       - backend
       - traefik_public
+
+  at-redis:
+    image: redis:7-alpine
+    command: redis-server --appendonly yes
+    volumes:
+      - redis_data:/data
+    healthcheck:
+      test: ["CMD", "redis-cli", "ping"]
+      interval: 5s
+      timeout: 3s
+      retries: 5
+    restart: unless-stopped
+    networks:
+      - backend
     deploy:
       labels:
         - traefik.enable=true
@@ -67,6 +88,7 @@ services:
 
 volumes:
   pg_data:
+  redis_data:
   app_storage:
   app_bootstrap:
 

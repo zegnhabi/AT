@@ -16,6 +16,9 @@ services:
       - DB_DATABASE=bus_ticketing
       - DB_USERNAME=busapp
       - DB_PASSWORD=busapp_secret
+      - CACHE_STORE=redis
+      - REDIS_HOST=redis
+      - REDIS_PORT=6379
       # Email (optional - defaults to log driver)
       # - MAIL_MAILER=smtp
       # - MAIL_HOST=smtp.gmail.com
@@ -31,6 +34,8 @@ services:
       # - ADMIN_NAME=Administrador
     depends_on:
       db:
+        condition: service_healthy
+      redis:
         condition: service_healthy
     networks:
       - bus-network
@@ -68,8 +73,23 @@ services:
     networks:
       - bus-network
 
+  redis:
+    image: redis:7-alpine
+    container_name: bus_ticketing_redis
+    command: redis-server --appendonly yes
+    volumes:
+      - redisdata:/data
+    healthcheck:
+      test: ["CMD", "redis-cli", "ping"]
+      interval: 5s
+      timeout: 3s
+      retries: 5
+    networks:
+      - bus-network
+
 volumes:
   pgdata:
+  redisdata:
 
 networks:
   bus-network:
